@@ -5,11 +5,12 @@ import {
 	AiOutlineMenuUnfold,
 } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { IoLogOut } from 'react-icons/io5';
 
 import { navLinks } from '../../config';
 import logo from '../../assets/logo.svg';
+import UserContext from '../../context/Auth';
 
 /**
  *
@@ -77,6 +78,8 @@ const MdNavbar = ({ open, children }) => {
 const Layout = ({ children, title }) => {
 	const [open, setOpen] = useState(false);
 
+	const user = useContext(UserContext);
+
 	return (
 		<>
 			<div className="container relative font-[300]">
@@ -119,7 +122,7 @@ const Layout = ({ children, title }) => {
 						<span className="px-2 md:px-6"></span>
 						<span>
 							<img
-								src="https://ui-avatars.com/api/?name=John+Doe&background=003AFF&color=fff"
+								src={`https://ui-avatars.com/api/?name=${user?.name}&background=003AFF&color=fff`}
 								alt=""
 								className="rounded-full w-[50px] inline"
 							/>

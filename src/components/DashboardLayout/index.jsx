@@ -22,7 +22,7 @@ const DashboardLayout = () => {
 		}
 
 		if (isSuccess) {
-			setUserData(data.data);
+			setUserData(data.data?.user);
 		}
 
 		return () => {};
