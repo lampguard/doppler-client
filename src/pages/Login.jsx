@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import TextInput from "../components/Input/TextInput";
 
 const Login = () => {
 	return (
@@ -15,19 +16,19 @@ const Login = () => {
 				<div className="text-left p-2">
 					<label>E-mail Address</label>
 					<p className="p-1"></p>
-					<input
+					<TextInput
 						type="email"
-						className="font-[230] w-[100%] p-2 border rounded-md"
 						placeholder="you@example.com"
+            name="email"
 					/>
 				</div>
 				<div className="text-left p-2">
 					<label>Password</label>
 					<p className="p-1"></p>
-					<input
+					<TextInput
 						type="password"
-						className="font-[230] w-[100%] p-2 border rounded-md"
 						placeholder="*********"
+            name="password"
 					/>
 				</div>
 
