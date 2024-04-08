@@ -7,6 +7,10 @@ import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import AuthPane from './components/AuthPane';
 
+import { Provider } from 'react-redux';
+
+import { store } from './store.js';
+
 import {
 	createBrowserRouter,
 	RouterProvider,
@@ -26,9 +30,9 @@ const routes = createBrowserRouter(
 			</Route>
 			<Route element={<DashboardLayout />}>
 				<Route index element={<></>} />
-				<Route path='/tasks' element={<></>} />
-				<Route path='/apps' element={<></>} />
-				<Route path='/dashboard' element={<></>} />
+				<Route path="/tasks" element={<></>} />
+				<Route path="/apps" element={<></>} />
+				<Route path="/dashboard" element={<></>} />
 			</Route>
 		</Route>
 	)
@@ -36,6 +40,8 @@ const routes = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		<RouterProvider router={routes}></RouterProvider>
+		<Provider store={store}>
+			<RouterProvider router={routes} />
+		</Provider>
 	</React.StrictMode>
 );
