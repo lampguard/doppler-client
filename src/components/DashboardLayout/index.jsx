@@ -39,8 +39,8 @@ const DashboardLayout = () => {
 							<img src={logo} alt="" className="w-[130px]" />
 							<div className="md:pt-[40px]"></div>
 							<button className='flex w-full items-center justify-start rounded-full p-4 transition-[colors_2s] hover:bg-theme hover:text-white'>
-								<BsPlus className='inline mr-[20px]'	 size={	30} />
-								<span className='inline'>Add new app</span>
+								<BsPlus className='inline mr-[20px]' size={	30} />
+								<span className='inline'>Add New App</span>
 							</button>
 							<div className="md:pb-[40px]"></div>
 
