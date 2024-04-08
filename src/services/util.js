@@ -1,0 +1,1 @@
+export const baseUrl = __ENV__.API_URL

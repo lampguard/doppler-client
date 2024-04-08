@@ -1,7 +1,29 @@
-import { Link } from "react-router-dom";
-import TextInput from "../components/Input/TextInput";
+import { Link, useNavigate } from 'react-router-dom';
+import TextInput from '../components/Input/TextInput';
+
+import { useLoginMutation } from '../services';
+import { useState } from 'react';
 
 const Login = () => {
+	const [login, result] = useLoginMutation();
+	const navigate = useNavigate();
+
+	const [loginform, setLoginform] = useState({
+		email: undefined,
+		password: undefined,
+	});
+
+	const submitLogin = async () => {
+		try {
+			const data = await login(loginform).unwrap();
+
+			sessionStorage.setItem('authToken', data.data.token);
+			navigate('/');
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
 	return (
 		<div className="text-center">
 			<h1 className="text-[2.0em] font-[400] tracking-[1px]">
@@ -10,6 +32,7 @@ const Login = () => {
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
+					submitLogin();
 				}}
 				className="pt-10"
 			>
@@ -19,7 +42,14 @@ const Login = () => {
 					<TextInput
 						type="email"
 						placeholder="you@example.com"
-            name="email"
+						name="email"
+						value={loginform.email}
+						onChange={(e) => {
+							setLoginform({
+								...loginform,
+								email: e.target.value,
+							});
+						}}
 					/>
 				</div>
 				<div className="text-left p-2">
@@ -28,13 +58,22 @@ const Login = () => {
 					<TextInput
 						type="password"
 						placeholder="*********"
-            name="password"
+						name="password"
+						onChange={(e) => {
+							setLoginform({
+								...loginform,
+								password: e.target.value,
+							});
+						}}
+						value={loginform.password}
 					/>
 				</div>
 
 				<div className="py-4"></div>
 				<div className="p-2">
-					<button className="btn-primary">Log In</button>
+					<button className="btn-primary" type="submit">
+						Log In
+					</button>
 				</div>
 
 				<div className="text-center px-2">

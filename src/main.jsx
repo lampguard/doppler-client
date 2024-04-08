@@ -21,6 +21,7 @@ import ResetPassword from './pages/ResetPassword.jsx';
 import DashboardLayout from './components/DashboardLayout/index.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Layout from './components/DashboardLayout/Template.jsx';
+import Apps from './pages/Apps.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -32,8 +33,15 @@ const routes = createBrowserRouter(
 			</Route>
 			<Route element={<DashboardLayout />}>
 				<Route index element={<Dashboard />} />
-				<Route path="/tasks" element={<Layout title='Tasks'></Layout>} />
-				<Route path="/apps" element={<Layout title='Apps'></Layout>} />
+				<Route path="/tasks" element={<Layout title="Tasks"></Layout>} />
+				<Route
+					path="/apps"
+					element={
+						<Layout title="Apps">
+							<Apps />
+						</Layout>
+					}
+				/>
 				<Route path="/dashboard" element={<Dashboard />} />
 			</Route>
 		</Route>

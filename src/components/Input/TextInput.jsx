@@ -1,7 +1,14 @@
 /**
- * @type {React.FC<{type:React.HTMLInputTypeAttribute | undefined, placeholder?: string, className?: string, name?: string}>}
+ * @type {React.FC<{type:React.HTMLInputTypeAttribute | undefined, placeholder?: string, className?: string, name?: string, onChange: (e: React.ChangeEventHandler<HTMLInputElement>) => void, value?: any}>}
  */
-export default ({ type = 'text', placeholder, className = '', name }) => {
+export default ({
+	type = 'text',
+	placeholder,
+	className = '',
+	name,
+	onChange,
+	value = '',
+}) => {
 	return (
 		<>
 			<input
@@ -11,6 +18,8 @@ export default ({ type = 'text', placeholder, className = '', name }) => {
 				}
 				name={name}
 				placeholder={placeholder}
+				onChange={onChange}
+				value={value}
 			/>
 		</>
 	);
