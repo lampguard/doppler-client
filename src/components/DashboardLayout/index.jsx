@@ -36,8 +36,8 @@ export default () => {
 	const location = useLocation();
 
 	return (
-		<div className="font-[230]">
-			<div className="max-w-[25%] w-fit flex flex-col items-stretch justify-between h-svh border-r border-[#ccc] px-[30px] py-[40px]">
+		<div className="font-[230] flex">
+			<div className="container max-w-[20%] flex flex-col items-stretch justify-between h-svh border-r border-[#ccc] px-[30px] py-[40px]">
 				<div>
 					<img src={logo} alt="" className="w-[130px]" />
 					<div className="py-10"></div>
@@ -66,12 +66,12 @@ export default () => {
 					</ul>
 				</div>
 
-				<button className="flex w-full items-center py-3 px-4 border hover:bg-red-500 hover:text-white hover:border-red-500 rounded-full">
+				<Link to={'/login'} className="flex w-full items-center py-3 px-4 border hover:bg-red-500 hover:text-white hover:border-red-500 rounded-full">
 					<span className="pr-5">
 						<IoLogOut size={25} />
 					</span>
 					Log out
-				</button>
+				</Link>
 			</div>
 			<Outlet />
 		</div>

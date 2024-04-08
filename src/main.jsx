@@ -19,6 +19,8 @@ import {
 } from 'react-router-dom';
 import ResetPassword from './pages/ResetPassword.jsx';
 import DashboardLayout from './components/DashboardLayout/index.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import Layout from './components/DashboardLayout/Template.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -29,10 +31,10 @@ const routes = createBrowserRouter(
 				<Route element={<ResetPassword />} path="/reset-password" />
 			</Route>
 			<Route element={<DashboardLayout />}>
-				<Route index element={<></>} />
-				<Route path="/tasks" element={<></>} />
-				<Route path="/apps" element={<></>} />
-				<Route path="/dashboard" element={<></>} />
+				<Route index element={<Dashboard />} />
+				<Route path="/tasks" element={<Layout title='Tasks'></Layout>} />
+				<Route path="/apps" element={<Layout title='Apps'></Layout>} />
+				<Route path="/dashboard" element={<Dashboard />} />
 			</Route>
 		</Route>
 	)
