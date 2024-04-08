@@ -14,15 +14,18 @@ import {
 	Route,
 } from 'react-router-dom';
 import ResetPassword from './pages/ResetPassword.jsx';
+import DashboardLayout from './components/DashboardLayout/index.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
 			<Route element={<AuthPane />}>
-				<Route element={<Login />} index />
 				<Route element={<Login />} path="/login" />
 				<Route element={<Signup />} path="/signup" />
 				<Route element={<ResetPassword />} path="/reset-password" />
+			</Route>
+			<Route element={<DashboardLayout />}>
+				<Route index element={<></>} />
 			</Route>
 		</Route>
 	)
