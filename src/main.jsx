@@ -26,6 +26,9 @@ const routes = createBrowserRouter(
 			</Route>
 			<Route element={<DashboardLayout />}>
 				<Route index element={<></>} />
+				<Route path='/tasks' element={<></>} />
+				<Route path='/apps' element={<></>} />
+				<Route path='/dashboard' element={<></>} />
 			</Route>
 		</Route>
 	)
