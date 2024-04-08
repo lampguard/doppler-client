@@ -127,7 +127,7 @@ const Layout = ({ children, title }) => {
 								className="rounded-full w-[50px] inline"
 							/>
 							<span className="md:px-[6px]"></span>
-							<p className="hidden md:inline">John Doe</p>
+							<p className="hidden md:inline">{user?.name}</p>
 						</span>
 					</div>
 				</div>
