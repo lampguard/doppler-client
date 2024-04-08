@@ -24,10 +24,10 @@ const AuthPane = () => {
 			<div className="flex justify-center items-center">
 				<img src={logo} className="w-[150px]" />
 			</div>
-			<div className="md:pb-[3em] hidden md:block"></div>
+			<div className="pb-[3em]"></div>
 			<div className="flex justify-center relative">
-				<span className="absolute h-[1px] block bg-black opacity-[15%] w-full top-[200px] z-[-1]"></span>
-				<div className="min-w-[35%] bg-white border border-black border-opacity-[15%] rounded-[40px] py-[64px] min-h-[30vw] px-[24px] grid items-center">
+				<span className="absolute h-[1px] bg-black opacity-[15%] w-full top-[200px] z-[-1] hidden md:block"></span>
+				<div className="w-full md:w-[35%] bg-white md:border border-black border-opacity-[15%] md:rounded-[40px] py-[64px] min-h-[30vw] px-[24px] grid items-center">
 					<Outlet />
 				</div>
 			</div>
