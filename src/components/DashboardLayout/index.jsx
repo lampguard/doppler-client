@@ -6,6 +6,7 @@ import { useGetAuthQuery } from '../../services/index';
 import { navLinks } from '../../config';
 import logo from '../../assets/logo.svg';
 import UserContext from '../../context/Auth';
+import { BsPlus } from 'react-icons/bs';
 
 const DashboardLayout = () => {
 	const location = useLocation();
@@ -36,7 +37,12 @@ const DashboardLayout = () => {
 					<div className="container max-w-[20%] flex-col items-stretch justify-between h-svh border-r border-[#ccc] px-[30px] py-[40px] hidden md:flex">
 						<div>
 							<img src={logo} alt="" className="w-[130px]" />
-							<div className="py-10"></div>
+							<div className="md:pt-[40px]"></div>
+							<div className='flex items-center justify-start rounded-full p-4 transition-[colors_2s] hover:bg-theme hover:text-white'>
+								<BsPlus className='inline mr-[20px]'	 size={	30} />
+								<span className='inline'>Add new app</span>
+							</div>
+							<div className="md:pb-[40px]"></div>
 
 							<ul>
 								{navLinks.map((link) => (
