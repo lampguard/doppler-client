@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* --var(theme-color): #003AFF */
+
+  .btn-primary {
+    @apply bg-[#003AFF] w-[100%] text-white rounded-md py-3 hover:bg-blue-700;
+  }
+  .text-theme {
+    color: #003AFF;
+  }
+  .bg-theme {
+    background-color: #003AFF;
+  }
+}

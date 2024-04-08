@@ -4,6 +4,7 @@ import App from './App.jsx';
 import './index.css';
 
 import Login from './pages/Login.jsx';
+import AuthPane from './components/AuthPane';
 
 import {
 	createBrowserRouter,
@@ -14,9 +15,11 @@ import {
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
-		<Route path='/'>
+		<Route path="/">
 			<Route element={<App />} index />
-			<Route element={<Login />} path='/login' />
+			<Route element={<AuthPane/>}>
+				<Route element={<Login />} path="/login" />
+			</Route>
 		</Route>
 	)
 );
