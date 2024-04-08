@@ -18,6 +18,7 @@ const DashboardLayout = () => {
 	useEffect(() => {
 		if (isError) {
 			console.error(error);
+			navigate('/login');
 		}
 
 		if (isSuccess) {
