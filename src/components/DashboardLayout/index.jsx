@@ -1,43 +1,15 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { AiFillHome, AiOutlineHome, AiOutlineLineChart } from 'react-icons/ai';
-import { BsMenuAppFill, BsMenuButton, BsGithub } from 'react-icons/bs';
 import { IoLogOut } from 'react-icons/io5';
 
+import { navLinks } from '../../config';
 import logo from '../../assets/logo.svg';
 
-const navLinks = [
-	{
-		title: 'Dashboard',
-		slug: '/',
-		icon: <AiOutlineHome className="text-2xl inline" />,
-		activeIcon: <AiFillHome className="text-2xl inline" />,
-	},
-	{
-		title: 'Apps',
-		slug: '/apps',
-		icon: <BsMenuButton className="text-2xl inline" />,
-		activeIcon: <BsMenuAppFill className="text-2xl inline" />,
-	},
-	{
-		title: 'Tasks',
-		slug: '/tasks',
-		icon: <AiOutlineLineChart className="text-2xl inline" />,
-		activeIcon: <AiOutlineLineChart className="text-2xl inline" />,
-	},
-	{
-		title: 'View on Github',
-		slug: 'https://github.com/lampguard/doppler-client',
-		icon: <BsGithub className="text-2xl inline" />,
-		blankTarget: true,
-	},
-];
-
-export default () => {
+const DashboardLayout = () => {
 	const location = useLocation();
 
 	return (
-		<div className="font-[230] flex">
-			<div className="container max-w-[20%] flex flex-col items-stretch justify-between h-svh border-r border-[#ccc] px-[30px] py-[40px]">
+		<div className="font-[230] md:flex">
+			<div className="container max-w-[20%] flex-col items-stretch justify-between h-svh border-r border-[#ccc] px-[30px] py-[40px] hidden md:flex">
 				<div>
 					<img src={logo} alt="" className="w-[130px]" />
 					<div className="py-10"></div>
@@ -66,7 +38,10 @@ export default () => {
 					</ul>
 				</div>
 
-				<Link to={'/login'} className="flex w-full items-center py-3 px-4 border hover:bg-red-500 hover:text-white hover:border-red-500 rounded-full">
+				<Link
+					to={'/login'}
+					className="flex w-full items-center py-3 px-4 border hover:bg-red-500 hover:text-white hover:border-red-500 rounded-full"
+				>
 					<span className="pr-5">
 						<IoLogOut size={25} />
 					</span>
@@ -77,3 +52,5 @@ export default () => {
 		</div>
 	);
 };
+
+export default DashboardLayout;
