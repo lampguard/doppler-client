@@ -9,6 +9,10 @@ const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
     sessionStorage.clear();
+
+    return () => {
+      console.log("cleared session storage");
+    };
   }, []);
   const [loginform, setLoginform] = useState({
     email: undefined,

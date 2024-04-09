@@ -14,11 +14,11 @@ export const api = createApi({
 
       return headers;
     },
-    cache: "force-cache",
+    // cache: "force-cache",
     timeout: 60000,
   }),
   refetchOnReconnect: true,
-  keepUnusedDataFor: 300,
+  keepUnusedDataFor: 120,
   tagTypes: ["Auth"],
   endpoints: (builder) => ({
     login: builder.mutation({
