@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import Layout from "../components/DashboardLayout/Template";
 import { useLazyGetMetricsQuery } from "../services/metrics";
+import DashboardApp from "../components/Metrics/DashboardApp";
+import React from "react";
 
 const Dashboard = () => {
   const [trigger, { isLoading, data, isUninitialized }] =
@@ -19,7 +21,19 @@ const Dashboard = () => {
           <span className="loading loading-ring loading-lg text-theme"></span>
         </div>
       ) : (
-        <>{JSON.stringify(data)}</>
+        <>
+          <div className="p-4 w-full h-full">
+            {data?.map(({ app, data }) => {
+              return (
+                <React.Fragment key={app.id}>
+                  <div className="border p-4" key={app.id}>
+                    <DashboardApp app={app} data={data} />
+                  </div>
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </>
       )}
     </Layout>
   );
