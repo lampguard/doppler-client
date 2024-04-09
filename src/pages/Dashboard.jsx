@@ -1,18 +1,20 @@
 import { useEffect } from "react";
 import Layout from "../components/DashboardLayout/Template";
-import { useLazyGetMetricsQuery } from "../services/metrics";
+import {
+  useLazyGetMetricsQuery,
+  useGetMetricsQuery,
+} from "../services/metrics";
 import DashboardApp from "../components/Metrics/DashboardApp";
 import React from "react";
 
 const Dashboard = () => {
-  const [trigger, { isLoading, data, isUninitialized }] =
-    useLazyGetMetricsQuery();
-  useEffect(() => {
-    trigger()
-      .unwrap()
-      .then((data) => console.log)
-      .catch(console.error);
-  }, []);
+  const { isLoading, data, isUninitialized } = useGetMetricsQuery();
+  // useEffect(() => {
+  //   trigger()
+  //     .unwrap()
+  //     .then((data) => console.log)
+  //     .catch(console.error);
+  // }, []);
 
   return (
     <Layout title="Dashboard">
@@ -26,7 +28,10 @@ const Dashboard = () => {
             {data?.map(({ app, data }) => {
               return (
                 <React.Fragment key={app.id}>
-                  <div className="border p-4" key={app.id}>
+                  <div
+                    className="border p-4 grid grid-cols-1 h-[25rem]"
+                    key={app.id}
+                  >
                     <DashboardApp app={app} data={data} />
                   </div>
                 </React.Fragment>

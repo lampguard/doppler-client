@@ -10,10 +10,13 @@ const metricsApi = api
       getMetrics: builder.query({
         query: () => ({
           url: "/metrics",
+          params: {
+            from: "2023-01-01",
+          },
         }),
         providesTags: "Metrics",
       }),
     }),
   });
 
-export const { useLazyGetMetricsQuery } = metricsApi;
+export const { useLazyGetMetricsQuery, useGetMetricsQuery } = metricsApi;

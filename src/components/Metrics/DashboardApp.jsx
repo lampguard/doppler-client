@@ -1,38 +1,119 @@
+import React from "react";
 import {
-	LineChart,
-	Line,
-	CartesianGrid,
-	XAxis,
-	YAxis,
-	AreaChart,
-	Area,
-} from 'recharts';
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
-/**
- * @type {React.FC<{app: Partial<{title: string}>, data: {
- *  info: {time: string, key: string}[]
- * }}>} DashboardApp
- */
+const data = [
+  {
+    name: "Page A",
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: "Page B",
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: "Page C",
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Page D",
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: "Page E",
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: "Page F",
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: "Page G",
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
+
 const DashboardApp = ({ app, data }) => {
-	return (
-		<>
-			<h1 className="font-bold">{app.title}</h1>
-			<div className="py-3">
-				<AreaChart width={800} height={400} data={data.info}>
-					{/* <Line type={'monotone'} dataKey={'key'} stroke="#8884d8" /> */}
-					<Area
-						dataKey={'sum'}
-						points={(data.info.map((r) => ({ x: r.key, y: r.sum }))}
-						activeDot={true}
-					/>
-					<CartesianGrid />
-					<XAxis dataKey={'key'} />
-					<YAxis dataKey={'sum'} />
-				</AreaChart>
-			</div>
-			<p>{JSON.stringify(data.info)}</p>
-		</>
-	);
+  return (
+    <>
+      <h1 className="font-bold">{app.title}</h1>
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart
+          width={500}
+          height={400}
+          data={data || []}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="time" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="info"
+            stackId="1"
+            stroke="#8884d8"
+            fill="#8884d8"
+          />
+          <Area
+            type="monotone"
+            dataKey="debug"
+            stackId="1"
+            stroke="#82ca9d"
+            fill="#82ca9d"
+          />
+          <Area
+            type="monotone"
+            dataKey="critical"
+            stackId="1"
+            stroke="#000000"
+            fill="#000000"
+          />
+          <Area
+            type="monotone"
+            dataKey="error"
+            stackId="1"
+            stroke="#F17A7A"
+            fill="#F17A7A"
+          />
+          <Area
+            type="monotone"
+            dataKey="fatal"
+            stackId="1"
+            stroke="#FF0000"
+            fill="#FF0000"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+      {/* <p>{JSON.stringify(data.info)}</p> */}
+    </>
+  );
 };
 
 export default DashboardApp;
