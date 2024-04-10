@@ -112,20 +112,20 @@ const DashboardApp = ({ app, data }) => {
 					<Line
 						type="monotone"
 						dataKey={'fatal'}
-						stroke="#F17A7A"
+						stroke="#FF0000"
 						fill="#F17A7A"
 					/>
 					<Line
 						type="monotone"
 						dataKey={'debug'}
-						stroke="#F17A7A"
+						stroke="#82ca9d"
 						fill="#F17A7A"
 					/>
 					<Line
 						type="monotone"
 						dataKey={'critical'}
-						stroke="#F17A7A"
-						fill="#F17A7A"
+						stroke="#000"
+						fill="#000"
 					/>
 				</LineChart>
 			</ResponsiveContainer>
