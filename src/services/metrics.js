@@ -12,9 +12,9 @@ const metricsApi = api
 				query: () => ({
 					url: '/metrics',
 					params: {
-						from: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
+						from: format(subDays(new Date(), 2), 'yyyy-MM-dd'),
 						range: 'hour',
-						interval: '1',
+						interval: '6',
 					},
 				}),
 				providesTags: 'Metrics',
