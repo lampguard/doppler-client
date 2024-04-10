@@ -11,7 +11,9 @@ const metricsApi = api
         query: () => ({
           url: "/metrics",
           params: {
-            from: "2023-01-01",
+            from: "2024-04-01",
+            range: "minute",
+            interval: "1"
           },
         }),
         providesTags: "Metrics",
