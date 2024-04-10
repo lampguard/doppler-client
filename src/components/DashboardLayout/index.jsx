@@ -31,7 +31,7 @@ const DashboardLayout = () => {
 			{isLoading || isUninitialized ? (
 				<Loader />
 			) : (
-				<div className="font-[230] md:flex">
+				<div className="font-[230] font-articulat md:flex">
 					{/* Left Sidenav */}
 					<div className="container w-[20%] flex-col items-stretch justify-between h-svh border-r border-[#ccc] px-[30px] py-[40px] hidden md:flex sm:fixed bg-white z-[100]">
 						<div>

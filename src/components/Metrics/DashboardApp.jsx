@@ -24,6 +24,7 @@ const defaultLine = {
 const DashboardApp = ({ app, data }) => {
 	return (
 		<>
+			<h1 className="font-articulat-bold">{app.title}</h1>
 			<ResponsiveContainer width="100%" height="100%">
 				{/* <AreaChart
           width={500}

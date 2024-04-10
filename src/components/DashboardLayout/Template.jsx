@@ -98,7 +98,7 @@ const Layout = ({ children, title }) => {
 								<AiOutlineMenuUnfold className="text-3xl" />
 							)}
 						</button>
-						{title}
+						<span className='font-articulat'>{title}</span>
 					</p>
 
 					<MdNavbar open={open}>

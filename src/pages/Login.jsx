@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   return (
-    <div className="text-center">
+    <div className="text-center font-articulat">
       <h1 className="text-[2.0em] font-[400] tracking-[1px]">
         Login to Doppler
       </h1>

@@ -2,15 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    src: url("./assets/articulat/ArticulatCF-Regular.otf") format("opentype");
+    font-family: "Articulat";
+    font-weight: 400;
+  }
+  @font-face {
+    src: url("./assets/articulat/ArticulatCF-Bold.otf") format("opentype");
+    font-family: "ArticulatBold";
+    font-weight: bold;
+  }
+  @font-face {
+    src: url("./assets/articulat/ArticulatCF-Light.otf") format("opentype");
+    font-family: "ArticulatLight";
+    font-weight: lighter;
+  }
+  @font-face {
+    src: url("./assets/articulat/ArticulatCF-NormalOblique.otf") format("opentype");
+    font-family: "ArticulatOblique";
+    font-weight: normal;
+    font-style: italic;
+  }
+}
+
 @layer components {
   /* --var(theme-color): #003AFF */
 
   .btn-primary {
     @apply bg-[#003AFF] w-[100%] text-white rounded-md py-3 hover:bg-blue-700;
   }
+
   .text-theme {
     color: #003AFF;
   }
+
   .bg-theme {
     background-color: #003AFF;
   }
