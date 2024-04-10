@@ -26,7 +26,7 @@ const DashboardApp = ({ app, data }) => {
 		<>
 			<h1 className="font-articulat-bold">{app.title}</h1>
 			<ResponsiveContainer width="100%" height="100%">
-				{/* <AreaChart
+				<AreaChart
           width={500}
           height={400}
           data={data || []}
@@ -76,8 +76,8 @@ const DashboardApp = ({ app, data }) => {
             stroke="#FF0000"
             fill="#FF0000"
           />
-        </AreaChart> */}
-				<LineChart
+        </AreaChart>
+				{/* <LineChart
 					width={500}
 					height={400}
 					data={
@@ -127,7 +127,7 @@ const DashboardApp = ({ app, data }) => {
 						stroke="#000"
 						fill="#000"
 					/>
-				</LineChart>
+				</LineChart> */}
 			</ResponsiveContainer>
 			{/* <p>{JSON.stringify(data.info)}</p> */}
 		</>
