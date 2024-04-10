@@ -12,7 +12,7 @@ const metricsApi = api
 				query: () => ({
 					url: '/metrics',
 					params: {
-						from: format(subDays(new Date(), 1), 'yyyy-MM-dd'), // "2024-04-01",
+						from: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
 						range: 'hour',
 						interval: '1',
 					},
