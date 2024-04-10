@@ -80,7 +80,7 @@ const DashboardLayout = () => {
 					</div>
 
 					{/* Page Content */}
-					<div className='ml-[20%] w-full'>
+					<div className='md:ml-[20%] w-full'>
 						<Outlet />
 					</div>
 				</div>
