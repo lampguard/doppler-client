@@ -24,7 +24,6 @@ const defaultLine = {
 const DashboardApp = ({ app, data }) => {
 	return (
 		<>
-			<h1 className="font-bold">{app.title}</h1>
 			<ResponsiveContainer width="100%" height="100%">
 				{/* <AreaChart
           width={500}
@@ -86,13 +85,13 @@ const DashboardApp = ({ app, data }) => {
 							: [defaultLine, defaultLine, defaultLine, defaultLine]
 					}
 					margin={{
-						top: 10,
-						right: 30,
+						top: 0,
+						right: 10,
 						left: 0,
 						bottom: 0,
 					}}
 				>
-					<CartesianGrid strokeDasharray="6" />
+					<CartesianGrid strokeDasharray="3 3" />
 					<XAxis dataKey="time" />
 					<YAxis />
 					<Tooltip />

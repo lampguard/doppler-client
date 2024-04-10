@@ -29,9 +29,10 @@ const Dashboard = () => {
 							return (
 								<React.Fragment key={app.id}>
 									<div
-										className="border p-4 grid grid-cols-1 h-[25rem]"
+										className="border md:px-2 md:pt-2 md:pb-4 relative h-[25rem] rounded-md grid grid-cols-1"
 										key={app.id}
 									>
+										<h1 className="font-bold">{app.title}</h1>
 										<DashboardApp app={app} data={data} />
 									</div>
 								</React.Fragment>
