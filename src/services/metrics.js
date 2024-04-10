@@ -1,24 +1,25 @@
-import { api } from ".";
+import { api } from '.';
+import { format, subDays } from 'date-fns';
 
 const metricsApi = api
-  .enhanceEndpoints({
-    addTagTypes: ["Metrics"],
-  })
-  .injectEndpoints({
-    overrideExisting: true,
-    endpoints: (builder) => ({
-      getMetrics: builder.query({
-        query: () => ({
-          url: "/metrics",
-          params: {
-            from: "2024-04-01",
-            range: "minute",
-            interval: "1"
-          },
-        }),
-        providesTags: "Metrics",
-      }),
-    }),
-  });
+	.enhanceEndpoints({
+		addTagTypes: ['Metrics'],
+	})
+	.injectEndpoints({
+		overrideExisting: true,
+		endpoints: (builder) => ({
+			getMetrics: builder.query({
+				query: () => ({
+					url: '/metrics',
+					params: {
+						from: format(subDays(new Date(), 1), 'yyyy-MM-dd'), // "2024-04-01",
+						range: 'hour',
+						interval: '1',
+					},
+				}),
+				providesTags: 'Metrics',
+			}),
+		}),
+	});
 
 export const { useLazyGetMetricsQuery, useGetMetricsQuery } = metricsApi;
