@@ -7,6 +7,7 @@ import { navLinks } from '../../config';
 import logo from '../../assets/logo.svg';
 import UserContext from '../../context/Auth';
 import { BsPlus } from 'react-icons/bs';
+import Loader from '../Loaders';
 
 const DashboardLayout = () => {
 	const location = useLocation();
@@ -28,9 +29,7 @@ const DashboardLayout = () => {
 	return (
 		<UserContext.Provider value={userData}>
 			{isLoading || isUninitialized ? (
-				<div className="h-screen w-screen flex items-center justify-center">
-					<span className="loading loading-ring loading-lg text-theme"></span>
-				</div>
+				<Loader />
 			) : (
 				<div className="font-[230] md:flex">
 					{/* Left Sidenav */}
@@ -38,10 +37,10 @@ const DashboardLayout = () => {
 						<div>
 							<img src={logo} alt="" className="w-[130px]" />
 							<div className="md:pt-[40px]"></div>
-							<button className="flex w-full items-center justify-start rounded-full p-4 transition-[colors_2s] hover:bg-theme hover:text-white">
+							<Link to={'/dashboard/create-app'} className="flex w-full items-center justify-start rounded-full p-4 transition-[colors_2s] hover:bg-theme hover:text-white">
 								<BsPlus className="inline mr-[20px]" size={30} />
 								<span className="inline">Add New App</span>
-							</button>
+							</Link>
 							<div className="md:pb-[40px]"></div>
 
 							<ul>
@@ -80,7 +79,7 @@ const DashboardLayout = () => {
 					</div>
 
 					{/* Page Content */}
-					<div className='md:ml-[20%] w-full'>
+					<div className="md:ml-[20%] w-full">
 						<Outlet />
 					</div>
 				</div>

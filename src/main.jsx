@@ -43,6 +43,7 @@ const routes = createBrowserRouter(
 					}
 				/>
 				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/dashboard/create-app" element={<Layout title='Create App' />} />
 			</Route>
 		</Route>
 	)

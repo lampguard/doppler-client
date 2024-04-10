@@ -1,5 +1,5 @@
 /**
- * @type {React.FC<{type:React.HTMLInputTypeAttribute | undefined, placeholder?: string, className?: string, name?: string, onChange: (e: React.ChangeEventHandler<HTMLInputElement>) => void, value?: any}>}
+ * @type {React.FC<{type:React.HTMLInputTypeAttribute | undefined, placeholder?: string, className?: string, name?: string, onChange: (e: React.ChangeEventHandler<HTMLInputElement>) => void, value?: any, required?: boolean}>}
  */
 export default ({
 	type = 'text',
@@ -8,6 +8,7 @@ export default ({
 	name,
 	onChange,
 	value = '',
+	required = false
 }) => {
 	return (
 		<>
@@ -20,6 +21,7 @@ export default ({
 				placeholder={placeholder}
 				onChange={onChange}
 				value={value}
+				required={required}
 			/>
 		</>
 	);
