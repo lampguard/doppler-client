@@ -62,7 +62,7 @@ const DashboardLayout = () => {
 					<div className="hidden md:block md:w-[20%]"></div>
 
 					{/* Page Content */}
-					<div className="w-[80%]">
+					<div className="md:w-0-[80%]">
 						<Outlet />
 					</div>
 				</div>
