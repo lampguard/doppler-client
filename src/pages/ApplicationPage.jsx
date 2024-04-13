@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Loader from '../components/Loaders';
 import { useGetAppQuery, useLazyGetLogsQuery } from '../services/apps';
 import { useParams } from 'react-router-dom';
 import LogPanes from '../components/Logs/Panes';
-import PageContext from '../context/PageContext';
 
 const ApplicationPage = () => {
 	const { id } = useParams();
-	const { data: app, isLoading, isError, isSuccess } = useGetAppQuery(id);
+	const { isLoading, isSuccess } = useGetAppQuery(id);
 
 	const [logs, setLogs] = useState([]);
 	const [page, setPage] = useState(1);
@@ -36,7 +35,7 @@ const ApplicationPage = () => {
 					<LogPanes data={logs} />
 				</div>
 			)}
-			{(isLoading || loading) && <Loader />}
+			{(isLoading || loading || isUninitialized) && <Loader />}
 		</>
 	);
 };
