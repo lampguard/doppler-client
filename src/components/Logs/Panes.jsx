@@ -57,27 +57,69 @@ const Log = ({ log }) => {
 };
 
 /**
- * @type {React.FC<{data: TLog[]}>} LogPanes
+ * @type {React.FC<{data: TLog[], app: any}>} LogPanes
  * @returns
  */
-const LogPanes = ({ data }) => {
-	console.log(data);
+const LogPanes = ({ data, app }) => {
+	const copyToken = () => {
+		window.navigator.clipboard.writeText(app.token);
+	};
+
 	return (
 		<div className="w-full md:px-6">
-			<p>Latest</p>
-			{data.slice(0, 5).map((log) => {
-				return (
-					<React.Fragment key={log.id}>
-						<Log log={log} />
-					</React.Fragment>
-				);
-			})}
-			<p>Older</p>
-			{data.slice(5).map((log) => (
-				<React.Fragment key={log.id}>
-					<Log log={log} />
-				</React.Fragment>
-			))}
+			{data.length < 1 ? (
+				<div className="prose">
+					{JSON.stringify(data)}
+					<p>
+						Your app has generated 0 logs. Copy your token to start receiving
+						logs.
+					</p>
+					<p>
+						<button
+							className="btn btn-sm w-full md:w-auto not-prose"
+							onClick={copyToken}
+						>
+							{app.token}
+						</button>
+					</p>
+					<div className="bg-black w-full p-3 rounded-md text-white">
+						<code className="not-prose text-sm">
+							// Paste this code in your terminal to send a sample log
+							<br />
+							curl -X POST {__ENV__.API_URL}/logs --header "APP_ID: {app.token}"
+							--json '
+							{JSON.stringify({
+								level: 'error',
+								text: 'Lorem ipsum dolor sit amet.',
+							})}
+							'
+						</code>
+					</div>
+				</div>
+			) : (
+				<>
+					<button
+						className="btn btn-sm w-full md:w-auto not-prose"
+						onClick={copyToken}
+					>
+						{app.token}
+					</button>
+					<p>Latest</p>
+					{data.slice(0, 5).map((log, index) => {
+						return (
+							<React.Fragment key={index}>
+								<Log log={log} />
+							</React.Fragment>
+						);
+					})}
+					<p>Older</p>
+					{data.slice(5).map((log, index) => (
+						<React.Fragment key={index + 5}>
+							<Log log={log} />
+						</React.Fragment>
+					))}
+				</>
+			)}
 		</div>
 	);
 };

@@ -20,8 +20,21 @@ const appApi = api
 				}),
 				providesTags: ['Logs'],
 			}),
+			createApp: builder.mutation({
+				query: (data) => ({
+					url: '/apps',
+					body: data,
+					method: 'POST',
+				}),
+				invalidatesTags: ['Apps'],
+				transformResponse: (response, meta, args) => response.data,
+			}),
 		}),
 	});
 
-export const { useGetAppQuery, useLazyGetAppQuery, useLazyGetLogsQuery } =
-	appApi;
+export const {
+	useGetAppQuery,
+	useLazyGetAppQuery,
+	useLazyGetLogsQuery,
+	useCreateAppMutation,
+} = appApi;

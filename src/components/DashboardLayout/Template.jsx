@@ -60,16 +60,12 @@ const Template = ({ children, title }) => {
 	const [open, setOpen] = useState(false);
 	const user = useContext(UserContext);
 
-	const pageContext = useContext(PageContext);
-	const [page, setPage] = useState(pageContext);
-
 	useEffect(() => {
-		setPage({...page, title});
-		document.title = page.title;
-	}, [page]);
+		document.title = title;
+	}, []);
 
 	return (
-		<PageContext.Provider value={page}>
+		<>
 			<div className="container relative font-[300]">
 				{/* Topnav */}
 				<div className="border-b border-[#ccc] flex flex-wrap justify-between md:items-end pt-3 md:pt-6 pb-3 px-5">
@@ -119,7 +115,7 @@ const Template = ({ children, title }) => {
 						</Link>
 					</div>
 				</div>
-				<div className="md:flex items-stretch">
+				<div className="md:flex w-full items-stretch">
 					<div className="w-full md:max-w-[75%] border-r">{children}</div>
 
 					{/* Right Aside */}
@@ -129,7 +125,7 @@ const Template = ({ children, title }) => {
 					></div>
 				</div>
 			</div>
-		</PageContext.Provider>
+		</>
 	);
 };
 

@@ -9,12 +9,16 @@ const metricsApi = api
 		overrideExisting: true,
 		endpoints: (builder) => ({
 			getMetrics: builder.query({
-				query: () => ({
+				query: (
+					params = {
+						from: format(subDays(new Date(), 7), 'yyyy-MM-dd'),
+						range: 'day',
+						interval: 1,
+					}
+				) => ({
 					url: '/metrics',
 					params: {
-						from: format(subDays(new Date(), 2), 'yyyy-MM-dd'),
-						range: 'hour',
-						interval: '6',
+						...params
 					},
 				}),
 				providesTags: 'Metrics',

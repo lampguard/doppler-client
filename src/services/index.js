@@ -20,7 +20,7 @@ export const api = createApi({
 	}),
 	refetchOnReconnect: true,
 	keepUnusedDataFor: 120,
-	tagTypes: ['Auth'],
+	tagTypes: ['Auth', 'Apps'],
 	endpoints: (builder) => ({
 		login: builder.mutation({
 			query: (body) => ({

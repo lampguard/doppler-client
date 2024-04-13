@@ -1,26 +1,41 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TextInput from '../components/Input/TextInput';
 
 import { useLazyGetTeamsQuery } from '../services/teams';
+import { useCreateAppMutation } from '../services/apps';
+import Loader from '../components/Loaders';
 
 const NewApp = () => {
 	const [form, setForm] = useState({ title: undefined });
+	const navigate = useNavigate();
 
 	const [teams, setTeams] = useState([]);
 
 	const [trigger, { isLoading, isUninitialized }] = useLazyGetTeamsQuery();
 
+	const [create, { isLoading: loading, isUninitialized: uninitialized }] =
+		useCreateAppMutation();
+
 	useEffect(() => {
 		trigger()
 			.unwrap()
 			.then((data) => {
-				// console.log(data);
 				setTeams(data);
 			})
 			.catch((err) => {
 				console.error(err);
 			});
 	}, []);
+
+	const createApp = () => {
+		create(form)
+			.unwrap()
+			.then((response) => {
+				navigate('/apps');
+			})
+			.catch((err) => console.error);
+	};
 
 	return (
 		<>
@@ -32,6 +47,7 @@ const NewApp = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
+							createApp();
 						}}
 						className="text-left"
 					>
@@ -44,7 +60,9 @@ const NewApp = () => {
 								value={form.title}
 							/>
 							<div className="py-3"></div>
-							<button className="btn btn-primary w-full">Create App</button>
+							<button className="btn btn-primary w-full" disabled={loading}>
+								{loading ? <Loader /> : <>Create App</>}
+							</button>
 						</div>
 						<div className="pb-[3.75rem]"></div>
 					</form>

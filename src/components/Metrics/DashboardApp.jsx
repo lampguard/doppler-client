@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaEye } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import {
 	AreaChart,
 	Area,
@@ -64,7 +65,9 @@ const DashboardApp = ({ app, data }) => {
 
 	return (
 		<>
-			<h1 className="font-articulat-bold">{app.title}</h1>
+			<Link to={`/apps/${app.id}`}>
+				<h1 className="font-articulat-bold">{app.title}</h1>
+			</Link>
 			<div className="md:flex items-center max-h-[300px] md:max-h-none">
 				<ResponsiveContainer width="100%" height="100%" debounce={2}>
 					<AreaChart
