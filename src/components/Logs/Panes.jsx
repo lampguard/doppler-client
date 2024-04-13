@@ -69,7 +69,6 @@ const LogPanes = ({ data, app }) => {
 		<div className="w-full md:px-6">
 			{data.length < 1 ? (
 				<div className="prose">
-					{JSON.stringify(data)}
 					<p>
 						Your app has generated 0 logs. Copy your token to start receiving
 						logs.
@@ -99,7 +98,7 @@ const LogPanes = ({ data, app }) => {
 			) : (
 				<>
 					<button
-						className="btn btn-sm w-full md:w-auto not-prose"
+						className="btn btn-sm not-prose btn-block bg-[#EBEBF5] rounded-none"
 						onClick={copyToken}
 					>
 						{app.token}

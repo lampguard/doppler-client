@@ -15,9 +15,29 @@ const ApplicationPage = () => {
 	const [logs, setLogs] = useState([]);
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(20);
+	const [total, setTotal] = useState(0);
 
-	const [getLogs, { isUninitialized, isLoading: loading, isSuccess: success }] =
-		useLazyGetLogsQuery();
+	const [
+		getLogs,
+		{ isUninitialized, isLoading: loading, isSuccess: success, isFetching },
+	] = useLazyGetLogsQuery();
+
+	const loadMore = () => {
+		getLogs({
+			page: page + 1,
+			id,
+			count,
+		})
+			.unwrap()
+			.then((response) => {
+				setLogs([...logs, ...response.data]);
+
+				if (response.data.length > 0) {
+					setPage(Number(response.page));
+				}
+			})
+			.catch((err) => {});
+	};
 
 	useEffect(() => {
 		getLogs({
@@ -27,12 +47,8 @@ const ApplicationPage = () => {
 		})
 			.unwrap()
 			.then((response) => {
-				setLogs([...logs, ...response.data]);
-
-				window.addEventListener('scroll', (e) => {
-					console.log("scrolled:", window.scrollY);
-					console.log(window.innerHeight);
-				});
+				setLogs(response.data);
+				setTotal(response.total);
 			})
 			.catch((err) => console.error);
 	}, []);
@@ -53,11 +69,17 @@ const ApplicationPage = () => {
 	return (
 		<>
 			{isSuccess && success && (
-				<div className="container p-3">
-					<LogPanes data={logs} app={app} />
-				</div>
+				<>
+					<div className="container p-3" id="loglist">
+						<LogPanes data={logs} app={app} />
+						{isFetching && <Loader />}
+						<button className="btn btn-sm w-full" onClick={loadMore}>
+							Load More
+						</button>
+					</div>
+				</>
 			)}
-			{(isLoading || loading || isUninitialized) && <Loader />}
+			{(isLoading || isUninitialized) && <Loader />}
 		</>
 	);
 };
