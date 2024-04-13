@@ -73,7 +73,7 @@ const Login = () => {
 
         <div className="py-4"></div>
         <div className="p-2">
-          <button className="btn-primary" type="submit">
+          <button className="btn w-full btn-primary" type="submit">
             {isLoading ? (
               <span className="loading loading-ring loading-sm text-white"></span>
             ) : (

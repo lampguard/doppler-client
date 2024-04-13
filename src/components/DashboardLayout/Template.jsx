@@ -5,12 +5,14 @@ import {
 	AiOutlineMenuUnfold,
 } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { IoLogOut } from 'react-icons/io5';
 
 import { navLinks } from '../../config';
 import logo from '../../assets/logo.svg';
 import UserContext from '../../context/Auth';
+import NavList from '../Navlist';
+import PageContext from '../../context/PageContext';
 
 /**
  *
@@ -30,28 +32,7 @@ const MdNavbar = ({ open, children }) => {
 							</div>
 							<div className="py-2"></div>
 
-							<ul>
-								{navLinks.map((link) => (
-									<li className="pb-3" key={link.slug}>
-										<Link
-											to={link.slug}
-											target={link.blankTarget ? '_blank' : undefined}
-											className={
-												'py-3 px-4 rounded-full w-full text-lg flex items-center ' +
-												(location.pathname == link.slug
-													? 'bg-theme text-white '
-													: null)
-											}
-										>
-											{location.pathname == link.slug
-												? link.activeIcon || link.icon
-												: link.icon}
-											<div className="px-2"></div>
-											<span>{link.title}</span>
-										</Link>
-									</li>
-								))}
-							</ul>
+							<NavList />
 						</div>
 						<Link
 							to={'/login'}
@@ -75,13 +56,20 @@ const MdNavbar = ({ open, children }) => {
  *  title: string;
  * }>} Layout
  */
-const Layout = ({ children, title }) => {
+const Template = ({ children, title }) => {
 	const [open, setOpen] = useState(false);
-
 	const user = useContext(UserContext);
 
+	const pageContext = useContext(PageContext);
+	const [page, setPage] = useState(pageContext);
+
+	useEffect(() => {
+		setPage({...page, title});
+		document.title = page.title;
+	}, [page]);
+
 	return (
-		<>
+		<PageContext.Provider value={page}>
 			<div className="container relative font-[300]">
 				{/* Topnav */}
 				<div className="border-b border-[#ccc] flex flex-wrap justify-between md:items-end pt-3 md:pt-6 pb-3 px-5">
@@ -98,7 +86,7 @@ const Layout = ({ children, title }) => {
 								<AiOutlineMenuUnfold className="text-3xl" />
 							)}
 						</button>
-						<span className='font-articulat'>{title}</span>
+						<span className="font-articulat">{title}</span>
 					</p>
 
 					<MdNavbar open={open}>
@@ -120,7 +108,7 @@ const Layout = ({ children, title }) => {
 							</span>
 						</span>
 						<span className="px-2 md:px-6"></span>
-						<span>
+						<Link to={'/account/profile'}>
 							<img
 								src={`https://ui-avatars.com/api/?name=${user?.name}&background=003AFF&color=fff`}
 								alt=""
@@ -128,17 +116,21 @@ const Layout = ({ children, title }) => {
 							/>
 							<span className="md:px-[6px]"></span>
 							<p className="hidden md:inline">{user?.name}</p>
-						</span>
+						</Link>
 					</div>
 				</div>
 				<div className="md:flex items-stretch">
-					<div className="w-full">{children}</div>
-					<div className="hidden md:block w-[20%] border-l h-svh"></div>
+					<div className="w-full md:max-w-[75%] border-r">{children}</div>
+
+					{/* Right Aside */}
+					<div
+						className="hidden md:block md:w-[25vw] h-svh border-b"
+						id="right-aside"
+					></div>
 				</div>
-				{/* Right Aside */}
 			</div>
-		</>
+		</PageContext.Provider>
 	);
 };
 
-export default Layout;
+export default Template;

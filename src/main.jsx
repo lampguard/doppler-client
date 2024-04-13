@@ -20,8 +20,11 @@ import {
 import ResetPassword from './pages/ResetPassword.jsx';
 import DashboardLayout from './components/DashboardLayout/index.jsx';
 import Dashboard from './pages/Dashboard.jsx';
-import Layout from './components/DashboardLayout/Template.jsx';
+import Template from './components/DashboardLayout/Template.jsx';
 import Apps from './pages/Apps.jsx';
+import NewApp from './pages/NewApp.jsx';
+import Profile from './pages/Profile.jsx';
+import ApplicationPage from './pages/ApplicationPage.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -33,17 +36,42 @@ const routes = createBrowserRouter(
 			</Route>
 			<Route element={<DashboardLayout />}>
 				<Route index element={<Dashboard />} />
-				<Route path="/tasks" element={<Layout title="Tasks"></Layout>} />
+				<Route path="/tasks" element={<Template title="Tasks"></Template>} />
+				<Route path="/apps">
+					<Route
+						index
+						element={
+							<Template title="Apps">
+								<Apps />
+							</Template>
+						}
+					/>
+					<Route
+						path={':id'}
+						element={
+							<Template title="App">
+								<ApplicationPage />
+							</Template>
+						}
+					/>
+				</Route>
+				<Route path="/dashboard" element={<Dashboard />} />
 				<Route
-					path="/apps"
+					path="/account/profile"
 					element={
-						<Layout title="Apps">
-							<Apps />
-						</Layout>
+						<Template title="Profile">
+							<Profile />
+						</Template>
 					}
 				/>
-				<Route path="/dashboard" element={<Dashboard />} />
-				<Route path="/dashboard/create-app" element={<Layout title='Create App' />} />
+				<Route
+					path="/dashboard/create-app"
+					element={
+						<Template title="New App">
+							<NewApp />
+						</Template>
+					}
+				/>
 			</Route>
 		</Route>
 	)

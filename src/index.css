@@ -8,16 +8,19 @@
     font-family: "Articulat";
     font-weight: 400;
   }
+
   @font-face {
     src: url("./assets/articulat/ArticulatCF-Bold.otf") format("opentype");
     font-family: "ArticulatBold";
     font-weight: bold;
   }
+
   @font-face {
     src: url("./assets/articulat/ArticulatCF-Light.otf") format("opentype");
     font-family: "ArticulatLight";
     font-weight: lighter;
   }
+
   @font-face {
     src: url("./assets/articulat/ArticulatCF-NormalOblique.otf") format("opentype");
     font-family: "ArticulatOblique";
@@ -30,7 +33,7 @@
   /* --var(theme-color): #003AFF */
 
   .btn-primary {
-    @apply bg-[#003AFF] w-[100%] text-white rounded-md py-3 hover:bg-blue-700;
+    @apply bg-[#003AFF] text-white;
   }
 
   .text-theme {
@@ -39,5 +42,18 @@
 
   .bg-theme {
     background-color: #003AFF;
+  }
+
+  .log.error {
+    @apply bg-red-400;
+  }
+  .log.info {
+    @apply bg-blue-500;
+  }
+  .log.debug {
+    @apply bg-green-500;
+  }
+  .log.fatal {
+    @apply bg-red-700;
   }
 }

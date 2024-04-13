@@ -8,9 +8,9 @@ import logo from '../../assets/logo.svg';
 import UserContext from '../../context/Auth';
 import { BsPlus } from 'react-icons/bs';
 import Loader from '../Loaders';
+import NavList from '../Navlist';
 
 const DashboardLayout = () => {
-	const location = useLocation();
 	const navigate = useNavigate();
 	const [userData, setUserData] = useState(undefined);
 	const [getAuth, { isLoading, isUninitialized }] = useLazyGetAuthQuery();
@@ -37,39 +37,21 @@ const DashboardLayout = () => {
 						<div>
 							<img src={logo} alt="" className="w-[130px]" />
 							<div className="md:pt-[40px]"></div>
-							<Link to={'/dashboard/create-app'} className="flex w-full items-center justify-start rounded-full p-4 transition-[colors_2s] hover:bg-theme hover:text-white">
-								<BsPlus className="inline mr-[20px]" size={30} />
+							<Link
+								to={'/dashboard/create-app'}
+								className="btn w-full h-fit"
+							>
+								<BsPlus className="inline" size={30} />
 								<span className="inline">Add New App</span>
 							</Link>
 							<div className="md:pb-[40px]"></div>
 
-							<ul>
-								{navLinks.map((link) => (
-									<li className="pb-3" key={link.slug}>
-										<Link
-											to={link.slug}
-											target={link.blankTarget ? '_blank' : undefined}
-											className={
-												'py-3 px-4 rounded-full w-full text-lg flex items-center ' +
-												(location.pathname == link.slug
-													? 'bg-theme text-white '
-													: null)
-											}
-										>
-											{location.pathname == link.slug
-												? link.activeIcon || link.icon
-												: link.icon}
-											<div className="px-2"></div>
-											<span>{link.title}</span>
-										</Link>
-									</li>
-								))}
-							</ul>
+							<NavList />
 						</div>
 
 						<Link
 							to={'/login'}
-							className="flex w-full items-center py-3 px-4 border hover:bg-red-500 hover:text-white hover:border-red-500 rounded-full"
+							className="btn hover:btn-error hover:text-white rounded-full flex h-fit"
 						>
 							<span className="pr-5">
 								<IoLogOut size={25} />
@@ -77,9 +59,10 @@ const DashboardLayout = () => {
 							Log out
 						</Link>
 					</div>
+					<div className="hidden md:block md:w-[20%]"></div>
 
 					{/* Page Content */}
-					<div className="md:ml-[20%] w-full">
+					<div className="w-[80%]">
 						<Outlet />
 					</div>
 				</div>

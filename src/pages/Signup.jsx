@@ -25,7 +25,7 @@ export default () => {
 	};
 
 	return (
-		<div className="text-center">
+		<div className="text-center font-articulat">
 			<h1 className="text-[1.5em] font-[400] tracking-[0px]">
 				Create a Free Doppler Account
 			</h1>
@@ -88,7 +88,7 @@ export default () => {
 
 				<div className="py-4"></div>
 				<div className="p-2">
-					<button className="btn-primary">
+					<button className="btn w-full btn-primary font-normal">
 						{isLoading ? (
 							<span className="loading loading-ring loading-lg text-white"></span>
 						) : (
