@@ -3,7 +3,6 @@ import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoLogOut } from 'react-icons/io5';
 
 import { useLazyGetAuthQuery } from '../../services/index';
-import { navLinks } from '../../config';
 import logo from '../../assets/logo.svg';
 import UserContext from '../../context/Auth';
 import { BsPlus } from 'react-icons/bs';
@@ -19,7 +18,10 @@ const DashboardLayout = () => {
 		getAuth()
 			.unwrap()
 			.then((res) => {
-				setUserData(res.data?.user);
+				if (res.data?.user) {
+					setUserData(res.data?.user);
+					return;
+				}
 				navigate('/');
 			})
 			.catch(() => navigate('/login'));
