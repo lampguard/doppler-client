@@ -31,7 +31,7 @@ const Dashboard = () => {
 								return (
 									<React.Fragment key={app.id}>
 										<div
-											className="px-0 md:px-2 md:pt-2 md:pb-4 relative h-[25rem] rounded-md grid grid-cols-1 mb-3"
+											className="px-0 md:px-2 md:pt-2 md:pb-4 h-[25rem] rounded-md grid grid-cols-1 mb-3"
 											key={app.id}
 										>
 											<DashboardApp app={app} data={data} />

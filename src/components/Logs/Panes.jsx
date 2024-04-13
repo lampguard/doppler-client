@@ -94,6 +94,7 @@ const LogPanes = ({ data, app }) => {
 							'
 						</code>
 					</div>
+					<div className="pb-4"></div>
 				</div>
 			) : (
 				<>

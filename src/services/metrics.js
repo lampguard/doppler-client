@@ -18,12 +18,22 @@ const metricsApi = api
 				) => ({
 					url: '/metrics',
 					params: {
-						...params
+						...params,
 					},
 				}),
 				providesTags: 'Metrics',
 			}),
+			getMetricsForApp: builder.query({
+				query: (data) => ({
+					url: `/metrics/${data.token}`,
+					params: {...data, token: undefined},
+				}),
+			}),
 		}),
 	});
 
-export const { useLazyGetMetricsQuery, useGetMetricsQuery } = metricsApi;
+export const {
+	useLazyGetMetricsQuery,
+	useGetMetricsQuery,
+	useLazyGetMetricsForAppQuery
+} = metricsApi;
