@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
-import Loader from '../components/Loaders';
-import { useGetAppQuery, useLazyGetLogsQuery } from '../services/apps';
-import { useLazyGetMetricsForAppQuery } from '../services/metrics';
 import { useParams } from 'react-router-dom';
-import LogPanes from '../components/Logs/Panes';
-
 import { format, subDays } from 'date-fns';
+
+import {
+	useGetAppQuery,
+	useLazyGetLogsQuery,
+	useDeleteLogsMutation,
+} from '../services/apps';
+import { useLazyGetMetricsForAppQuery } from '../services/metrics';
 import DashboardApp from '../components/Metrics/DashboardApp';
+import Loader from '../components/Loaders';
+import LogPanes from '../components/Logs/Panes';
+import Modal from '../components/Modal';
 
 const ApplicationPage = () => {
 	const { id } = useParams();
@@ -16,44 +21,48 @@ const ApplicationPage = () => {
 		getLogs,
 		{ isUninitialized, isLoading: loading, isSuccess: success, isFetching },
 	] = useLazyGetLogsQuery();
+	const [deleteLogs, { isFetching: deleting, isLoading: loadingDelete }] =
+		useDeleteLogsMutation();
 
 	const [appMetrics, setMetrics] = useState([]);
 	const [logs, setLogs] = useState([]);
 	const [page, setPage] = useState(1);
-	const [count, setCount] = useState(20);
-	const [total, setTotal] = useState(0);
+	const count = 20;
 
-	const loadMore = () => {
+	const fetchLogs = (data, append = false) => {
 		getLogs({
-			page: page + 1,
-			id,
-			count,
+			...data,
+			id: id,
 		})
 			.unwrap()
 			.then((response) => {
-				setLogs([...logs, ...response.data]);
-
-				if (response.data.length > 0) {
-					setPage(Number(response.page));
+				if (append) {
+					setLogs([...logs, ...response.data]);
+				} else {
+					setLogs([...response.data]);
 				}
+				setPage(Number(response.page));
 			})
 			.catch((err) => {
 				console.error(err);
 			});
 	};
 
+	const loadMore = () => {
+		fetchLogs(
+			{
+				page: page + 1,
+				count,
+			},
+			true
+		);
+	};
+
 	useEffect(() => {
-		getLogs({
-			page,
+		fetchLogs({
+			page: 1,
 			count,
-			id,
-		})
-			.unwrap()
-			.then((response) => {
-				setLogs(response.data);
-				setTotal(response.total);
-			})
-			.catch((err) => console.error);
+		});
 	}, []);
 
 	useEffect(() => {
@@ -72,14 +81,38 @@ const ApplicationPage = () => {
 		}
 	}, [app]);
 
+	const clearLogs = () => {
+		deleteLogs(id)
+			.unwrap()
+			.then((response) => {
+				fetchLogs({ page: 1, count: 20 });
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	};
+
 	return (
 		<>
 			{isSuccess && success && (
 				<>
+					<Modal id="modal1" withClose>
+						<p>Are you sure? This will delete all your logs.</p>
+						<button
+							className="btn btn-sm btn-primary"
+							onClick={clearLogs}
+							disabled={deleting}
+						>
+							{deleting || loadingDelete ? <Loader /> : "Yes, I'm sure"}
+						</button>
+					</Modal>
 					<div className="flex justify-end md:px-4 md:pt-4">
-						<div className="btn btn-sm btn-outline bg-red rounded-full right">
+						<button
+							className="btn btn-sm btn-outline bg-red rounded-full right"
+							onClick={() => document.getElementById('modal1').showModal()}
+						>
 							Clear Logs
-						</div>
+						</button>
 					</div>
 					{fetching ? (
 						<Loader />
