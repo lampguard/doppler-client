@@ -30,6 +30,7 @@ const routes = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
 			<Route element={<AuthPane />}>
+				<Route element={<Login />} path="/verify-2fa" />
 				<Route element={<Login />} path="/login" />
 				<Route element={<Signup />} path="/signup" />
 				<Route element={<ResetPassword />} path="/reset-password" />

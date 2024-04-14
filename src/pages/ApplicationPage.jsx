@@ -85,6 +85,7 @@ const ApplicationPage = () => {
 		deleteLogs(id)
 			.unwrap()
 			.then((response) => {
+				setLogs([]);
 				fetchLogs({ page: 1, count: 20 });
 			})
 			.catch((err) => {

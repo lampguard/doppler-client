@@ -1,8 +1,13 @@
-const Modal = ({ id, children, withClose }) => {
+/**
+ *
+ * @type {React.FC<{withClose: boolean, id: string, className: string}>}
+ *
+ */
+const Modal = ({ id, children, withClose, className }) => {
 	return (
 		<>
-			<dialog id={id} className="modal">
-				<div className="modal-box">
+			<dialog id={id} className={"modal"}>
+				<div className={"modal-box " + className}>
 					{children}
 					{withClose && (
 						<div className="modal-action">
