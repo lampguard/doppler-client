@@ -6,6 +6,13 @@ const appApi = api
 	})
 	.injectEndpoints({
 		endpoints: (builder) => ({
+			deleteLogs: builder.mutation({
+				query: (appId) => ({
+					url: `/logs/${appId}`,
+					method: 'DELETE',
+				}),
+				invalidatesTags: ['Logs'],
+			}),
 			getApp: builder.query({
 				query: (id) => ({
 					url: '/apps/' + id,
@@ -37,4 +44,5 @@ export const {
 	useLazyGetAppQuery,
 	useLazyGetLogsQuery,
 	useCreateAppMutation,
+	useDeleteLogsMutation,
 } = appApi;

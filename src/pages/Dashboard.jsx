@@ -26,7 +26,7 @@ const Dashboard = () => {
 			) : (
 				<>
 					<div className="p-2 md:p-4 w-full h-full">
-						{data.length > 0 ? (
+						{data?.length > 0 ? (
 							data?.map(({ app, data }) => {
 								return (
 									<React.Fragment key={app.id}>
