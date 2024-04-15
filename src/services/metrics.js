@@ -1,5 +1,5 @@
 import { api } from '.';
-import { format, subDays } from 'date-fns';
+import { addDays, format, subDays } from 'date-fns';
 
 const metricsApi = api
 	.enhanceEndpoints({
@@ -11,9 +11,10 @@ const metricsApi = api
 			getMetrics: builder.query({
 				query: (
 					params = {
-						from: format(subDays(new Date(), 7), 'yyyy-MM-dd'),
-						range: 'day',
-						interval: 1,
+						from: format(subDays(new Date(), 4), 'yyyy-MM-dd'),
+						to: format(addDays(new Date(), 1), 'yyyy-MM-dd HH:mm:00'),
+						range: 'hour',
+						interval: 12,
 					}
 				) => ({
 					url: '/metrics',

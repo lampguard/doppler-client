@@ -92,7 +92,7 @@ const DashboardApp = ({ app, data }) => {
 										key={index}
 										type="monotone"
 										dataKey={type}
-										stackId="1"
+										stackId={index+1}
 										stroke={color}
 										fill={color}
 									/>
