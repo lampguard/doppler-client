@@ -8,11 +8,10 @@ import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { IoLogOut } from 'react-icons/io5';
 
-import { navLinks } from '../../config';
 import logo from '../../assets/logo.svg';
 import UserContext from '../../context/Auth';
 import NavList from '../Navlist';
-import PageContext from '../../context/PageContext';
+import MyTeams from '../MyTeams';
 
 /**
  *
@@ -115,14 +114,16 @@ const Template = ({ children, title }) => {
 						</Link>
 					</div>
 				</div>
-				<div className="md:flex w-full items-stretch">
+				<div className="md:flex w-full items-stretch relative">
 					<div className="w-full md:max-w-[75%] border-r">{children}</div>
 
 					{/* Right Aside */}
 					<div
-						className="hidden md:block md:w-[25vw] h-svh border-b"
+						className="hidden md:block md:w-[25%] h-svh border-b px-6 py-7"
 						id="right-aside"
-					></div>
+					>
+						<MyTeams />
+					</div>
 				</div>
 			</div>
 		</>

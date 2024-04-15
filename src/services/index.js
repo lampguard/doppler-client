@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseUrl } from './util';
-import { data } from 'autoprefixer';
 
 export const api = createApi({
 	reducerPath: 'global',
@@ -115,4 +114,5 @@ export const {
 	useEnable2FAMutation,
 	useLogoutMutation,
 	useVerify2FAMutation,
+	useLazyGetAppsQuery
 } = api;

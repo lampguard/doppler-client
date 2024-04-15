@@ -25,6 +25,7 @@ import Apps from './pages/Apps.jsx';
 import NewApp from './pages/NewApp.jsx';
 import Profile from './pages/Profile.jsx';
 import ApplicationPage from './pages/ApplicationPage.jsx';
+import { TeamProvider } from './context/TeamContext.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -81,7 +82,9 @@ const routes = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<RouterProvider router={routes} />
+			<TeamProvider	>
+				<RouterProvider router={routes} />
+			</TeamProvider>
 		</Provider>
 	</React.StrictMode>
 );

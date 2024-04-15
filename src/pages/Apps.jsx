@@ -4,11 +4,13 @@ import {
 	getCoreRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
-import { useGetAppsQuery } from '../services';
+import { useGetAppsQuery, useLazyGetAppsQuery } from '../services';
 import Table from '../components/Table';
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loaders';
 import { BsPlus } from 'react-icons/bs';
+import { useTeamContext } from '../context/TeamContext';
+import { useEffect, useState } from 'react';
 
 const columnHelper = createColumnHelper();
 
@@ -40,7 +42,7 @@ const columns = [
 				return new Date(value).toLocaleDateString();
 			}
 
-			return info.getValue().toISOString();
+			return info.getValue()?.toISOString();
 		},
 	}),
 	columnHelper.accessor('token', {
@@ -50,12 +52,29 @@ const columns = [
 ];
 
 const Apps = () => {
-	const { data, isLoading, isUninitialized, isError, error, isSuccess } =
-		useGetAppsQuery();
+	const { value: team } = useTeamContext();
+	const [apps, setApps] = useState([]);
+
+	const [getApps, { isLoading, isFetching, isUninitialized, isError, error }] =
+		useLazyGetAppsQuery();
+
+	useEffect(() => {
+		if (team) {
+			getApps(team?.id)
+				.unwrap()
+				.then(({ data }) => {
+					setApps(data);
+				})
+				.catch((err) => {
+					console.error(err);
+					setApps([]);
+				});
+		}
+	}, [team]);
 
 	const table = useReactTable({
 		columns,
-		data: data?.data || [{ title: '', token: '', createdat: new Date() }],
+		data: apps || [{ title: '', token: '', createdat: new Date() }],
 		getCoreRowModel: getCoreRowModel(),
 	});
 
@@ -68,7 +87,7 @@ const Apps = () => {
 			) : (
 				<div className="md:p-6">
 					<Link className="btn btn-sm md:hidden" to={'/dashboard/create-app'}>
-						<BsPlus className='text-2xl' /> Add a new app
+						<BsPlus className="text-2xl" /> Add a new app
 					</Link>
 					<div className="md:border-[1px] border-[#ccc] rounded-lg">
 						<Table table={table} />
