@@ -3,10 +3,7 @@ import { createContext, useContext, useState } from 'react';
 export const TeamContext = createContext({});
 
 export const TeamProvider = ({ children }) => {
-	const [value, setValue] = useState({
-		name: 'All Teams',
-		id: 0,
-	});
+	const [value, setValue] = useState();
 
 	const updateValue = (newValue) => {
 		setValue(newValue);

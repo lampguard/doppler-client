@@ -12,7 +12,15 @@ const teams = api
 				}),
 				providesTags: ['Teams'],
 			}),
+			newTeam: builder.mutation({
+				query: (data) => ({
+					url: '/teams/new',
+					method: 'POST',
+					body: data,
+				}),
+				invalidatesTags: ['Teams'],
+			}),
 		}),
 	});
 
-export const { useLazyGetTeamsQuery } = teams;
+export const { useLazyGetTeamsQuery, useNewTeamMutation } = teams;

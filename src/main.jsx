@@ -26,6 +26,7 @@ import NewApp from './pages/NewApp.jsx';
 import Profile from './pages/Profile.jsx';
 import ApplicationPage from './pages/ApplicationPage.jsx';
 import { TeamProvider } from './context/TeamContext.jsx';
+import NewTeam from './pages/NewTeam.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -74,6 +75,15 @@ const routes = createBrowserRouter(
 						</Template>
 					}
 				/>
+				<Route
+					path="/dashboard/create-team"
+					element={
+						<Template title="New Team">
+							<NewTeam />
+						</Template>
+					}
+				/>
+				<Route path="/teams/:id" element={<Template title="Team Info" />} />
 			</Route>
 		</Route>
 	)
@@ -82,7 +92,7 @@ const routes = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<TeamProvider	>
+			<TeamProvider>
 				<RouterProvider router={routes} />
 			</TeamProvider>
 		</Provider>

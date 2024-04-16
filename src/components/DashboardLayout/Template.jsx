@@ -12,6 +12,8 @@ import logo from '../../assets/logo.svg';
 import UserContext from '../../context/Auth';
 import NavList from '../Navlist';
 import MyTeams from '../MyTeams';
+import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
+import { useTeamContext } from '../../context/TeamContext';
 
 /**
  *
@@ -57,11 +59,40 @@ const MdNavbar = ({ open, children }) => {
  */
 const Template = ({ children, title }) => {
 	const [open, setOpen] = useState(false);
+	const [asideOpen, setAsideOpe] = useState(false);
 	const user = useContext(UserContext);
+	const { value: team } = useTeamContext();
 
 	useEffect(() => {
 		document.title = title;
 	}, []);
+
+	function openAside() {
+		const el = document.getElementById('right-aside'); //.classList.toggle('hidden')
+		el.classList.add('fixed');
+		el.classList.add('top-0');
+		el.classList.remove('hidden');
+		// el.classList.add('z-1000');
+		setAsideOpe(true);
+	}
+
+	function closeAside() {
+		const el = document.getElementById('right-aside'); //.classList.toggle('hidden')
+		el.classList.remove('fixed');
+		el.classList.remove('top-0');
+		el.classList.add('hidden');
+		// el.classList.remove('z-1000');
+		setAsideOpe(false);
+	}
+
+	function toggleAside() {
+		const el = document.getElementById('right-aside'); //.classList.toggle('hidden')
+		el.classList.toggle('fixed');
+		el.classList.toggle('top-0');
+		el.classList.toggle('hidden');
+		el.classList.toggle('z-0');
+		setAsideOpe(!asideOpen);
+	}
 
 	return (
 		<>
@@ -119,11 +150,20 @@ const Template = ({ children, title }) => {
 
 					{/* Right Aside */}
 					<div
-						className="hidden md:block md:w-[25%] h-svh border-b px-6 py-7"
+						className="bg-white hidden md:block w-[100%] md:w-[25%] h-svh border-b px-6 py-7"
 						id="right-aside"
 					>
-						<MyTeams />
+						<MyTeams open={asideOpen} setOpen={closeAside} />
 					</div>
+				</div>
+			</div>
+
+			<div
+				className="md:hidden fixed w-[35px] h-[30px] top-[20%] right-0 z-[999]"
+				onClick={toggleAside}
+			>
+				<div className="btn btn-sm w-[100%] h-[100%] rounded-none bg-white rounded-l-md border-2 grid place-items-center">
+					{!asideOpen ? <BiSolidLeftArrow /> : <BiSolidRightArrow />}
 				</div>
 			</div>
 		</>

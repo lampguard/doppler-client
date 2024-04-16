@@ -55,21 +55,19 @@ const Apps = () => {
 	const { value: team } = useTeamContext();
 	const [apps, setApps] = useState([]);
 
-	const [getApps, { isLoading, isFetching, isUninitialized, isError, error }] =
+	const [getApps, { isLoading, isFetching, isError, error }] =
 		useLazyGetAppsQuery();
 
 	useEffect(() => {
-		if (team) {
-			getApps(team?.id)
-				.unwrap()
-				.then(({ data }) => {
-					setApps(data);
-				})
-				.catch((err) => {
-					console.error(err);
-					setApps([]);
-				});
-		}
+		getApps(team?.id)
+			.unwrap()
+			.then(({ data }) => {
+				setApps(data);
+			})
+			.catch((err) => {
+				console.error(err);
+				setApps([]);
+			});
 	}, [team]);
 
 	const table = useReactTable({
@@ -80,7 +78,7 @@ const Apps = () => {
 
 	return (
 		<>
-			{isLoading || isUninitialized ? (
+			{isLoading ? (
 				<Loader />
 			) : isError ? (
 				<>{error.data.message || <>An error occurred</>}</>

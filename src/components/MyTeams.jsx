@@ -10,7 +10,11 @@ const defaultActiveTeam = {
 	selected: true,
 };
 
-const MyTeams = () => {
+/**
+ * @type {React.FC<{open: boolean, setOpen: (state: boolean) => void}>} MyTeams
+ *
+ */
+const MyTeams = ({ open, setOpen }) => {
 	const [getTeams] = useLazyGetTeamsQuery();
 	const [teams, setTeams] = useState([defaultActiveTeam]);
 
@@ -37,6 +41,7 @@ const MyTeams = () => {
 			})
 		);
 		setActiveTeam(team);
+		setOpen(false);
 		teamCtx.updateValue(team);
 	}
 
@@ -60,14 +65,22 @@ const MyTeams = () => {
 								/>
 								{team.name}
 							</label>
-							<BsMenuApp />
+							{team.id !== undefined && (
+								<Link to={`/teams/${team.id}`}>
+									<BsMenuApp />
+								</Link>
+							)}
 						</div>
 					);
 				})}
 
-				<Link to={'/'} className="btn btn-primary w-full rounded-full">
-					<BsPlus className='text-[2.5em]' />
-					New Team
+				<Link
+					to={'/dashboard/create-team'}
+					className="btn btn-primary w-full flex rounded-full"
+					onClick={setOpen}
+				>
+					<BsPlus className="text-[2.5em]" />
+					<span>New Team</span>
 				</Link>
 			</div>
 		</TeamContext.Provider>
