@@ -57,9 +57,13 @@ const Profile = () => {
 
 	return (
 		<>
-			<Modal id={'enable2fa'} className="w-6/12 max-w-full" withClose>
+			<Modal
+				id={'enable2fa'}
+				className="w-11/12 md:w-6/12 max-w-[100%]"
+				withClose
+			>
 				{twofaForm.secret && (
-					<div className="flex w-full justify-evenly items-start">
+					<div className="md:flex w-full justify-evenly items-start">
 						<img src={twofaForm.qrCode} alt="" />
 						<div className="p-3">
 							<p>
