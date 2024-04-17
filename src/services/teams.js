@@ -2,7 +2,7 @@ import { api } from '.';
 
 const teams = api
 	.enhanceEndpoints({
-		addTagTypes: ['Teams'],
+		addTagTypes: ['Teams', 'Team', 'Team Apps'],
 	})
 	.injectEndpoints({
 		endpoints: (builder) => ({
@@ -20,7 +20,44 @@ const teams = api
 				}),
 				invalidatesTags: ['Teams'],
 			}),
+			getTeam: builder.query({
+				query: (id) => ({
+					url: `/teams/${id}/show`,
+				}),
+				providesTags: ['Team'],
+			}),
+			getTeamApps: builder.query({
+				query: (id) => ({
+					url: `/teams/${id}/apps`,
+				}),
+				providesTags: ['Team Apps'],
+				forceRefetch: true,
+			}),
+			addMember: builder.mutation({
+				query: (data) => ({
+					url: `/teams/add-member`,
+					method: 'POST',
+					body: data,
+				}),
+				invalidatesTags: ['Team'],
+			}),
+			addApp: builder.mutation({
+				query: (data) => ({
+					url: `/apps/add-to-team`,
+					method: 'POST',
+					body: data,
+				}),
+				invalidatesTags: ['Team'],
+			}),
 		}),
 	});
 
-export const { useLazyGetTeamsQuery, useNewTeamMutation } = teams;
+export const {
+	useLazyGetTeamsQuery,
+	useNewTeamMutation,
+	useGetTeamQuery,
+	useLazyGetTeamQuery,
+	useLazyGetTeamAppsQuery,
+	useAddMemberMutation,
+	useAddAppMutation: useAddAppToTeamMutation,
+} = teams;

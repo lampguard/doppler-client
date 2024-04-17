@@ -140,17 +140,17 @@ const Template = ({ children, title }) => {
 								alt=""
 								className="rounded-full w-[50px] inline"
 							/>
-							<span className="md:px-[6px]"></span>
+							<span className="m	d:px-[6px]"></span>
 							<p className="hidden md:inline">{user?.name}</p>
 						</Link>
 					</div>
 				</div>
-				<div className="md:flex w-full items-stretch relative">
-					<div className="w-full md:max-w-[75%] border-r">{children}</div>
+				<div className="md:flex w-full h-full items-stretch relative">
+					<div className="w-full md:max-w-[75%] border-r h-screen">{children}</div>
 
 					{/* Right Aside */}
 					<div
-						className="bg-white hidden md:block w-[100%] md:w-[25%] h-svh border-b px-6 py-7"
+						className="bg-white hidden md:block w-[100%] md:w-[25%] border-b px-6 py-7"
 						id="right-aside"
 					>
 						<MyTeams open={asideOpen} setOpen={closeAside} />
@@ -158,6 +158,7 @@ const Template = ({ children, title }) => {
 				</div>
 			</div>
 
+			{/* Floating Mobile drawer opener */}
 			<div
 				className="md:hidden fixed w-[35px] h-[30px] top-[20%] right-0 z-[999]"
 				onClick={toggleAside}

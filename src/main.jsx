@@ -27,6 +27,7 @@ import Profile from './pages/Profile.jsx';
 import ApplicationPage from './pages/ApplicationPage.jsx';
 import { TeamProvider } from './context/TeamContext.jsx';
 import NewTeam from './pages/NewTeam.jsx';
+import TeamInfo from './pages/TeamInfo.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -83,7 +84,14 @@ const routes = createBrowserRouter(
 						</Template>
 					}
 				/>
-				<Route path="/teams/:id" element={<Template title="Team Info" />} />
+				<Route
+					path="/teams/:id"
+					element={
+						<Template title="Team Info">
+							<TeamInfo />
+						</Template>
+					}
+				/>
 			</Route>
 		</Route>
 	)

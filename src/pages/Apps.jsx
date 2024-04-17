@@ -11,6 +11,7 @@ import Loader from '../components/Loaders';
 import { BsPlus } from 'react-icons/bs';
 import { useTeamContext } from '../context/TeamContext';
 import { useEffect, useState } from 'react';
+import { formatDate } from 'date-fns';
 
 const columnHelper = createColumnHelper();
 
@@ -38,11 +39,12 @@ const columns = [
 		header: (info) => 'Created',
 		cell: (info) => {
 			const value = info.getValue();
-			if (typeof value == 'string') {
-				return new Date(value).toLocaleDateString();
-			}
+			// if (typeof value == 'string') {
+			// 	return new Date(value).toLocaleDateString();
+			// }
 
-			return info.getValue()?.toISOString();
+			// return info.getValue()?.toISOString();
+			return formatDate(info.getValue(), "yyyy-MM-dd")
 		},
 	}),
 	columnHelper.accessor('token', {
