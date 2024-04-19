@@ -5,7 +5,14 @@ import whiteLogo from '../assets/logo-white.png';
 import Ellipse from '../assets/Ellipse 8.svg';
 import Panes from '../assets/multi-pane.png';
 import Desktop from '../assets/Desktop.png';
-import {BsPlus} from 'react-icons/bs';
+import Faq from '../components/Faq';
+import { FaBurger } from 'react-icons/fa6';
+
+const navLinks = [
+	{ title: 'Home', to: '/' },
+	{ title: 'Features', to: '/#features' },
+	{ title: 'Pricing', to: '/#pricing' },
+];
 
 /**
  * @type {React.FC} Landing
@@ -13,11 +20,14 @@ import {BsPlus} from 'react-icons/bs';
 const Landing = () => {
 	return (
 		<>
-			<div className="hidden md:p-[100px] pb-[40px] md:flex justify-between items-center w-full">
-				<img src={logo} className="w-[130px]" />
+			{/* Top Nav & Header */}
+			<div className="p-[20px] md:p-[100px] pb-[40px] flex justify-between items-center w-full">
+				<div className="w-[130px]">
+					<img src={logo} className="w-full" />
+				</div>
 
-				<div className="flex items-center">
-					<div className="nav text-[16px]">
+				<div className="hidden md:flex items-center">
+					<div className="nav">
 						<Link to={'/'} className="py-2 px-5 rounded hover:bg-gray-200">
 							Home
 						</Link>
@@ -56,8 +66,44 @@ const Landing = () => {
 						</Link>
 					</div>
 				</div>
+				<div className="md:hidden">
+					<button
+						className="btn btn-outline btn-square btn-sm"
+						onClick={() => {
+							document.querySelector('#mobileNav').classList.toggle('hidden');
+						}}
+					>
+						<FaBurger />
+					</button>
+				</div>
+			</div>
+			<div className="border-t hidden" id="mobileNav">
+				<div className="nav text-[16px] flex flex-col px-4">
+					{navLinks.map((nav, index) => (
+						<Link
+							key={index}
+							to={nav.to}
+							className="py-2.5 px-8 rounded hover:bg-gray-200"
+						>
+							{nav.title}
+						</Link>
+					))}
+					<Link
+						to={'/login'}
+						className="py-2.5 px-8 btn-ghost rounded-lg w-full"
+					>
+						Sign In
+					</Link>
+					<Link
+						to={'/signup'}
+						className="py-2.5 px-8 btn-primary btn-md rounded-full w-full"
+					>
+						Get Started
+					</Link>
+				</div>
 			</div>
 
+			{/* Hero */}
 			<section id="hero" className="w-full py-[50px] text-center relative">
 				<img
 					src={Ellipse}
@@ -77,7 +123,9 @@ const Landing = () => {
 					An Easier way to Manage your Apps
 				</p>
 				<div className="py-7"></div>
-				<p className="px-[20px] md:px-0">With Doppler you can easily manage multiple apps in one place</p>
+				<p className="px-[20px] md:px-0">
+					With Doppler you can easily manage multiple apps in one place
+				</p>
 				<div className="py-4 md:py-7"></div>
 				<Link to={'/signup'} className="btn btn-primary md:w-1/4">
 					Try Doppler for Free
@@ -147,37 +195,16 @@ const Landing = () => {
 				</div>
 			</section>
 			<section className="">
-				<p className="text-xl md:text-3xl font-bold py-[40px] text-center w-full">Some of your Questions, Answered!</p>
+				<p className="text-xl md:text-3xl font-bold py-[40px] text-center w-full">
+					Some of your Questions, Answered!
+				</p>
 				<div className="w-full md:py-[40px]">
-				<ul className="w-[90%] md:w-1/2 m-auto">
-					<li className="border rounded-md px-2 py-4">
-						<p className="flex flex-wrap justify-between">
-							<span>
-								What data does the platform track from other apps?
-							</span>
-							<button
-					onClick={(e) => {
-						e.target.closest('div').querySelector('div').classList.toggle('hidden');
-					}}
-		className="rounded-full border border-black hover:bg-[#ccccccae]"><BsPlus className="text-2xl" /></button>
-<div className='w-full bg-gray-100 rounded-md p-2 mt-[10px] hidden'>
-							Lorem ipsum dolor sit amet.
-						</div>
-						</p>
-						
-					</li>
-					<li>
-						
-					</li>
-					<li></li>
-					<li></li>
-					<li></li>
-				</ul>
-		</div>
+					<Faq />
+				</div>
 			</section>
 
 			{/* Footer */}
-			<div className="py-[80px] md:py-[200px]"></div>
+			<div className="py-[80px]"></div>
 			<div className="relative text-white w-full">
 				<img
 					src={Ellipse}
@@ -191,9 +218,7 @@ const Landing = () => {
 					<div className="py-2 md:hidden"></div>
 
 					<div className="md:w-1/3">
-						<Link className="btn btn-white w-full">
-							Try Doppler for Free
-						</Link>
+						<Link className="btn btn-white w-full">Try Doppler for Free</Link>
 					</div>
 				</div>
 
