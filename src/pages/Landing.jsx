@@ -78,12 +78,12 @@ const Landing = () => {
 				</div>
 			</div>
 			<div className="border-t hidden" id="mobileNav">
-				<div className="nav text-[16px] flex flex-col px-4">
+				<div className="nav text-[16px] flex flex-col justify-center px-4">
 					{navLinks.map((nav, index) => (
 						<Link
 							key={index}
 							to={nav.to}
-							className="py-2.5 px-8 rounded hover:bg-gray-200"
+							className="py-2.5 px-8 w-full rounded hover:bg-gray-200"
 						>
 							{nav.title}
 						</Link>
@@ -96,7 +96,7 @@ const Landing = () => {
 					</Link>
 					<Link
 						to={'/signup'}
-						className="py-2.5 px-8 btn-primary btn-md rounded-full w-full"
+						className="btn btn-primary rounded-lg w-full"
 					>
 						Get Started
 					</Link>

@@ -27,7 +27,10 @@ const Faq = () => {
 	return (
 		<ul className="w-[90%] md:w-1/2 m-auto">
 			{questions.map((q, index) => (
-				<li className="border border-[#21212180] rounded-md px-2 py-4 mb-4" key={`question-${index}`}>
+				<li
+					className="border border-[#21212180] rounded-md px-2 py-4 mb-4"
+					key={`question-${index}`}
+				>
 					<p className="flex flex-wrap items-center justify-between">
 						<span>{q.question}</span>
 						<button
@@ -35,11 +38,11 @@ const Faq = () => {
 								// console.log(e.currentTarget.nextElementSibling);
 								e.currentTarget.nextElementSibling.classList.toggle('hidden');
 							}}
-							className="btn btn-sm btn-circle border border-[#21212180] hover:bg-[#ccccccae]"
+							className="btn btn-sm btn-outline btn-circle"
 						>
 							<BsPlus className="text-2xl" />
 						</button>
-						<span className="w-full bg-gray-100 rounded-md p-2 mt-[10px] hidden">
+						<span className="w-full rounded-md p-2 mt-[10px] hidden">
 							{q.answer}
 						</span>
 					</p>
