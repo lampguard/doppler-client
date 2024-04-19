@@ -97,7 +97,7 @@ const Landing = () => {
 						className="hidden md:block absolute w-3/4 left-[0] top-[-15%] z-[-1]"
 					/>
 					<div className="md:w-2/5">
-						<p className="text-2xl">Error Tracking</p>
+						<p className="text-2xl font-bold">Error Tracking</p>
 						<div className="py-1.5 md:py-3"></div>
 						<p>
 							Gain real-time insights into app errors and potential safety
@@ -114,7 +114,7 @@ const Landing = () => {
 				<div className="md:flex gap-3 w-full px-[24px] md:px-[100px] py-[50px] justify-between items-center relative">
 					<img src={Desktop} className="hidden md:block md:w-1/2" />
 					<div className="md:w-2/5">
-						<p className="text-2xl">Manage Your Apps & Teams</p>
+						<p className="text-2xl font-bold">Manage Your Apps & Teams</p>
 						<div className="py-3"></div>
 						<p>
 							Gain real-time insights into app errors and potential safety
@@ -133,7 +133,7 @@ const Landing = () => {
 						className="absolute w-3/4 right-[0] top-[-15%] z-[-1]"
 					/>
 					<div className="md:w-2/5">
-						<p className="text-2xl">Distribute Tasks Efficiently</p>
+						<p className="text-2xl font-bold">Distribute Tasks Efficiently</p>
 						<div className="py-3"></div>
 						<p>
 							Gain real-time insights into app errors and potential safety
