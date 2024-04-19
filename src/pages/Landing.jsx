@@ -21,7 +21,7 @@ const Landing = () => {
 	return (
 		<>
 			{/* Top Nav & Header */}
-			<div className="p-[20px] md:p-[100px] pb-[40px] flex justify-between items-center w-full">
+			<div className="p-[20px] md:p-[2em] pb-[40px] flex justify-between items-center w-full">
 				<div className="w-[130px]">
 					<img src={logo} className="w-full" />
 				</div>
@@ -50,7 +50,7 @@ const Landing = () => {
 							Contact Us
 						</Link>
 					</div>
-					<div className="px-[20px]"></div>
+					<div className="lg:px-[1.25rem]"></div>
 					<div>
 						<Link
 							to={'/login'}
