@@ -1,17 +1,20 @@
 import { Link } from 'react-router-dom';
 
 import logo from '../assets/logo.svg';
-import whiteLogo from '../assets/logo-white.png';
+import blackLogo from '../assets/black-logo.svg';
 import Ellipse from '../assets/Ellipse 8.svg';
 import Panes from '../assets/multi-pane.png';
 import Desktop from '../assets/Desktop.png';
 import Faq from '../components/Faq';
-import { FaBurger } from 'react-icons/fa6';
+import Twitter from '../assets/twitter-logo.svg';
+import Github from '../assets/github-icon-logo.svg';
+import Linkedin from '../assets/linkedin-logo.svg';
+import { FaBurger, FaGithub, FaLinkedin } from 'react-icons/fa6';
 
 const navLinks = [
 	{ title: 'Home', to: '/' },
 	{ title: 'Features', to: '/#features' },
-	{ title: 'Pricing', to: '/#pricing' },
+	{ title: `Developer Guide`, to: '/docs/guide' },
 ];
 
 /**
@@ -28,7 +31,7 @@ const Landing = () => {
 
 				<div className="hidden md:flex items-center">
 					<div className="nav">
-						<Link to={'/'} className="py-2 px-5 rounded hover:bg-gray-200">
+						{/* <Link to={'/'} className="py-2 px-5 rounded hover:bg-gray-200">
 							Home
 						</Link>
 						<Link
@@ -48,7 +51,18 @@ const Landing = () => {
 							className="py-2 px-5 rounded hover:bg-gray-200"
 						>
 							Contact Us
-						</Link>
+						</Link> */}
+						{navLinks.map((link) => {
+							return (
+								<Link
+									key={link.to}
+									to={link.to}
+									className="py-2 px-5 rounded hover:bg-gray-200"
+								>
+									{link.title}
+								</Link>
+							);
+						})}
 					</div>
 					<div className="lg:px-[1.25rem]"></div>
 					<div>
@@ -202,13 +216,13 @@ const Landing = () => {
 
 			{/* Footer */}
 			<div className="py-[80px]"></div>
-			<div className="relative text-white w-full">
+			<div className="relative w-full">
 				<img
 					src={Ellipse}
 					className="absolute top-[-100%] z-[-1] left-[-20%] w-3/5"
 					alt=""
 				/>
-				<div className="px-[25px] py-[40px] md:absolute w-full md:w-8/12 md:p-[40px] bg-[#4D75FF] top-[-23%] md:flex justify-between items-center left-[18%]">
+				<div className="px-[25px] py-[40px] md:absolute w-full md:w-8/12 md:p-[40px] bg-theme top-[-23%] md:flex justify-between items-center left-[18%]">
 					<p className="font-articulat text-2xl md:w-2/5">
 						Discover the Doppler Effect Now!!!
 					</p>
@@ -219,40 +233,33 @@ const Landing = () => {
 					</div>
 				</div>
 
-				<div className="md:p-[120px] flex justify-between items-center w-full bg-theme font-articulat-light">
-					<img src={whiteLogo} className="hidden md:block w-[130px]" />
+				<div className="md:p-[120px] w-full bg-white font-articulat-light">
+					<div className="flex justify-between items-center">
+						<img src={blackLogo} className="hidden md:block w-[130px]" />
+						<div className="hidden md:flex items-center w-2/3 justify-end">
+							{navLinks.map((link) => (
+								<Link
+									key={link.to}
+									to={link.to}
+									className="py-2 pl-5 rounded hover:underline hover:bg-[#cccccc3d]"
+								>
+									{link.title}
+								</Link>
+							))}
+						</div>
+					</div>
 
-					<div className="hidden md:flex items-center w-2/3 justify-between">
-						<Link
-							to={'/'}
-							className="py-2 px-5 rounded hover:underline hover:bg-[#cccccc3d]"
-						>
-							Home
-						</Link>
-						<Link
-							to={'#about-us'}
-							className="py-2 px-5 rounded hover:underline hover:bg-[#cccccc3d]"
-						>
-							About Us
-						</Link>
-						<Link
-							to={'#features'}
-							className="py-2 px-5 rounded hover:underline hover:bg-[#cccccc3d]"
-						>
-							Features
-						</Link>
-						<Link
-							to={'#pricing'}
-							className="py-2 px-5 rounded hover:underline hover:bg-[#cccccc3d]"
-						>
-							Pricing
-						</Link>
-						<Link
-							to={'#contact'}
-							className="py-2 px-5 rounded hover:underline hover:bg-[#cccccc3d]"
-						>
-							Contact Us
-						</Link>
+					<div className="px-3 pb-3 md:p-0 gap-x-[24px] flex items-center justify-end w-full bg-theme md:bg-white">
+						<a href={'https://linkedin.com/u/peter-adeojo'} target="_blank" className="w-[35px]">
+							<img src={Linkedin} className="w-full" />
+						</a>
+						<a href={'https://twitter.com/usedopple'} target="_blank" className="w-[35px]">
+							<img src={Twitter} className="w-full" />
+						</a>
+						<a href={'https://github.com/lampguard/'} target="_blank" className="w-[35px]">
+							<	img src={Github} className="w-full hidden md:block" />
+							<FaGithub className='w-full h-full md:hidden' />
+						</a>
 					</div>
 				</div>
 			</div>

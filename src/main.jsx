@@ -34,6 +34,7 @@ const routes = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
 			<Route element={<Landing />} index />
+			<Route path='/docs/guide' element={<Landing />} />
 			<Route element={<AuthPane />}>
 				<Route element={<Login />} path="/verify-2fa" />
 				<Route element={<Login />} path="/login" />
