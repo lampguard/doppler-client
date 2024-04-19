@@ -88,10 +88,9 @@ export const api = createApi({
 				queryFulfilled
 					.then((apiResponse) => {
 						sessionStorage.setItem('authToken', apiResponse.data.data.token);
-					})
-					.catch((err) => {
-						console.error(err);
-					});
+					}).catch((err) => {
+						throw err;
+					});	
 			},
 		}),
 		logout: builder.mutation({
