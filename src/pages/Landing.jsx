@@ -21,8 +21,8 @@ const Landing = () => {
 	return (
 		<>
 			{/* Top Nav & Header */}
-			<div className="p-[20px] md:p-[2em] pb-[40px] flex justify-between items-center w-full">
-				<div className="w-[130px]">
+			<div className="px-[2em] md:px-[4em] py-[1.7em] md:py-[2em] flex justify-between items-center w-full">
+				<div className="md:w-[12.5%]">
 					<img src={logo} className="w-full" />
 				</div>
 
@@ -94,10 +94,7 @@ const Landing = () => {
 					>
 						Sign In
 					</Link>
-					<Link
-						to={'/signup'}
-						className="btn btn-primary rounded-lg w-full"
-					>
+					<Link to={'/signup'} className="btn btn-primary rounded-lg w-full">
 						Get Started
 					</Link>
 				</div>
@@ -108,7 +105,7 @@ const Landing = () => {
 				<img
 					src={Ellipse}
 					alt=""
-					className="absolute top-[-20%] w-full z-[-10] hidden"
+					className="absolute top-[-20%] w-full z-[-10]"
 				/>
 				<img
 					src={Panes}
