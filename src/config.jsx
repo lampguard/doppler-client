@@ -5,7 +5,7 @@ import { BsMenuAppFill, BsMenuButton, BsGithub } from 'react-icons/bs';
 export const navLinks = [
 	{
 		title: 'Dashboard',
-		slug: '/',
+		slug: '/dashboard',
 		icon: <AiOutlineHome className="text-2xl inline" />,
 		activeIcon: <AiFillHome className="text-2xl inline" />,
 	},
