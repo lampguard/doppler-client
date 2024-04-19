@@ -5,6 +5,7 @@ import whiteLogo from '../assets/logo-white.png';
 import Ellipse from '../assets/Ellipse 8.svg';
 import Panes from '../assets/multi-pane.png';
 import Desktop from '../assets/Desktop.png';
+import {BsPlus} from 'react-icons/bs';
 
 /**
  * @type {React.FC} Landing
@@ -144,6 +145,35 @@ const Landing = () => {
 					</div>
 					<img src={Desktop} className="hidden md:block w-1/2" />
 				</div>
+			</section>
+			<section className="">
+				<p className="text-xl md:text-3xl font-bold py-[40px] text-center w-full">Some of your Questions, Answered!</p>
+				<div className="w-full md:py-[40px]">
+				<ul className="w-[90%] md:w-1/2 m-auto">
+					<li className="border rounded-md px-2 py-4">
+						<p className="flex flex-wrap justify-between">
+							<span>
+								What data does the platform track from other apps?
+							</span>
+							<button
+					onClick={(e) => {
+						e.target.closest('div').querySelector('div').classList.toggle('hidden');
+					}}
+		className="rounded-full border border-black hover:bg-[#ccccccae]"><BsPlus className="text-2xl" /></button>
+<div className='w-full bg-gray-100 rounded-md p-2 mt-[10px] hidden'>
+							Lorem ipsum dolor sit amet.
+						</div>
+						</p>
+						
+					</li>
+					<li>
+						
+					</li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+		</div>
 			</section>
 
 			{/* Footer */}
