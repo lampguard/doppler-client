@@ -17,6 +17,7 @@ import {
 	createRoutesFromElements,
 	Route,
 } from 'react-router-dom';
+import Landing from './pages/Landing.jsx';
 import ResetPassword from './pages/ResetPassword.jsx';
 import DashboardLayout from './components/DashboardLayout/index.jsx';
 import Dashboard from './pages/Dashboard.jsx';
@@ -32,6 +33,7 @@ import TeamInfo from './pages/TeamInfo.jsx';
 const routes = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
+			<Route element={<Landing />} index />
 			<Route element={<AuthPane />}>
 				<Route element={<Login />} path="/verify-2fa" />
 				<Route element={<Login />} path="/login" />
@@ -39,7 +41,7 @@ const routes = createBrowserRouter(
 				<Route element={<ResetPassword />} path="/reset-password" />
 			</Route>
 			<Route element={<DashboardLayout />}>
-				<Route index element={<Dashboard />} />
+				{/* <Route index element={<Dashboard />} /> */}
 				<Route path="/tasks" element={<Template title="Tasks"></Template>} />
 				<Route path="/apps">
 					<Route
