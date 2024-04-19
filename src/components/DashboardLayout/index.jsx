@@ -23,7 +23,7 @@ const DashboardLayout = () => {
 					setUserData(res.data?.user);
 					return;
 				}
-				navigate('/');
+				navigate('/dashboard');
 			})
 			.catch(() => navigate('/login'));
 		return () => {};

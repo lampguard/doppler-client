@@ -34,7 +34,7 @@ const Login = () => {
 					document.getElementById('2fa')?.showModal();
 					return;
 				}
-				navigate('/');
+				navigate('/dashboard');
 			})
 			.catch((err) => console.error(err));
 	};

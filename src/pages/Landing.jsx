@@ -72,11 +72,11 @@ const Landing = () => {
 					src={Panes}
 					className="top-0 right-0 absolute hidden md:block z-[-1]"
 				/>
-				<p className="text-3xl md:text-4xl font-bold">
+				<p className="px[20px] text-3xl md:text-4xl font-bold">
 					An Easier way to Manage your Apps
 				</p>
 				<div className="py-7"></div>
-				<p>With Doppler you can easily manage multiple apps in one place</p>
+				<p className="px-[20px] md:px-0">With Doppler you can easily manage multiple apps in one place</p>
 				<div className="py-4 md:py-7"></div>
 				<Link to={'/signup'} className="btn btn-primary md:w-1/4">
 					Try Doppler for Free
@@ -154,16 +154,16 @@ const Landing = () => {
 					className="absolute top-[-100%] z-[-1] left-[-20%] w-3/5"
 					alt=""
 				/>
-				<div className="p-[20px] md:absolute w-full md:w-8/12 md:p-[40px] bg-[#4D75FF] top-[-23%] md:flex justify-between items-center left-[18%]">
+				<div className="px-[25px] py-[40px] md:absolute w-full md:w-8/12 md:p-[40px] bg-[#4D75FF] top-[-23%] md:flex justify-between items-center left-[18%]">
 					<p className="font-articulat text-2xl md:w-2/5">
 						Discover the Doppler Effect Now!!!
 					</p>
 					<div className="py-2 md:hidden"></div>
 
 					<div className="md:w-1/3">
-						<button className="btn btn-white w-full">
+						<Link className="btn btn-white w-full">
 							Try Doppler for Free
-						</button>
+						</Link>
 					</div>
 				</div>
 
