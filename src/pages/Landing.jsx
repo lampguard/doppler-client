@@ -22,7 +22,7 @@ const Landing = () => {
 		<>
 			{/* Top Nav & Header */}
 			<div className="px-[2em] md:px-[4em] py-[1.7em] md:py-[2em] flex justify-between items-center w-full">
-				<div className="md:w-[12.5%]">
+				<div className="w-[130px] md:w-[12.5%]">
 					<img src={logo} className="w-full" />
 				</div>
 
