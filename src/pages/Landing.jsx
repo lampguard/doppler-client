@@ -106,10 +106,10 @@ const Landing = () => {
 			</section>
 
 			<section className="w-full relative">
-				<div className="flex gap-3 w-full p-[100px] justify-between items-center relative">
+				<div className="flex gap-3 w-full px-[100px] py-[50px] justify-between items-center relative">
 					<img src={Desktop} className="w-1/2" />
 					<div className="w-2/5">
-						<p className="text-2xl">Error Tracking</p>
+						<p className="text-2xl">Manage Your Apps & Teams</p>
 						<div className="py-3"></div>
 						<p>
 							Gain real-time insights into app errors and potential safety
@@ -121,13 +121,10 @@ const Landing = () => {
 				</div>
 			</section>
 			<section className="w-full relative pt-[140px]">
-				<p className="text-3xl text-center">
-					Designed to make your life Easier
-				</p>
-				<div className="flex gap-3 w-full p-[100px] justify-between items-center relative">
+				<div className="flex gap-3 w-full px-[100px] py-[50px] justify-between items-center relative">
 					<img src={Ellipse} className="absolute w-3/4 left-[0] top-[-15%]" />
 					<div className="w-2/5">
-						<p className="text-2xl">Error Tracking</p>
+						<p className="text-2xl">Distribute Tasks EfficientlY</p>
 						<div className="py-3"></div>
 						<p>
 							Gain real-time insights into app errors and potential safety
