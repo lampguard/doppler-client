@@ -14,8 +14,10 @@ import { FaBurger, FaGithub, FaLinkedin } from 'react-icons/fa6';
 import TextInput from '../components/Input/TextInput';
 import Loader from '../components/Loaders';
 
+import { notification } from 'antd';
+
 import { useJoinWaitlistMutation } from '../services';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const navLinks = [
 	{ title: 'Home', to: '/' },
@@ -38,10 +40,28 @@ const Landing = () => {
 		waitlist({ email })
 			.unwrap()
 			.then((data) => {
-				console.log(data);
+				// setResponse({ message: data.message, display: true, mode: 'success' });
+				notification.info({
+					message: data.message || 'Success!',
+					duration: 3,
+				});
 			})
 			.catch((err) => {
-				console.log(err);
+				// setResponse({
+				// 	message: err.data?.message || 'An error occurred',
+				// 	display: true,
+				// 	mode: 'error',
+				// });
+				notification.error({
+					message: err.data?.message || 'An error occurred',
+					duration: 3,
+					className: 'bg-red-200 text-white'
+				});
+			})
+			.finally(() => {
+				// setTimeout(() => {
+				// 	setResponse({ ...response, display: false });
+				// }, 10000);
 			});
 	};
 

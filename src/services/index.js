@@ -106,6 +106,7 @@ export const api = createApi({
 				url: '/waitlist',
 				method: 'POST',
 				body: data,
+				timeout: 15000,
 			}),
 		}),
 	}),
