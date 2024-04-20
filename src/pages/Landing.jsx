@@ -14,7 +14,7 @@ import { FaBurger, FaGithub, FaLinkedin } from 'react-icons/fa6';
 const navLinks = [
 	{ title: 'Home', to: '/' },
 	{ title: 'Features', to: '/#features' },
-	{ title: `Developer Guide`, to: 'https://doppler.gitbook.io/guide' },
+	{ title: `Developer Guide`, to: 'https://doppler.gitbook.io/guide', _blank: true },
 ];
 
 /**
@@ -58,6 +58,7 @@ const Landing = () => {
 									key={link.to}
 									to={link.to}
 									className="py-2 px-5 rounded hover:bg-gray-200"
+									target={link._blank ? '_blank' : undefined}
 								>
 									{link.title}
 								</Link>
@@ -98,6 +99,7 @@ const Landing = () => {
 							key={index}
 							to={nav.to}
 							className="py-2.5 px-8 w-full rounded hover:bg-gray-200"
+							target={nav._blank ? '_blank' : undefined}
 						>
 							{nav.title}
 						</Link>
@@ -242,6 +244,7 @@ const Landing = () => {
 									key={link.to}
 									to={link.to}
 									className="py-2 pl-5 rounded hover:underline hover:bg-[#cccccc3d]"
+									target={link._blank ? '_blank' : undefined}
 								>
 									{link.title}
 								</Link>
