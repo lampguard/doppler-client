@@ -14,7 +14,7 @@ import { FaBurger, FaGithub, FaLinkedin } from 'react-icons/fa6';
 const navLinks = [
 	{ title: 'Home', to: '/' },
 	{ title: 'Features', to: '/#features' },
-	{ title: `Developer Guide`, to: '/docs/guide' },
+	{ title: `Developer Guide`, to: 'https://doppler.gitbook.io/guide' },
 ];
 
 /**
