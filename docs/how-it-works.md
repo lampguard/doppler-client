@@ -12,7 +12,7 @@ Any event has the following structure
 
 {% tab title="Node (Fetch)" %}
 ```js
-fetch('https://api.dopple.cc/v1/logs', {
+fetch('https://api.dopple.cc/v1/logs', evt, {
   method: 'POST',
   headers: {
     'APP_ID': <%GENERATED APP TOKEN%>
@@ -25,7 +25,7 @@ fetch('https://api.dopple.cc/v1/logs', {
 ```php
 Http::withHeaders([
     'APP_ID' => <%GENERATED APP TOKEN%>
-])->post('https://api.dopple.cc/v1/logs');
+])->post('https://api.dopple.cc/v1/logs', $evt);
 ```
 {% endtab %}
 
