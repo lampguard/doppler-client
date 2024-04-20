@@ -106,8 +106,8 @@ const Landing = () => {
 					</button>
 				</div>
 			</div>
-			
-			<div className="border-t hidden" id="mobileNav">
+
+			<div className="border-t hidden md:hidden" id="mobileNav">
 				<div className="nav text-[16px] flex flex-col justify-center px-4">
 					{navLinks.map((nav, index) => (
 						<Link
@@ -154,7 +154,7 @@ const Landing = () => {
 					src={Panes}
 					className="top-0 right-0 absolute hidden md:block z-[-1]"
 				/>
-				<p className="px[20px] text-3xl md:text-4xl font-bold">
+				<p className="px-[20px] text-3xl md:text-4xl font-bold">
 					An Easier way to Manage your Apps
 				</p>
 				<div className="py-7"></div>
