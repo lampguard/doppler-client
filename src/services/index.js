@@ -88,9 +88,10 @@ export const api = createApi({
 				queryFulfilled
 					.then((apiResponse) => {
 						sessionStorage.setItem('authToken', apiResponse.data.data.token);
-					}).catch((err) => {
+					})
+					.catch((err) => {
 						throw err;
-					});	
+					});
 			},
 		}),
 		logout: builder.mutation({
@@ -99,6 +100,13 @@ export const api = createApi({
 				method: 'POST',
 			}),
 			invalidatesTags: ['Auth'],
+		}),
+		joinWaitlist: builder.mutation({
+			query: (data) => ({
+				url: '/waitlist',
+				method: 'POST',
+				body: data,
+			}),
 		}),
 	}),
 });
@@ -113,5 +121,6 @@ export const {
 	useEnable2FAMutation,
 	useLogoutMutation,
 	useVerify2FAMutation,
-	useLazyGetAppsQuery
+	useLazyGetAppsQuery,
+	useJoinWaitlistMutation
 } = api;

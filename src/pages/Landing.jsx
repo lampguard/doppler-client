@@ -11,16 +11,40 @@ import Github from '../assets/github-icon-logo.svg';
 import Linkedin from '../assets/linkedin-logo.svg';
 import { FaBurger, FaGithub, FaLinkedin } from 'react-icons/fa6';
 
+import TextInput from '../components/Input/TextInput';
+import Loader from '../components/Loaders';
+
+import { useJoinWaitlistMutation } from '../services';
+import { useState } from 'react';
+
 const navLinks = [
 	{ title: 'Home', to: '/' },
 	{ title: 'Features', to: '/#features' },
-	{ title: `Developer Guide`, to: 'https://doppler.gitbook.io/guide', _blank: true },
+	{
+		title: `Developer Guide`,
+		to: 'https://doppler.gitbook.io/guide',
+		_blank: true,
+	},
 ];
 
 /**
  * @type {React.FC} Landing
  */
 const Landing = () => {
+	const [email, setEmail] = useState('');
+	const [waitlist, { isLoading }] = useJoinWaitlistMutation();
+
+	const joinWaitlist = () => {
+		waitlist({ email })
+			.unwrap()
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	return (
 		<>
 			{/* Top Nav & Header */}
@@ -66,7 +90,7 @@ const Landing = () => {
 						})}
 					</div>
 					<div className="lg:px-[1.25rem]"></div>
-					<div>
+					{/* <div>
 						<Link
 							to={'/login'}
 							className="py-2.5 px-8 btn-ghost rounded-lg w-[100px] h-[30px]"
@@ -79,7 +103,7 @@ const Landing = () => {
 						>
 							Get Started
 						</Link>
-					</div>
+					</div> */}
 				</div>
 				<div className="md:hidden">
 					<button
@@ -104,7 +128,7 @@ const Landing = () => {
 							{nav.title}
 						</Link>
 					))}
-					<Link
+					{/* <Link
 						to={'/login'}
 						className="py-2.5 px-8 btn-ghost rounded-lg w-full"
 					>
@@ -112,7 +136,7 @@ const Landing = () => {
 					</Link>
 					<Link to={'/signup'} className="btn btn-primary rounded-lg w-full">
 						Get Started
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 
@@ -140,9 +164,34 @@ const Landing = () => {
 					With Doppler you can easily manage multiple apps in one place
 				</p>
 				<div className="py-4 md:py-7"></div>
-				<Link to={'/signup'} className="btn btn-primary md:w-1/4">
+				{/* <Link to={'/signup'} className="btn btn-primary md:w-1/4">
 					Try Doppler for Free
-				</Link>
+				</Link> */}
+				<div className="w-[90%] md:w-1/4 outline outline-1 m-auto rounded-full overflow-clip">
+					<form
+						className="flex"
+						onSubmit={(e) => {
+							e.preventDefault();
+							joinWaitlist({ email });
+						}}
+					>
+						<TextInput
+							type="email"
+							required
+							className="rounded-none border-0 focus:outline-none"
+							placeholder="you@beautiful.com"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+						<button className="btn btn-primary rounded-none min-w-[100px] border-0">
+							{isLoading ? (
+								<Loader className="text-white" theme={false} />
+							) : (
+								'Join Waitlist'
+							)}
+						</button>
+					</form>
+				</div>
 				<div className="p-0 pt-[20px] md:pt-[80px]"></div>
 				<div className="w-full flex justify-center">
 					<img src={Desktop} className="w-3/4 md:w-3/5" />
@@ -207,6 +256,7 @@ const Landing = () => {
 					<img src={Desktop} className="hidden md:block w-1/2" />
 				</div>
 			</section>
+
 			<section className="">
 				<p className="text-xl md:text-3xl font-bold py-[40px] text-center w-full">
 					Some of your Questions, Answered!
@@ -230,8 +280,33 @@ const Landing = () => {
 					</p>
 					<div className="py-2 md:hidden"></div>
 
-					<div className="md:w-1/3">
-						<Link className="btn btn-white w-full">Try Doppler for Free</Link>
+					<div className="md:w-2/5">
+						{/* <Link className="btn btn-white w-full">Try Doppler for Free</Link> */}
+						<div className="m-auto text-black outline outline-1">
+							<form
+								className="flex"
+								onSubmit={(e) => {
+									e.preventDefault();
+									joinWaitlist({ email });
+								}}
+							>
+								<TextInput
+									type="email"
+									required
+									className="rounded-none border-0 focus:outline-none"
+									placeholder="you@beautiful.com"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+								/>
+								<button className="btn rounded-none min-w-[100px] border-0">
+									{isLoading ? (
+										<Loader className="text-white" theme={false} />
+									) : (
+										'Join Waitlist'
+									)}
+								</button>
+							</form>
+						</div>
 					</div>
 				</div>
 
@@ -253,15 +328,27 @@ const Landing = () => {
 					</div>
 
 					<div className="px-3 pb-3 md:p-0 gap-x-[24px] flex items-center justify-end w-full bg-theme md:bg-white">
-						<a href={'https://linkedin.com/u/peter-adeojo'} target="_blank" className="w-[35px]">
+						<a
+							href={'https://linkedin.com/u/peter-adeojo'}
+							target="_blank"
+							className="w-[35px]"
+						>
 							<img src={Linkedin} className="w-full" />
 						</a>
-						<a href={'https://twitter.com/usedopple'} target="_blank" className="w-[35px]">
+						<a
+							href={'https://twitter.com/usedopple'}
+							target="_blank"
+							className="w-[35px]"
+						>
 							<img src={Twitter} className="w-full" />
 						</a>
-						<a href={'https://github.com/lampguard/'} target="_blank" className="w-[35px]">
-							<	img src={Github} className="w-full hidden md:block" />
-							<FaGithub className='w-full h-full md:hidden' />
+						<a
+							href={'https://github.com/lampguard/'}
+							target="_blank"
+							className="w-[35px]"
+						>
+							<img src={Github} className="w-full hidden md:block" />
+							<FaGithub className="w-full h-full md:hidden" />
 						</a>
 					</div>
 				</div>
