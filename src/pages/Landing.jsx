@@ -9,7 +9,7 @@ import Faq from '../components/Faq';
 import Twitter from '../assets/twitter-logo.svg';
 import Github from '../assets/github-icon-logo.svg';
 import Linkedin from '../assets/linkedin-logo.svg';
-import { FaBurger, FaGithub, FaLinkedin } from 'react-icons/fa6';
+import { FaBurger, FaGithub } from 'react-icons/fa6';
 
 import TextInput from '../components/Input/TextInput';
 import Loader from '../components/Loaders';
@@ -17,7 +17,7 @@ import Loader from '../components/Loaders';
 import { notification } from 'antd';
 
 import { useJoinWaitlistMutation } from '../services';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const navLinks = [
 	{ title: 'Home', to: '/' },
@@ -40,28 +40,17 @@ const Landing = () => {
 		waitlist({ email })
 			.unwrap()
 			.then((data) => {
-				// setResponse({ message: data.message, display: true, mode: 'success' });
 				notification.info({
 					message: data.message || 'Success!',
 					duration: 3,
 				});
 			})
 			.catch((err) => {
-				// setResponse({
-				// 	message: err.data?.message || 'An error occurred',
-				// 	display: true,
-				// 	mode: 'error',
-				// });
 				notification.error({
 					message: err.data?.message || 'An error occurred',
 					duration: 3,
-					className: 'bg-red-200 text-white'
+					className: 'bg-red-200 text-white',
 				});
-			})
-			.finally(() => {
-				// setTimeout(() => {
-				// 	setResponse({ ...response, display: false });
-				// }, 10000);
 			});
 	};
 
@@ -75,27 +64,6 @@ const Landing = () => {
 
 				<div className="hidden md:flex items-center">
 					<div className="nav">
-						{/* <Link to={'/'} className="py-2 px-5 rounded hover:bg-gray-200">
-							Home
-						</Link>
-						<Link
-							to={'#features'}
-							className="py-2 px-5 rounded hover:bg-gray-200"
-						>
-							Features
-						</Link>
-						<Link
-							to={'#pricing'}
-							className="py-2 px-5 rounded hover:bg-gray-200"
-						>
-							Pricing
-						</Link>
-						<Link
-							to={'#contact'}
-							className="py-2 px-5 rounded hover:bg-gray-200"
-						>
-							Contact Us
-						</Link> */}
 						{navLinks.map((link) => {
 							return (
 								<Link
@@ -110,20 +78,22 @@ const Landing = () => {
 						})}
 					</div>
 					<div className="lg:px-[1.25rem]"></div>
-					{/* <div>
-						<Link
-							to={'/login'}
-							className="py-2.5 px-8 btn-ghost rounded-lg w-[100px] h-[30px]"
-						>
-							Sign In
-						</Link>
-						<Link
-							to={'/signup'}
-							className="py-2.5 px-8 btn-primary btn-md rounded-lg w-[150px]"
-						>
-							Get Started
-						</Link>
-					</div> */}
+					{__ENV__.WAITLISTING == 'off' && (
+						<div>
+							<Link
+								to={'/login'}
+								className="py-2.5 px-8 btn-ghost rounded-lg w-[100px] h-[30px]"
+							>
+								Sign In
+							</Link>
+							<Link
+								to={'/signup'}
+								className="py-2.5 px-8 btn-primary btn-md rounded-lg w-[150px]"
+							>
+								Get Started
+							</Link>
+						</div>
+					)}
 				</div>
 				<div className="md:hidden">
 					<button
@@ -136,6 +106,7 @@ const Landing = () => {
 					</button>
 				</div>
 			</div>
+			
 			<div className="border-t hidden" id="mobileNav">
 				<div className="nav text-[16px] flex flex-col justify-center px-4">
 					{navLinks.map((nav, index) => (
@@ -148,15 +119,22 @@ const Landing = () => {
 							{nav.title}
 						</Link>
 					))}
-					{/* <Link
-						to={'/login'}
-						className="py-2.5 px-8 btn-ghost rounded-lg w-full"
-					>
-						Sign In
-					</Link>
-					<Link to={'/signup'} className="btn btn-primary rounded-lg w-full">
-						Get Started
-					</Link> */}
+					{__ENV__.WAITLISTING == 'off' && (
+						<>
+							<Link
+								to={'/login'}
+								className="py-2.5 px-8 btn-ghost rounded-lg w-full"
+							>
+								Sign In
+							</Link>
+							<Link
+								to={'/signup'}
+								className="btn btn-primary rounded-lg w-full"
+							>
+								Get Started
+							</Link>
+						</>
+					)}
 				</div>
 			</div>
 
@@ -184,34 +162,43 @@ const Landing = () => {
 					With Doppler you can easily manage multiple apps in one place
 				</p>
 				<div className="py-4 md:py-7"></div>
+				{__ENV__.WAITLISTING == 'off' ? (
+					<Link to={'/signup'} className="btn btn-primary md:w-1/4">
+						Try Doppler for Free
+					</Link>
+				) : (
+					<>
+						<div className="w-[90%] md:w-1/4 outline outline-1 m-auto rounded-full overflow-clip">
+							<form
+								className="flex"
+								onSubmit={(e) => {
+									e.preventDefault();
+									joinWaitlist({ email });
+								}}
+							>
+								<TextInput
+									type="email"
+									required
+									className="rounded-none border-0 focus:outline-none"
+									placeholder="you@beautiful.com"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+								/>
+								<button className="btn btn-primary rounded-none min-w-[100px] border-0">
+									{isLoading ? (
+										<Loader className="text-white" theme={false} />
+									) : (
+										'Join Waitlist'
+									)}
+								</button>
+							</form>
+						</div>
+					</>
+				)}
 				{/* <Link to={'/signup'} className="btn btn-primary md:w-1/4">
 					Try Doppler for Free
 				</Link> */}
-				<div className="w-[90%] md:w-1/4 outline outline-1 m-auto rounded-full overflow-clip">
-					<form
-						className="flex"
-						onSubmit={(e) => {
-							e.preventDefault();
-							joinWaitlist({ email });
-						}}
-					>
-						<TextInput
-							type="email"
-							required
-							className="rounded-none border-0 focus:outline-none"
-							placeholder="you@beautiful.com"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-						<button className="btn btn-primary rounded-none min-w-[100px] border-0">
-							{isLoading ? (
-								<Loader className="text-white" theme={false} />
-							) : (
-								'Join Waitlist'
-							)}
-						</button>
-					</form>
-				</div>
+
 				<div className="p-0 pt-[20px] md:pt-[80px]"></div>
 				<div className="w-full flex justify-center">
 					<img src={Desktop} className="w-3/4 md:w-3/5" />
@@ -301,32 +288,35 @@ const Landing = () => {
 					<div className="py-2 md:hidden"></div>
 
 					<div className="md:w-2/5">
-						{/* <Link className="btn btn-white w-full">Try Doppler for Free</Link> */}
-						<div className="m-auto text-black outline outline-1">
-							<form
-								className="flex"
-								onSubmit={(e) => {
-									e.preventDefault();
-									joinWaitlist({ email });
-								}}
-							>
-								<TextInput
-									type="email"
-									required
-									className="rounded-none border-0 focus:outline-none"
-									placeholder="you@beautiful.com"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-								/>
-								<button className="btn rounded-none min-w-[100px] border-0">
-									{isLoading ? (
-										<Loader className="text-white" theme={false} />
-									) : (
-										'Join Waitlist'
-									)}
-								</button>
-							</form>
-						</div>
+						{__ENV__.WAITLISTING == 'off' ? (
+							<Link className="btn btn-white w-full">Try Doppler for Free</Link>
+						) : (
+							<div className="m-auto text-black outline outline-1">
+								<form
+									className="flex"
+									onSubmit={(e) => {
+										e.preventDefault();
+										joinWaitlist({ email });
+									}}
+								>
+									<TextInput
+										type="email"
+										required
+										className="rounded-none border-0 focus:outline-none"
+										placeholder="you@beautiful.com"
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
+									/>
+									<button className="btn rounded-none min-w-[100px] border-0">
+										{isLoading ? (
+											<Loader className="text-white" theme={false} />
+										) : (
+											'Join Waitlist'
+										)}
+									</button>
+								</form>
+							</div>
+						)}
 					</div>
 				</div>
 
