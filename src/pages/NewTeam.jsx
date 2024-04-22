@@ -5,6 +5,8 @@ import { useNewTeamMutation } from '../services/teams';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loaders';
 
+import { notification } from 'antd';
+
 const NewTeam = () => {
 	const [teamForm, setTeamForm] = useState({
 		name: '',
@@ -54,11 +56,18 @@ const NewTeam = () => {
 							})
 								.unwrap()
 								.then((response) => {
-									console.log(response);
-									navigate('/');
+									notification.success({
+										message: 'App created successfully',
+										duration: 3,
+									});
+									navigate('/apps');
 								})
 								.catch(({ status, data }) => {
-									setTimeout(() => navigate('/'), 1000);
+									notification.error({
+										message: data.message || 'An error occurred',
+										duration: 3,
+									});
+									setTimeout(() => navigate('/dashboard'), 1000);
 								});
 						}}
 					>
