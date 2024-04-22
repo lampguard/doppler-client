@@ -11,6 +11,9 @@ export const tasks = api
 					url: '/tasks',
 				}),
 				providesTags: ['Tasks'],
+				forceRefetch: ({}) => {
+					return true;
+				},
 			}),
 			assignTask: builder.mutation({
 				query: (body) => ({
