@@ -18,7 +18,7 @@ export default () => {
 	const signup = () => {
 		register(form)
 			.unwrap()
-			.then(() => navigate('/'))
+			.then(() => navigate('/login'))
 			.catch((err) => {
 				console.error(err);
 				alert(err.data?.data.message);
@@ -97,10 +97,13 @@ export default () => {
 						)}
 					</button>
 					<p className="text-sm py-3 flex items-center justify-center gap-3">
-						<BiInfoCircle className='text-xl text-theme'/>
+						<BiInfoCircle className="text-xl text-theme" />
 						<span>
 							By signing up, you agree to the{' '}
-							<Link to={'/terms'} className="underline text-blue-700 hover:text-black">
+							<Link
+								to={'/terms'}
+								className="underline text-blue-700 hover:text-black"
+							>
 								Terms & Conditions
 							</Link>
 						</span>
