@@ -10,13 +10,13 @@
   }
 
   @font-face {
-    src: url("./assets/articulat/ArticulatCF-Bold.otf") format("opentype");
+    src: url("./assets/articulat/ArticulatCF-Medium.otf") format("opentype");
     font-family: "ArticulatBold";
     font-weight: bold;
   }
 
   @font-face {
-    src: url("./assets/articulat/ArticulatCF-Light.otf") format("opentype");
+    src: url("./assets/articulat/ArticulatCF-Normal.otf") format("opentype");
     font-family: "ArticulatLight";
     font-weight: lighter;
   }

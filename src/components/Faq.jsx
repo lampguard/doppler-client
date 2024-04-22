@@ -11,16 +11,13 @@ const questions = [
 		question: 'How is my data secured?',
 	},
 	{
-		question: 'How is my data secured?',
+		question: 'What type of errors can I track?',
 	},
 	{
-		question: 'How is my data secured?',
+		question: 'Who can access my data?',
 	},
 	{
-		question: 'How is my data secured?',
-	},
-	{
-		question: 'How is my data secured?',
+		question: 'Is there a cost associated with using the platform?',
 	},
 ];
 

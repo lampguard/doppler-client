@@ -15,7 +15,7 @@ export const navLinks = [
     activeIcon: <BsMenuAppFill className="text-2xl inline" />,
   },
   {
-    title: "Flags",
+    title: "Tasks",
     slug: "/tasks",
     icon: <AiOutlineLineChart className="text-2xl inline" />,
     activeIcon: <AiOutlineLineChart className="text-2xl inline" />,

@@ -6,9 +6,8 @@
 import React, { useEffect, useState } from 'react';
 import { BsCaretDownFill, BsCone } from 'react-icons/bs';
 import { useCreateFlagMutation } from '../../services/flags';
-import {
-	useLazyGetAppTeamsQuery,
-} from '../../services/apps';
+import { useAssignTaskMutation } from '../../services/tasks';
+import { useLazyGetAppTeamsQuery } from '../../services/apps';
 import { FaFlag } from 'react-icons/fa';
 import { notification } from 'antd';
 import Loader from '../Loaders';
@@ -23,55 +22,140 @@ const Log = ({ log, appteams }) => {
 	const [open, setOpen] = useState(false);
 	const [flag, { isLoading }] = useCreateFlagMutation();
 
-	const [assign, setAssign] = useState(undefined);
+	const [description, setDescription] = useState('');
+	const [assignedTeam, setAssignTeam] = useState(undefined);
+	const [assignedMember, setAssignMember] = useState(undefined);
+
+	const [assignTask, { isLoading: assigning }] = useAssignTaskMutation();
+
+	const submitAssignment = () => {
+		return assignTask({
+			log_id: log.id,
+			assignment: {
+				team: assignedTeam?.id,
+				member: assignedMember?.id,
+			},
+			description: description.length == 0 ? undefined : description,
+		});
+	};
 
 	return (
 		<>
-			<Modal id={`log-${log.id}`}>
-				<p>{log.level.toUpperCase()}</p>
-				<p>{log.text}</p>
+			<Modal
+				id={`log-${log.id}`}
+				className="rounded-none min-w-[67.7777%]"
+				withClose
+			>
+				<p className="font-articulat-bold text-xl">{log.level.toUpperCase()}</p>
+				<p className="line-clamp-2">
+					<span className="font-articulat-bold">Time</span>:{' '}
+					{format(log.createdAt, 'P HH:mm:ss a')}
+				</p>
+				<p className="line-clamp-2">
+					<span className="font-articulat-bold">Message</span>: {log.text}
+				</p>
 				<div className="py-2"></div>
-				<p className="text-sm">Select a team to assign </p>
-				<div className="flex">
-					<div className="w-1/3 border-r-2 border-black">
-						{appteams?.map((team) => {
-							return (
-								<div key={`team-${team.id}-log-${log.id}`}>
-									<label
-										className="btn glass w-full rounded-none"
-										onClick={() => {}}
-									>
-										{team.name}
-										<input
-											name="team"
-											type="radio"
-											className="radio radio-xs"
-                      checked={assign?.team.id == team.id}
-											onChange={(e) => {
-												if (e.target.checked) {
-													setAssign({
-														team,
-													});
-												}
-											}}
-										/>
-									</label>
-								</div>
-							);
-						})}
-					</div>
-
-          {/* I dey go sleep */}
-					<div className="w-2/3">
-						{assign && (
-							<form>
-								{assign?.team?.members.map((member) => (
-									<p>{member.name}</p>
-								))}
-							</form>
+				<p>Select A Team to Assign To</p>
+				<div className="flex items-start justify-start">
+					<div
+						className={
+							(assignedTeam == undefined ? 'w-full' : 'w-1/3 border-r-2') +
+							' border-black'
+						}
+					>
+						{assignedTeam && (
+							<button
+								className="btn btn-xs rounded-none w-full glass bg-red-500"
+								onClick={() => {
+									setAssignTeam(undefined);
+								}}
+							>
+								Reset
+							</button>
 						)}
+						{appteams.map((team) => (
+							<button
+								className="btn w-full rounded-none"
+								onClick={() => {
+									setAssignTeam(team);
+									setAssignMember(undefined);
+								}}
+							>
+								{team.name}
+							</button>
+						))}
 					</div>
+					{assignedTeam !== undefined && (
+						<div className="w-2/3 p-2">
+							<p>
+								Assigning to{' '}
+								{assignedMember && (
+									<span className="underline">{assignedMember.name} on</span>
+								)}{' '}
+								{assignedTeam.name}
+							</p>
+							<div className="py-1"></div>
+							{assignedTeam.members.map((member) => (
+								<label className="label" key={member.email}>
+									{member.name} ({member.email})
+									<input
+										type="radio"
+										className="checkbox radio-xs"
+										name={assignedTeam.name}
+										checked={assignedMember?.id == member.id}
+										onChange={(e) => {
+											if (e.target.checked) {
+												setAssignMember(member);
+											}
+										}}
+									/>
+								</label>
+							))}
+						</div>
+					)}
 				</div>
+
+				{assignedTeam && (
+					<>
+						<label className="text-sm">Description (optional)</label>
+						<textarea
+							className="textarea w-full textarea-bordered textarea-primary"
+							placeholder="Add a Description"
+							value={description}
+							onChange={(e) => {
+								setDescription(e.target.value);
+							}}
+						/>
+						<button
+							className="btn btn-primary w-full"
+							onClick={() => {
+								submitAssignment()
+									.then(() => {
+										setAssignMember(undefined);
+										setAssignTeam(undefined);
+										setDescription('');
+										document.getElementById(`log-${log.id}`).close();
+										notification.success({
+											duration: 3,
+											message: 'Task was assigned successfully',
+											style: { zIndex: 100000 },
+										});
+									})
+									.catch((err) => {
+										notification.error({
+											duration: 3,
+											message:
+												err.data?.message ||
+												'Unable to assign task. Please try again.',
+											style: { zIndex: 100000 },
+										});
+									});
+							}}
+						>
+							{assigning ? <Loader theme={false} /> : 'Assign'}
+						</button>
+					</>
+				)}
 			</Modal>
 			{open && (
 				<>
@@ -81,7 +165,7 @@ const Log = ({ log, appteams }) => {
 							onClick={() => setOpen(false)}
 						>
 							<span>IP Address: {log.ip}</span>
-							<span>{format(log.createdAt, 'yyyy-MM-dd hh:ii:ss a')}</span>
+							<span>{format(log.createdAt, 'yyyy-MM-dd hh:mm:ss a')}</span>
 						</div>
 						<div className="w-full p-[5px] bg-gray-200 rounded min-h-[100px]">
 							{log.text}

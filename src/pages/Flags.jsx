@@ -28,7 +28,7 @@ const Flags = () => {
 				<React.Fragment key={flag.id}>
           <div className='flex items-center justify-evenly'>
             <span><BsFlag/></span>
-            <span>{flag.log.text}</span>
+            <span className='truncate w-2/3'>{flag.log.text}</span>
             <span>{format(flag.createdAt,'d/M/y')}</span>
           </div>
         </React.Fragment>

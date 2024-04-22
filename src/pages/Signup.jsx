@@ -2,7 +2,8 @@ import { useState } from 'react';
 import TextInput from '../components/Input/TextInput';
 import Loader from '../components/Loaders';
 import { useSignupMutation } from '../services';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { BiInfoCircle } from 'react-icons/bi';
 
 export default () => {
 	const [form, setForm] = useState({
@@ -95,6 +96,15 @@ export default () => {
 							'Sign up'
 						)}
 					</button>
+					<p className="text-sm py-3 flex items-center justify-center gap-3">
+						<BiInfoCircle className='text-xl text-theme'/>
+						<span>
+							By signing up, you agree to the{' '}
+							<Link to={'/terms'} className="underline text-blue-700 hover:text-black">
+								Terms & Conditions
+							</Link>
+						</span>
+					</p>
 				</div>
 			</form>
 		</div>

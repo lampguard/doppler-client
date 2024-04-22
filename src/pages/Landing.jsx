@@ -235,10 +235,7 @@ const Landing = () => {
 						<p className="text-2xl font-bold">Manage Your Apps & Teams</p>
 						<div className="py-3"></div>
 						<p>
-							Gain real-time insights into app errors and potential safety
-							risks. Our comprehensive tracking system empowers you to identify
-							issues, prevent accidents, and ensure the well-being of your
-							users.
+						Our platform brings all your apps under one roof.  Easily manage access, track app performance, and receive real-time alerts. This centralized system fosters collaboration, empowers your team to identify and address issues quickly, and ultimately ensures the smooth operation of your apps.
 						</p>
 					</div>
 				</div>
@@ -254,10 +251,7 @@ const Landing = () => {
 						<p className="text-2xl font-bold">Distribute Tasks Efficiently</p>
 						<div className="py-3"></div>
 						<p>
-							Gain real-time insights into app errors and potential safety
-							risks. Our comprehensive tracking system empowers you to identify
-							issues, prevent accidents, and ensure the well-being of your
-							users.
+						Don't waste time assigning tasks manually. Our platform leverages smart algorithms to distribute error and fatality tracking tasks  based on team member expertise and workload. This ensures a balanced workload, reduces bottlenecks, and  empowers your team to focus on what matters most -  preventing future incidents and ensuring app safety.
 						</p>
 					</div>
 					<img src={Desktop} className="hidden md:block w-1/2" />

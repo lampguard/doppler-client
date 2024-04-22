@@ -6,7 +6,7 @@
 const Modal = ({ id, children, withClose, className }) => {
 	return (
 		<>
-			<dialog id={id} className={"modal"}>
+			<dialog id={id} className={"modal "}>
 				<div className={"modal-box " + className}>
 					{children}
 					{withClose && (
