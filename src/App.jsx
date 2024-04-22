@@ -5,6 +5,7 @@ import blackLogo from './assets/black-logo.svg';
 import Ellipse from './assets/Ellipse 8.svg';
 import Panes from './assets/multi-pane.png';
 import Desktop from './assets/Desktop.png';
+import DesktopTasks from './assets/Tasks.png';
 import Faq from './components/Faq';
 import Twitter from './assets/twitter-logo.svg';
 import Github from './assets/github-icon-logo.svg';
@@ -235,7 +236,11 @@ const Landing = () => {
 						<p className="text-2xl font-bold">Manage Your Apps & Teams</p>
 						<div className="py-3"></div>
 						<p>
-						Our platform brings all your apps under one roof.  Easily manage access, track app performance, and receive real-time alerts. This centralized system fosters collaboration, empowers your team to identify and address issues quickly, and ultimately ensures the smooth operation of your apps.
+							Our platform brings all your apps under one roof. Easily manage
+							access, track app performance, and receive real-time alerts. This
+							centralized system fosters collaboration, empowers your team to
+							identify and address issues quickly, and ultimately ensures the
+							smooth operation of your apps.
 						</p>
 					</div>
 				</div>
@@ -251,10 +256,19 @@ const Landing = () => {
 						<p className="text-2xl font-bold">Distribute Tasks Efficiently</p>
 						<div className="py-3"></div>
 						<p>
-						Don't waste time assigning tasks manually. Our platform leverages smart algorithms to distribute error and fatality tracking tasks  based on team member expertise and workload. This ensures a balanced workload, reduces bottlenecks, and  empowers your team to focus on what matters most -  preventing future incidents and ensuring app safety.
+							Don't waste time assigning tasks manually. Our platform leverages
+							smart algorithms to distribute error and fatality tracking tasks
+							based on team member expertise and workload. This ensures a
+							balanced workload, reduces bottlenecks, and empowers your team to
+							focus on what matters most - preventing future incidents and
+							ensuring app safety.
 						</p>
 					</div>
-					<img src={Desktop} className="hidden md:block w-1/2" />
+					<div className="py-3 md:hidden"></div>
+					<img
+						src={DesktopTasks}
+						className="w-full md:block md:w-1/2 rounded-lg border-[.25em] md:border-4 border-black"
+					/>
 				</div>
 			</section>
 
