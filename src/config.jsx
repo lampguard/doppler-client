@@ -20,10 +20,10 @@ export const navLinks = [
     icon: <AiOutlineLineChart className="text-2xl inline" />,
     activeIcon: <AiOutlineLineChart className="text-2xl inline" />,
   },
-  {
-    title: "View on Github",
-    slug: "https://github.com/lampguard/doppler-client",
-    icon: <BsGithub className="text-2xl inline" />,
-    blankTarget: true,
-  },
+  // {
+  //   title: "View on Github",
+  //   slug: "https://github.com/lampguard/doppler-client",
+  //   icon: <BsGithub className="text-2xl inline" />,
+  //   blankTarget: true,
+  // },
 ];

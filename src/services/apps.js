@@ -2,7 +2,7 @@ import { api } from '.';
 
 const appApi = api
 	.enhanceEndpoints({
-		addTagTypes: ['App', 'Logs'],
+		addTagTypes: ['App', 'Logs', 'AppTeams'],
 	})
 	.injectEndpoints({
 		endpoints: (builder) => ({
@@ -36,6 +36,12 @@ const appApi = api
 				invalidatesTags: ['Apps'],
 				transformResponse: (response, meta, args) => response.data,
 			}),
+			getAppTeams: builder.query({
+				query: (id) => ({
+					url: `/apps/${id}/teams`,
+				}),
+				providesTags: ['AppTeams'],
+			}),
 		}),
 	});
 
@@ -45,4 +51,6 @@ export const {
 	useLazyGetLogsQuery,
 	useCreateAppMutation,
 	useDeleteLogsMutation,
+	useLazyGetAppTeamsQuery,
+	useGetAppTeamsQuery,
 } = appApi;

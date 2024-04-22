@@ -45,23 +45,42 @@
   }
 
   .bg-theme {
-    background-color: #003AFF;
-    color: #fff;
+    @apply bg-[#003AFF] text-white;
+  }
+
+  .log {
+    @apply border-2;
   }
 
   .log.error {
-    @apply bg-red-400;
+    @apply border-red-400;
   }
   .log.info {
-    @apply bg-blue-500;
+    @apply border-blue-500;
   }
   .log.debug {
-    @apply bg-green-500;
+    @apply border-green-500;
   }
   .log.fatal {
-    @apply bg-red-700;
+    @apply border-red-700;
   }
   .log.critical {
+    @apply border-black;
+  }
+
+  .log.error-bg {
+    @apply bg-red-400;
+  }
+  .log.info-bg {
+    @apply bg-blue-500;
+  }
+  .log.debug-bg {
+    @apply bg-green-500;
+  }
+  .log.fatal-bg {
+    @apply bg-red-700;
+  }
+  .log.critical-bg {
     @apply bg-black;
   }
 }
