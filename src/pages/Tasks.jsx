@@ -13,7 +13,7 @@ type App = {
   token: string;
 };
 
-type Log = {s
+type Log = {
   createdAt: string;
   updatedAt: string;
   id: number;
@@ -58,6 +58,25 @@ type Task = {
 };
 */
 
+const Task = ({ task }) => (
+	<div key={task.id} className="pb-4 flex justify-between items-start gap-x-4">
+		<p className="font-articulat-light w-4/5 md:w-auto">
+			<span className="text-xs align-top pr-3 m-0">
+				<BsCircleFill className="inline text-theme" />
+			</span>
+			<span className="inline font-articulat-bold">{task.team.name}:</span>{' '}
+			{Boolean(task.assigned_to)
+				? `You have been assigned a new task in ${task.log.app.title}`
+				: `New task assigned in ${task.log.app.title} `}
+		</p>
+		<div className="grid place-items-end md:min-w-[20%]">
+			<Link to={`/tasks/${task.id}`} className="btn btn-sm max-w-fit">
+				View Task
+			</Link>
+		</div>
+	</div>
+);
+
 const Tasks = () => {
 	const [getTasks, { isLoading }] = useLazyGetTasksQuery();
 	const [tasks, setTasks] = useState([]);
@@ -88,30 +107,31 @@ const Tasks = () => {
 								.filter((task) => Boolean(task.assigned_to))
 								.map((task) => {
 									return (
-										<div
-											key={task.id}
-											className="pb-4 flex justify-between items-start gap-x-4"
-										>
-											<p className="font-articulat-light">
-												<span className="text-xs align-top pr-3 m-0">
-													<BsCircleFill className="inline text-theme" />
-												</span>
-												<span className="inline font-articulat-bold">
-													{task.team.name}:
-												</span>{' '}
-												{Boolean(task.assigned_to)
-													? `You have been assigned a new task in ${task.log.app.title}`
-													: `New task assigned in ${task.log.app.title} `}
-											</p>
-											<div className="grid place-items-end min-w-[20%]">
-												<Link
-													to={`/tasks/${task.id}`}
-													className="btn btn-sm max-w-fit"
-												>
-													View Task
-												</Link>
-											</div>
-										</div>
+										// <div
+										// 	key={task.id}
+										// 	className="pb-4 flex justify-between items-start gap-x-4"
+										// >
+										// 	<p className="font-articulat-light">
+										// 		<span className="text-xs align-top pr-3 m-0">
+										// 			<BsCircleFill className="inline text-theme" />
+										// 		</span>
+										// 		<span className="inline font-articulat-bold">
+										// 			{task.team.name}:
+										// 		</span>{' '}
+										// 		{Boolean(task.assigned_to)
+										// 			? `You have been assigned a new task in ${task.log.app.title}`
+										// 			: `New task assigned in ${task.log.app.title} `}
+										// 	</p>
+										// 	<div className="grid place-items-end min-w-[20%]">
+										// 		<Link
+										// 			to={`/tasks/${task.id}`}
+										// 			className="btn btn-sm max-w-fit"
+										// 		>
+										// 			View Task
+										// 		</Link>
+										// 	</div>
+										// </div>
+										<Task task={task} />
 									);
 								})
 						) : (
@@ -125,30 +145,31 @@ const Tasks = () => {
 								.filter((task) => Boolean(task.assigned_to) == false)
 								.map((task) => {
 									return (
-										<div
-											key={task.id}
-											className="pb-4 flex justify-between items-start gap-x-4"
-										>
-											<p className="font-articulat-light">
-												<span className="text-xs align-top pr-3 m-0">
-													<BsCircleFill className="inline text-theme" />
-												</span>
-												<span className="inline font-articulat-bold">
-													{task.team.name}:
-												</span>{' '}
-												{Boolean(task.assigned_to)
-													? `You have been assigned a new task in ${task.log.app.title}`
-													: `New task assigned in ${task.log.app.title} `}
-											</p>
-											<div className="grid place-items-end min-w-[20%]">
-												<Link
-													to={`/tasks/${task.id}`}
-													className="btn btn-sm max-w-fit"
-												>
-													View Task
-												</Link>
-											</div>
-										</div>
+										// <div
+										// 	key={task.id}
+										// 	className="pb-4 flex justify-between items-start gap-x-4"
+										// >
+										// 	<p className="font-articulat-light">
+										// 		<span className="text-xs align-top pr-3 m-0">
+										// 			<BsCircleFill className="inline text-theme" />
+										// 		</span>
+										// 		<span className="inline font-articulat-bold">
+										// 			{task.team.name}:
+										// 		</span>{' '}
+										// 		{Boolean(task.assigned_to)
+										// 			? `You have been assigned a new task in ${task.log.app.title}`
+										// 			: `New task assigned in ${task.log.app.title} `}
+										// 	</p>
+										// 	<div className="grid place-items-end min-w-[20%]">
+										// 		<Link
+										// 			to={`/tasks/${task.id}`}
+										// 			className="btn btn-sm max-w-fit"
+										// 		>
+										// 			View Task
+										// 		</Link>
+										// 	</div>
+										// </div>
+										<Task task={task} />
 									);
 								})
 						) : (

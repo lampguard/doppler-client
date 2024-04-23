@@ -56,16 +56,16 @@ const Log = ({ log, appteams }) => {
 				</p>
 				<div className="py-2"></div>
 				<p>Select A Team to Assign To</p>
-				<div className="flex items-start justify-start">
+				<div className="md:flex items-start justify-start">
 					<div
 						className={
-							(assignedTeam == undefined ? 'w-full' : 'w-1/3 border-r-2') +
+							(assignedTeam == undefined ? 'w-full' : 'md:w-1/3 md:border-r-2') +
 							' border-black'
 						}
 					>
 						{assignedTeam && (
 							<button
-								className="btn btn-xs rounded-none w-full glass bg-red-500"
+								className="btn btn-xs rounded-none w-full glass text-white bg-red-500"
 								onClick={() => {
 									setAssignTeam(undefined);
 								}}
@@ -86,8 +86,8 @@ const Log = ({ log, appteams }) => {
 						))}
 					</div>
 					{assignedTeam !== undefined && (
-						<div className="w-2/3 p-2">
-							<p>
+						<div className="w-full md:w-2/3 p-2">
+							<p className='py-3 md:py-0'>
 								Assigning to{' '}
 								{assignedMember && (
 									<span className="underline">{assignedMember.name} on</span>
