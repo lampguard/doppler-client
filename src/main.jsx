@@ -31,6 +31,7 @@ import TeamInfo from "./pages/TeamInfo.jsx";
 // import Flags from './pages/Flags.jsx';
 import Tasks from "./pages/Tasks.jsx";
 import Task from "./pages/Task.jsx";
+import PasswordReset from "./pages/PasswordReset.jsx";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,7 @@ const routes = createBrowserRouter(
         <Route element={<Login />} path="/login" />
         <Route element={<Signup />} path="/signup" />
         <Route element={<ResetPassword />} path="/reset-password" />
+        <Route element={<PasswordReset />} path="/password-reset" />
       </Route>
       <Route element={<DashboardLayout />}>
         {/* <Route index element={<Dashboard />} /> */}
