@@ -12,6 +12,7 @@ import { BsPlus } from 'react-icons/bs';
 import { useTeamContext } from '../context/TeamContext';
 import { useEffect, useState } from 'react';
 import { formatDate } from 'date-fns';
+import Skeleton from '../components/Loaders/Skeleton';
 
 const columnHelper = createColumnHelper();
 
@@ -44,7 +45,7 @@ const columns = [
 			// }
 
 			// return info.getValue()?.toISOString();
-			return formatDate(info.getValue(), "yyyy-MM-dd")
+			return formatDate(info.getValue(), 'yyyy-MM-dd');
 		},
 	}),
 	columnHelper.accessor('token', {
@@ -80,20 +81,20 @@ const Apps = () => {
 
 	return (
 		<>
-			{isLoading ? (
-				<Loader />
-			) : isError ? (
-				<>{error.data.message || <>An error occurred</>}</>
-			) : (
-				<div className="md:p-6">
-					<Link className="btn btn-sm md:hidden" to={'/dashboard/create-app'}>
-						<BsPlus className="text-2xl" /> Add a new app
-					</Link>
-					<div className="md:border-[1px] border-[#ccc] rounded-lg">
+			<div className="md:p-6">
+				<Link className="btn btn-sm md:hidden" to={'/dashboard/create-app'}>
+					<BsPlus className="text-2xl" /> Add a new app
+				</Link>
+				<div className="md:border-[1px] border-[#ccc] rounded-lg">
+					{isLoading || isFetching ? (
+						<div className="p-2">
+							<Skeleton className="w-full h-64 rounded-none" />
+						</div>
+					) : (
 						<Table table={table} />
-					</div>
+					)}
 				</div>
-			)}
+			</div>
 		</>
 	);
 	// return <div className="container p-4">{table.getAllColumns()}</div>;

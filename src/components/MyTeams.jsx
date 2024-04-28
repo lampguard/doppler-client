@@ -46,44 +46,33 @@ const MyTeams = ({ open, setOpen }) => {
 	}
 
 	return (
-		<TeamContext.Provider value={activeTeam}>
-			<div className="bg-white h-full w-full">
-				<p className="text-3xl">My Teams</p>
-				<div className="py-2"></div>
-				{teams.map((team) => {
-					return (
-						<div key={team.name} className="flex items-center justify-between">
-							<label htmlFor="" className="label flex gap-x-1">
-								<input
-									type="radio"
-									name="team"
-									className="radio radio-xs border"
-									checked={team.id == activeTeam.id}
-									onChange={(e) => {
-										selectTeam(team.id);
-									}}
-								/>
-								{team.name}
-							</label>
-							{team.id !== undefined && (
-								<Link to={`/teams/${team.id}`}>
-									<BsMenuApp />
-								</Link>
-							)}
-						</div>
-					);
-				})}
-
-				<Link
-					to={'/dashboard/create-team'}
-					className="btn btn-primary w-full flex rounded-full"
-					onClick={setOpen}
-				>
-					<BsPlus className="text-[2.5em]" />
-					<span>New Team</span>
-				</Link>
-			</div>
-		</TeamContext.Provider>
+		<div className="bg-white h-full w-full">
+			<p className="text-3xl">My Teams</p>
+			<div className="py-2"></div>
+			{teams.map((team) => {
+				return (
+					<div key={team.name} className="flex items-center justify-between">
+						<label htmlFor="" className="label flex gap-x-1">
+							<input
+								type="radio"
+								name="team"
+								className="radio radio-xs border"
+								checked={team.id == activeTeam.id}
+								onChange={(e) => {
+									selectTeam(team.id);
+								}}
+							/>
+							{team.name}
+						</label>
+						{team.id !== undefined && (
+							<Link to={`/teams/${team.id}`}>
+								<BsMenuApp />
+							</Link>
+						)}
+					</div>
+				);
+			})}
+		</div>
 	);
 };
 

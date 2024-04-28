@@ -16,42 +16,6 @@ import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
 import { useTeamContext } from '../../context/TeamContext';
 
 /**
- *
- * @type {React.FC<{open: boolean}>} MdNavbar
- * @returns
- */
-const MdNavbar = ({ open, children }) => {
-	return (
-		<>
-			{open ? (
-				<>
-					<div className="md:hidden bg-white z-[1000] absolute left-0 top-0 w-[100%] p-3">
-						<div>
-							<div className="flex justify-between">
-								<img src={logo} alt="" className="w-[130px]" />
-								{children}
-							</div>
-							<div className="py-2"></div>
-
-							<NavList />
-						</div>
-						<Link
-							to={'/login'}
-							className="flex w-full items-center py-3 px-4 border hover:bg-red-500 hover:text-white hover:border-red-500 rounded-full"
-						>
-							<span className="pr-5">
-								<IoLogOut size={25} />
-							</span>
-							Log out
-						</Link>
-					</div>
-				</>
-			) : null}
-		</>
-	);
-};
-
-/**
  * @type {React.FC<{
  *  children?: React.ReactElement;
  *  title: string;
@@ -158,15 +122,6 @@ const Template = ({ children, title }) => {
 				</div>
 			</div>
 
-			{/* Floating Mobile drawer opener */}
-			<div
-				className="md:hidden fixed w-[35px] h-[30px] top-[20%] right-0 z-[999]"
-				onClick={toggleAside}
-			>
-				<div className="btn btn-sm w-[100%] h-[100%] rounded-none bg-white rounded-l-md border-2 grid place-items-center">
-					{!asideOpen ? <BiSolidLeftArrow /> : <BiSolidRightArrow />}
-				</div>
-			</div>
 		</>
 	);
 };

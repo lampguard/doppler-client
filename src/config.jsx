@@ -5,20 +5,20 @@ export const navLinks = [
   {
     title: "Dashboard",
     slug: "/dashboard",
-    icon: <AiOutlineHome className="text-2xl inline" />,
-    activeIcon: <AiFillHome className="text-2xl inline" />,
+    icon: <AiOutlineHome className="text-xl inline" />,
+    activeIcon: <AiFillHome className="text-xl inline" />,
   },
   {
     title: "Apps",
     slug: "/apps",
-    icon: <BsMenuButton className="text-2xl inline" />,
-    activeIcon: <BsMenuAppFill className="text-2xl inline" />,
+    icon: <BsMenuButton className="text-xl inline" />,
+    activeIcon: <BsMenuAppFill className="text-xl inline" />,
   },
   {
     title: "Tasks",
     slug: "/tasks",
-    icon: <AiOutlineLineChart className="text-2xl inline" />,
-    activeIcon: <AiOutlineLineChart className="text-2xl inline" />,
+    icon: <AiOutlineLineChart className="text-xl inline" />,
+    activeIcon: <AiOutlineLineChart className="text-xl inline" />,
   },
   // {
   //   title: "View on Github",

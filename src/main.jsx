@@ -1,133 +1,77 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './index.css';
 
-import Login from "./pages/Login.jsx";
-import Signup from "./pages/Signup.jsx";
-import AuthPane from "./components/AuthPane";
+import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
+import AuthPane from './components/AuthPane';
 
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 
-import { store } from "./store.js";
+import { store } from './store.js';
 
 import {
-  createBrowserRouter,
-  RouterProvider,
-  createRoutesFromElements,
-  Route,
-} from "react-router-dom";
-import ResetPassword from "./pages/ResetPassword.jsx";
-import DashboardLayout from "./components/DashboardLayout/index.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
-import Template from "./components/DashboardLayout/Template.jsx";
-import Apps from "./pages/Apps.jsx";
-import NewApp from "./pages/NewApp.jsx";
-import Profile from "./pages/Profile.jsx";
-import ApplicationPage from "./pages/ApplicationPage.jsx";
-import { TeamProvider } from "./context/TeamContext.jsx";
-import NewTeam from "./pages/NewTeam.jsx";
-import TeamInfo from "./pages/TeamInfo.jsx";
+	createBrowserRouter,
+	RouterProvider,
+	createRoutesFromElements,
+	Route,
+} from 'react-router-dom';
+import ResetPassword from './pages/ResetPassword.jsx';
+import DashboardLayout from './components/DashboardLayout/index.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import Template from './components/DashboardLayout/Template.jsx';
+import Apps from './pages/Apps.jsx';
+import NewApp from './pages/NewApp.jsx';
+import Profile from './pages/Profile.jsx';
+import ApplicationPage from './pages/ApplicationPage.jsx';
+import { TeamProvider } from './context/TeamContext.jsx';
+import NewTeam from './pages/NewTeam.jsx';
+import TeamInfo from './pages/TeamInfo.jsx';
 // import Flags from './pages/Flags.jsx';
-import Tasks from "./pages/Tasks.jsx";
-import Task from "./pages/Task.jsx";
-import PasswordReset from "./pages/PasswordReset.jsx";
+import Tasks from './pages/Tasks.jsx';
+import Task from './pages/Task.jsx';
+import PasswordReset from './pages/PasswordReset.jsx';
+import AppLayout from './components/Layouts/AppLayout.jsx';
 
 const routes = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/">
-      <Route element={<App />} index />
-      <Route path="/docs/guide" element={<App />} />
-      <Route element={<AuthPane />}>
-        <Route element={<Login />} path="/verify-2fa" />
-        <Route element={<Login />} path="/login" />
-        <Route element={<Signup />} path="/signup" />
-        <Route element={<ResetPassword />} path="/reset-password" />
-        <Route element={<PasswordReset />} path="/password-reset" />
-      </Route>
-      <Route element={<DashboardLayout />}>
-        {/* <Route index element={<Dashboard />} /> */}
-        <Route path="/tasks">
-          <Route
-            index
-            element={
-              <Template title="Tasks">
-                {/* <Flags /> */}
-                <Tasks />
-              </Template>
-            }
-          />
-          <Route
-            path=":id"
-            element={
-              <Template title="Task">
-                <Task />
-              </Template>
-            }
-          />
-        </Route>
-        <Route path="/apps">
-          <Route
-            index
-            element={
-              <Template title="Apps">
-                <Apps />
-              </Template>
-            }
-          />
-          <Route
-            path={":id"}
-            element={
-              <Template title="App">
-                <ApplicationPage />
-              </Template>
-            }
-          />
-        </Route>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route
-          path="/account/profile"
-          element={
-            <Template title="Profile">
-              <Profile />
-            </Template>
-          }
-        />
-        <Route
-          path="/dashboard/create-app"
-          element={
-            <Template title="New App">
-              <NewApp />
-            </Template>
-          }
-        />
-        <Route
-          path="/dashboard/create-team"
-          element={
-            <Template title="New Team">
-              <NewTeam />
-            </Template>
-          }
-        />
-        <Route
-          path="/teams/:id"
-          element={
-            <Template title="Team Info">
-              <TeamInfo />
-            </Template>
-          }
-        />
-      </Route>
-    </Route>,
-  ),
+	createRoutesFromElements(
+		<Route path="/">
+			<Route element={<App />} index />
+			<Route path="/docs/guide" element={<App />} />
+			<Route element={<AuthPane />}>
+				<Route element={<Login />} path="/verify-2fa" />
+				<Route element={<Login />} path="/login" />
+				<Route element={<Signup />} path="/signup" />
+				<Route element={<ResetPassword />} path="/reset-password" />
+				<Route element={<PasswordReset />} path="/password-reset" />
+			</Route>
+			<Route element={<AppLayout />}>
+				{/* <Route index element={<Dashboard />} /> */}
+				<Route path="/tasks">
+					<Route index element={<Tasks />} />
+					<Route path=":id" element={<Task />} />
+				</Route>
+				<Route path="/apps">
+					<Route index element={<Apps />} />
+					<Route path={':id'} element={<ApplicationPage />} />
+				</Route>
+				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/account/profile" element={<Profile />} />
+				<Route path="/dashboard/create-app" element={<NewApp />} />
+				<Route path="/dashboard/create-team" element={<NewTeam />} />
+				<Route path="/teams/:id" element={<TeamInfo />} />
+			</Route>
+		</Route>
+	)
 );
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <TeamProvider>
-        <RouterProvider router={routes} />
-      </TeamProvider>
-    </Provider>
-  </React.StrictMode>,
+ReactDOM.createRoot(document.getElementById('root')).render(
+	<React.StrictMode>
+		<Provider store={store}>
+			<TeamProvider>
+				<RouterProvider router={routes} />
+			</TeamProvider>
+		</Provider>
+	</React.StrictMode>
 );

@@ -13,7 +13,7 @@ const NavList = () => {
 							to={link.slug}
 							target={link.blankTarget ? '_blank' : undefined}
 							className={
-								'py-3 px-4 rounded-full w-full text-lg flex items-center ' +
+								'py-3 px-4 rounded-full w-full text-sm flex items-center ' +
 								(location.pathname == link.slug ? 'bg-theme text-white ' : null)
 							}
 						>
