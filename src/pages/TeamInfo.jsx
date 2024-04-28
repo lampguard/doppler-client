@@ -12,6 +12,7 @@ import {
 import { useLazyGetAppsQuery } from '../services';
 
 import Loader from '../components/Loaders';
+import Skeleton from '../components/Loaders/Skeleton';
 import Modal from '../components/Modal';
 import TextInput from '../components/Input/TextInput';
 
@@ -22,7 +23,7 @@ import TextInput from '../components/Input/TextInput';
 const TeamInfo = () => {
 	const { id } = useParams();
 	const { data, isLoading, isError, isSuccess } = useGetTeamQuery(id);
-	const [getTeamApps] = useLazyGetTeamAppsQuery();
+	const [getTeamApps, {isLoading: taLoading}] = useLazyGetTeamAppsQuery();
 	const [getApps] = useLazyGetAppsQuery();
 
 	const [teamApps, setTeamApps] = useState([]);
@@ -113,6 +114,13 @@ const TeamInfo = () => {
 
 						<div className="pt-4"></div>
 						<p>Apps ( {teamApps.length} )</p>
+						{taLoading && <>
+							<Skeleton className='w-full h-8 rounded-md' />
+							<div className="py-1"></div>
+							<Skeleton className='w-full h-8 rounded-md' />
+							<div className="py-1"></div>
+							<Skeleton className='w-full h-8 rounded-md' />
+						</>}
 						{teamApps.map((app) => {
 							return (
 								<div

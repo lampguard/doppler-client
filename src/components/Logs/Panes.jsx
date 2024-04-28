@@ -8,7 +8,7 @@ import { BsCaretDownFill, BsCone } from 'react-icons/bs';
 import { useCreateFlagMutation } from '../../services/flags';
 import { useAssignTaskMutation } from '../../services/tasks';
 import { useLazyGetAppTeamsQuery } from '../../services/apps';
-import { FaFlag } from 'react-icons/fa';
+import { FaFlag, FaChartLine } from 'react-icons/fa';
 import { notification } from 'antd';
 import Loader from '../Loaders';
 import Modal from '../../components/Modal';
@@ -43,89 +43,86 @@ const Log = ({ log, appteams }) => {
 		<>
 			<Modal
 				id={`log-${log.id}`}
-				className="rounded-none min-w-[67.7777%]"
+				className="rounded-none min-w-[72.5%] px-10"
 				withClose
 			>
-				<p className="font-articulat-bold text-xl">{log.level.toUpperCase()}</p>
-				<p className="line-clamp-2">
-					<span className="font-articulat-bold">Time</span>:{' '}
+				<p className="font-articulat-bold text-xl py-5">
+					{log.level.toUpperCase()}
+				</p>
+				<p className="line-clamp-2 pb-5">
+					<span className="text-gray-500">Time</span>:{' '}
 					{format(log.createdAt, 'P HH:mm:ss a')}
 				</p>
-				<p className="line-clamp-2">
-					<span className="font-articulat-bold">Message</span>: {log.text}
+				<p className="line-clamp-2 pb-5">
+					<span className="text-gray-500">Message</span>: {log.text}
 				</p>
 				<div className="py-2"></div>
-				<p>Select A Team to Assign To</p>
-				<div className="md:flex items-start justify-start">
-					<div
-						className={
-							(assignedTeam == undefined ? 'w-full' : 'md:w-1/3 md:border-r-2') +
-							' border-black'
-						}
-					>
-						{assignedTeam && (
-							<button
-								className="btn btn-xs rounded-none w-full glass text-white bg-red-500"
-								onClick={() => {
-									setAssignTeam(undefined);
-								}}
-							>
-								Reset
-							</button>
-						)}
+				<div className="md:flex items-stretch justify-start bg-[#EBEBF5]">
+					<div className="w-[40%] border-r border-black px-4 py-5">
+						<p className="py-2">Select a team to assign</p>
 						{appteams.map((team) => (
-							<button
-								className="btn w-full rounded-none"
-								onClick={() => {
-									setAssignTeam(team);
-									setAssignMember(undefined);
-								}}
-							>
+							<label htmlFor="" key={team.id} className='w-full flex items-center'>
+								<input
+									type="checkbox"
+									name="active-team"
+									className="checkbox checkbox-xs mr-4"
+									onChange={(e) => {
+										if (e.target.checked) {
+											setAssignTeam(team);
+											setAssignMember(undefined);
+										} else {
+											setAssignTeam(undefined);
+											setAssignMember(undefined);
+										}
+									}}
+
+									checked={assignedTeam?.id == team.id}
+								/>
 								{team.name}
-							</button>
+							</label>
 						))}
 					</div>
-					{assignedTeam !== undefined && (
-						<div className="w-full md:w-2/3 p-2">
-							<p className='py-3 md:py-0'>
-								Assigning to{' '}
-								{assignedMember && (
-									<span className="underline">{assignedMember.name} on</span>
-								)}{' '}
-								{assignedTeam.name}
-							</p>
-							<div className="py-1"></div>
-							{assignedTeam.members.map((member) => (
-								<label className="label" key={member.email}>
-									{member.name} ({member.email})
-									<input
-										type="radio"
-										className="checkbox radio-xs"
-										name={assignedTeam.name}
-										checked={assignedMember?.id == member.id}
-										onChange={(e) => {
-											if (e.target.checked) {
-												setAssignMember(member);
-											}
-										}}
-									/>
-								</label>
-							))}
-						</div>
-					)}
+
+					<div className="w-full md:w-2/3 p-5">
+						<p className="py-2">
+							<strong className="font-articulat-bold">{assignedTeam?.name}</strong>
+						</p>
+						<div className="py-1"></div>
+						{assignedTeam?.members.map((member) => (
+							<label className="label" key={member.email}>
+								{member.name} ({member.email})
+								<input
+									type="checkbox"
+									className="checkbox checkbox-xs"
+									name={assignedTeam?.name}
+									checked={assignedMember?.id == member.id}
+									onChange={(e) => {
+										if (e.target.checked) {
+											setAssignMember(member);
+										} else {
+											setAssignMember(undefined);
+										}
+									}}
+								/>
+							</label>
+						))}
+					</div>
 				</div>
 
 				{assignedTeam && (
 					<>
-						<label className="text-sm">Description (optional)</label>
+						<div className="py-2"></div>
+						<label className="text-sm">Description <span className='text-gray-500'>(optional)</span></label>
+						<div className="py-2"></div>
 						<textarea
-							className="textarea w-full textarea-bordered textarea-primary"
-							placeholder="Add a Description"
+							className="textarea w-full textarea-bordered border-[#EBEBF5] textarea-primary"
+							rows={5}
 							value={description}
 							onChange={(e) => {
 								setDescription(e.target.value);
 							}}
 						/>
+						<div className="py-2"></div>
 						<button
 							className="btn btn-primary w-full"
 							onClick={() => {
@@ -152,7 +149,7 @@ const Log = ({ log, appteams }) => {
 									});
 							}}
 						>
-							{assigning ? <Loader theme={false} /> : 'Assign'}
+							{assigning ? <Loader theme={false} /> : 'Assign Task'}
 						</button>
 					</>
 				)}
@@ -170,43 +167,45 @@ const Log = ({ log, appteams }) => {
 						<div className="w-full p-[5px] bg-gray-200 rounded min-h-[100px]">
 							{log.text}
 						</div>
-						<div className="py-1"></div>
-						<button
-							className="btn btn-xs glass btn-ghost relative"
-							onClick={(e) => {
-								flag({
-									log_id: log.id,
-									reason: 'User flagged',
-								})
-									.unwrap()
-									.then((data) => {
-										notification.info({
-											message: 'Okay!',
-											duration: 3,
-										});
+						<div className="py-1 flex justify-between">
+							<button
+								className="btn btn-xs glass btn-ghost relative"
+								onClick={(e) => {
+									document.getElementById(`log-${log.id}`).showModal();
+								}}
+							>
+								{/* <BsCone /> */}
+								<FaChartLine />
+								Create Task
+							</button>
+							<button
+								className="btn btn-xs glass btn-ghost relative"
+								onClick={(e) => {
+									flag({
+										log_id: log.id,
+										reason: 'User flagged',
 									})
-									.catch((err) => {
-										notification.error({
-											message:
-												err.data.message ||
-												"That didn't work. Please try again.",
-											duration: 3,
+										.unwrap()
+										.then((data) => {
+											notification.info({
+												message: 'Okay!',
+												duration: 3,
+											});
+										})
+										.catch((err) => {
+											notification.error({
+												message:
+													err.data.message ||
+													"That didn't work. Please try again.",
+												duration: 3,
+											});
 										});
-									});
-							}}
-						>
-							<FaFlag /> Raise a flag
-							{isLoading && <Loader theme={false} />}
-						</button>
-						<button
-							className="btn btn-xs glass btn-ghost relative"
-							onClick={(e) => {
-								document.getElementById(`log-${log.id}`).showModal();
-							}}
-						>
-							<BsCone />
-							Create Task
-						</button>
+								}}
+							>
+								<FaFlag /> Raise a flag
+								{isLoading && <Loader theme={false} />}
+							</button>
+						</div>
 					</div>
 				</>
 			)}

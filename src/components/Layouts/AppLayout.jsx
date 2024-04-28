@@ -4,7 +4,7 @@ import {
 	AiOutlineMenuFold,
 	AiOutlineMenuUnfold,
 } from 'react-icons/ai';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { BsPlus } from 'react-icons/bs';
 import { IoLogOut } from 'react-icons/io5';
 
@@ -20,7 +20,14 @@ import { TeamContext, TeamProvider } from '../../context/TeamContext';
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
 
 const AppLayout = () => {
-	const { data } = useGetAuthQuery();
+	const { data, isSuccess, isError } = useGetAuthQuery();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (isError) {
+			navigate('/login');
+		}
+	}, [isError]);
 
 	const [teamsVisible, setTeamsVisible] = useState(false);
 	const [open, setOpen] = useState(false);
@@ -66,6 +73,7 @@ const AppLayout = () => {
 							className="btn w-full rounded-full text-white bg-red-500 glass font-normal"
 							onClick={() => {
 								sessionStorage.clear('authToken');
+								navigate('/login');
 							}}
 						>
 							<IoLogOut className="text-2xl" />
@@ -101,7 +109,7 @@ const AppLayout = () => {
 									<AiFillSetting className="text-2xl" />
 								</span>
 								<span className="px-2 md:px-6"></span>
-								<span className="relative">
+								<Link to={'/notifications'} className="relative">
 									<AiFillBell className="text-2xl"></AiFillBell>
 									<span className="absolute top-0 right-0">
 										<span className="relative flex h-3 w-3">
@@ -109,7 +117,7 @@ const AppLayout = () => {
 											<span className="relative rounded-full h-2 w-2 bg-theme text-white text-xs text-center"></span>
 										</span>
 									</span>
-								</span>
+								</Link>
 								<span className="px-2 md:px-6"></span>
 								<Link to={'/account/profile'}>
 									<img
@@ -117,7 +125,7 @@ const AppLayout = () => {
 										alt=""
 										className="rounded-full w-[50px] inline"
 									/>
-									<span className="m	d:px-[6px]"></span>
+									<span className="md:px-[6px]"></span>
 									<p className="hidden md:inline">{data?.data.user?.name}</p>
 								</Link>
 							</div>
@@ -130,8 +138,10 @@ const AppLayout = () => {
 							<div
 								id="right-aside"
 								className={
-									'border-l min-w-[300px] top-0 right-0 ' +
-									(teamsVisible ? 'fixed h-full w-full bg-white' : 'hidden sm:block')
+									'border-l min-w-[200px] lg:min-w-[300px] top-0 right-0 ' +
+									(teamsVisible
+										? 'fixed h-full w-full bg-white'
+										: 'hidden sm:block')
 								}
 							>
 								<div

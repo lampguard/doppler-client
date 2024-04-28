@@ -61,6 +61,7 @@ const routes = createBrowserRouter(
 				<Route path="/dashboard/create-app" element={<NewApp />} />
 				<Route path="/dashboard/create-team" element={<NewTeam />} />
 				<Route path="/teams/:id" element={<TeamInfo />} />
+				<Route path="/notifications" element={<TeamInfo />} />
 			</Route>
 		</Route>
 	)
