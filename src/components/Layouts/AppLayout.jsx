@@ -132,9 +132,10 @@ const AppLayout = () => {
 						</div>
 
 						<div className="md:flex relative items-stretch">
-							<div className="w-full h-full">
+							<div className="w-full h-full grid grid-cols-1">
 								<Outlet />
 							</div>
+
 							<div
 								id="right-aside"
 								className={

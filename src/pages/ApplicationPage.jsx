@@ -109,6 +109,7 @@ const ApplicationPage = () => {
 							{deleting || loadingDelete ? <Loader /> : "Yes, I'm sure"}
 						</button>
 					</Modal>
+
 					<div className="flex justify-end md:px-4 md:pt-4">
 						<button
 							className="btn btn-sm btn-outline bg-red rounded-full right"
