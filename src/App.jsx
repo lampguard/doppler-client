@@ -203,7 +203,7 @@ const Landing = () => {
 
 				<div className="p-0 pt-[20px] md:pt-[80px]"></div>
 				<div className="w-full flex justify-center">
-					<img src={Desktop} className="w-3/4 md:w-3/5" />
+					<img src={Desktop} className="w-3/4 md:w-3/5 z-[1]" />
 				</div>
 			</section>
 
@@ -211,11 +211,11 @@ const Landing = () => {
 				<div className="py-[10px] md:hidden"></div>
 				<p className="text-center text-3xl md:text-4xl">But first, What is DOPPLER?</p>
 				<div className="pb-[30px] md:pb-[80px]"></div>
-				<div className="flex justify-center gap-10 items-stretch">
-					<div className="absolute md:static md:w-2/4 grid md:grid place-items-center -z-10 md:z-0 opacity-[0.25] md:opacity-100">
-						<img src={hilogo} className='md:w-2/3' />
+				<div className="md:flex justify-center gap-10 items-stretch relative overflow-hidden">
+					<div className="md:w-2/4 md:grid place-items-center opacity-[0.15] md:opacity-100 max-w-full overflow-x-hidden p-1">
+						<img src={hilogo} className='md:w-2/3 scale-[2.5] translate-x-[50px] md:scale-0 md:translate-x-[initial] absolute md:static -z-[100] md:z-0' />
 					</div>
-					<div className="md:w-2/3 flex flex-col justify-between items-start">
+					<div className="w-full md:w-2/3 flex flex-col justify-between items-start">
 						<p className='md:max-w-[80%]'>
 							Doppler is an app tracking platform provides comprehensive
 							insights into app behavior, allowing developers and organizations
