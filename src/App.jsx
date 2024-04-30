@@ -209,14 +209,19 @@ const Landing = () => {
 
 			<section className="w-full px-[30px] md:px-[50px]">
 				<div className="py-[10px] md:hidden"></div>
-				<p className="text-center text-3xl md:text-4xl">But first, What is DOPPLER?</p>
+				<p className="text-center text-3xl md:text-4xl">
+					But first, What is DOPPLER?
+				</p>
 				<div className="pb-[30px] md:pb-[80px]"></div>
 				<div className="md:flex justify-center gap-10 items-stretch relative overflow-hidden">
 					<div className="md:w-2/4 md:grid place-items-center opacity-[0.15] md:opacity-100 max-w-full overflow-x-hidden p-1">
-						<img src={hilogo} className='md:w-2/3 scale-[2.5] translate-x-[50px] md:scale-0 md:translate-x-[initial] absolute md:static -z-[100] md:z-0' />
+						<img
+							src={hilogo}
+							className="md:w-2/3 scale-[2.5] translate-x-[50px] md:scale-0 md:translate-x-[initial] absolute md:static -z-[100] md:z-0"
+						/>
 					</div>
-					<div className="w-full md:w-2/3 flex flex-col justify-between items-start">
-						<p className='md:max-w-[80%]'>
+					<div className="w-full md:w-2/3 flex flex-col py-2 justify-between items-start">
+						<p className="md:max-w-[80%]">
 							Doppler is an app tracking platform provides comprehensive
 							insights into app behavior, allowing developers and organizations
 							to identify errors, prevent fatalities, and ensure user safety. We
@@ -227,9 +232,39 @@ const Landing = () => {
 							where apps are a source of trust and innovation.
 						</p>
 						<div className="py-7 md:hidden"></div>
-						<button className="py-3 w-full md:w-1/2 px-4 rounded-lg btn-primary text-sm">
-							Try Doppler for Free
-						</button>
+						{__ENV__.WAITLISTING == 'on' ? (
+							<>
+								<div className="w-2/3 outline outline-1 rounded-full overflow-clip">
+									<form
+										className="flex"
+										onSubmit={(e) => {
+											e.preventDefault();
+											joinWaitlist({ email });
+										}}
+									>
+										<TextInput
+											type="email"
+											required
+											className="rounded-none border-0 focus:outline-none"
+											placeholder="you@beautiful.com"
+											value={email}
+											onChange={(e) => setEmail(e.target.value)}
+										/>
+										<button className="btn btn-primary rounded-none min-w-[100px] border-0">
+											{isLoading ? (
+												<Loader className="text-white" theme={false} />
+											) : (
+												'Join Waitlist'
+											)}
+										</button>
+									</form>
+								</div>
+							</>
+						) : (
+							<button className="py-3 w-full md:w-1/2 px-4 rounded-lg btn-primary text-sm">
+								Try Doppler for Free
+							</button>
+						)}
 					</div>
 				</div>
 			</section>
