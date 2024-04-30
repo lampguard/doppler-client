@@ -220,8 +220,8 @@ const Landing = () => {
 							className="md:w-2/3 scale-[2.5] translate-x-[50px] md:scale-0 md:translate-x-[initial] absolute md:static -z-[100] md:z-0"
 						/>
 					</div>
-					<div className="w-full md:w-2/3 flex flex-col py-2 justify-between items-start">
-						<p className="md:max-w-[80%]">
+					<div className="w-full md:w-2/3 flex flex-col p-2 justify-between items-start">
+						<p className="w-full md:max-w-[80%]">
 							Doppler is an app tracking platform provides comprehensive
 							insights into app behavior, allowing developers and organizations
 							to identify errors, prevent fatalities, and ensure user safety. We
@@ -234,7 +234,7 @@ const Landing = () => {
 						<div className="py-7 md:hidden"></div>
 						{__ENV__.WAITLISTING == 'on' ? (
 							<>
-								<div className="w-2/3 outline outline-1 rounded-full overflow-clip">
+								<div className="w-full md:w-2/3 outline outline-1 rounded-full overflow-clip">
 									<form
 										className="flex"
 										onSubmit={(e) => {
