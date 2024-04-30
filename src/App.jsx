@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import logo from './assets/logo.svg';
-import hilogo from './assets/hidef.png';
+import hilogo from './assets/biglogo.png';
 import blackLogo from './assets/black-logo.svg';
 import Ellipse from './assets/Ellipse 8.svg';
 import Panes from './assets/multi-pane.png';
@@ -212,11 +212,11 @@ const Landing = () => {
 				<p className="text-center text-3xl md:text-4xl">But first, What is DOPPLER?</p>
 				<div className="pb-[30px] md:pb-[80px]"></div>
 				<div className="flex justify-center gap-10 items-stretch">
-					<div className="absolute md:static md:w-2/4 md:grid place-items-center -z-10 md:z-0 opacity-[0.25] md:opacity-100">
-						<img src={hilogo} />
+					<div className="absolute md:static md:w-2/4 grid md:grid place-items-center -z-10 md:z-0 opacity-[0.25] md:opacity-100">
+						<img src={hilogo} className='md:w-2/3' />
 					</div>
 					<div className="md:w-2/3 flex flex-col justify-between items-start">
-						<p>
+						<p className='md:max-w-[80%]'>
 							Doppler is an app tracking platform provides comprehensive
 							insights into app behavior, allowing developers and organizations
 							to identify errors, prevent fatalities, and ensure user safety. We
