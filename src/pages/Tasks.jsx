@@ -3,60 +3,7 @@ import { useLazyGetTasksQuery } from '../services/tasks';
 import { BsCircleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loaders';
-
-/*
-type App = {
-  createdAt: string;
-  updatedAt: string;
-  id: number;
-  title: string;
-  token: string;
-};
-
-type Log = {
-  createdAt: string;
-  updatedAt: string;
-  id: number;
-  level: string;
-  text: string;
-  ip: string;
-  tags: Array<never>;
-  context: any;
-  saved: boolean;
-  app: App;
-};
-
-type Team = {
-  createdAt: string;
-  updatedAt: string;
-  id: number;
-  name: string;
-};
-
-type AssignedTo = {
-  createdAt: string;
-  updatedAt: string;
-  id: number;
-  name: string;
-  email: string;
-  isAdmin: boolean;
-};
-
-type Task = {
-  createdAt: string;
-  updatedAt: string;
-  id: string;
-  team_id: number;
-  user_id: number;
-  log_id: number;
-  assigned_to: number;
-  description: string;
-  status: number;
-  log: Log;
-  team: Team;
-  assignedTo: AssignedTo;
-};
-*/
+import { usePageContext } from '../context/PageContext';
 
 const Task = ({ task }) => (
 	<div key={task.id} className="pb-4 flex justify-between items-start gap-x-4">
@@ -81,7 +28,10 @@ const Tasks = () => {
 	const [getTasks, { isLoading }] = useLazyGetTasksQuery();
 	const [tasks, setTasks] = useState([]);
 
+	const page = usePageContext();
+
 	useEffect(() => {
+		page.updateTitle("Tasks");
 		getTasks()
 			.unwrap()
 			.then((res) => {

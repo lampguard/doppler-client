@@ -18,10 +18,17 @@ import MyTeams from '../MyTeams';
 import NavList from '../Navlist';
 import { TeamContext, TeamProvider } from '../../context/TeamContext';
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
+import PageContext, {
+	PageProvider,
+	usePageContext,
+} from '../../context/PageContext';
 
 const AppLayout = () => {
 	const { data, isSuccess, isError } = useGetAuthQuery();
 	const navigate = useNavigate();
+	
+	const pageCtx = usePageContext();
+	const [pageTitle, setPageTitle] = useState(pageCtx.title);
 
 	useEffect(() => {
 		if (isError) {
@@ -48,6 +55,11 @@ const AppLayout = () => {
 			}
 		});
 	}, []);
+
+	useEffect(() => {
+		document.title = pageCtx?.title;
+		setPageTitle(pageCtx.title);
+	}, [pageCtx]);
 
 	return (
 		<UserContext.Provider value={data?.data.user}>
@@ -97,7 +109,7 @@ const AppLayout = () => {
 										<AiOutlineMenuUnfold className="text-3xl" />
 									)}
 								</button>
-								<span className="font-articulat"></span>
+								<span className="font-articulat">{pageTitle}</span>
 							</p>
 
 							<MdNavbar open={open}>
@@ -111,12 +123,12 @@ const AppLayout = () => {
 								<span className="px-2 md:px-6"></span>
 								<Link to={'/notifications'} className="relative">
 									<AiFillBell className="text-2xl"></AiFillBell>
-									<span className="absolute top-0 right-0">
+									{/* <span className="absolute top-0 right-0">
 										<span className="relative flex h-3 w-3">
 											<span className="animate-[ping_2s_infinite] absolute inline-flex h-full w-full rounded-full bg-theme opacity-75 left-[-2px]  top-[-2px]"></span>
 											<span className="relative rounded-full h-2 w-2 bg-theme text-white text-xs text-center"></span>
 										</span>
-									</span>
+									</span> */}
 								</Link>
 								<span className="px-2 md:px-6"></span>
 								<Link to={'/account/profile'}>

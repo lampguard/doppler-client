@@ -13,6 +13,7 @@ import { useTeamContext } from '../context/TeamContext';
 import { useEffect, useState } from 'react';
 import { formatDate } from 'date-fns';
 import Skeleton from '../components/Loaders/Skeleton';
+import { usePageContext } from '../context/PageContext';
 
 const columnHelper = createColumnHelper();
 
@@ -57,6 +58,11 @@ const columns = [
 const Apps = () => {
 	const { value: team } = useTeamContext();
 	const [apps, setApps] = useState([]);
+
+	const pageCtx = usePageContext();
+	useEffect(() => {
+		pageCtx.updateTitle('Apps');
+	}, []);
 
 	const [getApps, { isLoading, isFetching, isError, error }] =
 		useLazyGetAppsQuery();

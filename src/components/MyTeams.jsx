@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLazyGetTeamsQuery } from '../services/teams';
-import { BsMenuApp, BsPlus } from 'react-icons/bs';
+// import { BsMenuApp, BsPlus } from 'react-icons/bs';
+import { CgMoreVerticalAlt as BsMenuApp } from 'react-icons/cg';
 import { TeamContext, useTeamContext } from '../context/TeamContext.jsx';
 import { Link } from 'react-router-dom';
 
@@ -65,7 +66,7 @@ const MyTeams = ({ open, setOpen }) => {
 							{team.name}
 						</label>
 						{team.id !== undefined && (
-							<Link to={`/teams/${team.id}`}>
+							<Link to={`/teams/${team.id}`} className='btn btn-sm btn-circle btn-ghost'>
 								<BsMenuApp />
 							</Link>
 						)}

@@ -4,6 +4,7 @@ import DashboardApp from '../components/Metrics/DashboardApp';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLazyGetAppsQuery } from '../services';
+import { usePageContext } from '../context/PageContext';
 
 const Dashboard = () => {
 	const { isLoading, data, isUninitialized } = useGetMetricsQuery();
@@ -13,6 +14,11 @@ const Dashboard = () => {
 	//     .then((data) => console.log)
 	//     .catch(console.error);
 	// }, []);
+
+	const pageCtx = usePageContext();
+	useEffect(() => {
+		pageCtx.updateTitle('Dashboard');
+	}, []);
 
 	return (
 		<>

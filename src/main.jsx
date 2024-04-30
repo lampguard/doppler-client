@@ -33,6 +33,8 @@ import Tasks from './pages/Tasks.jsx';
 import Task from './pages/Task.jsx';
 import PasswordReset from './pages/PasswordReset.jsx';
 import AppLayout from './components/Layouts/AppLayout.jsx';
+import Notifications from './pages/Notifications.jsx';
+import { PageProvider } from './context/PageContext.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -61,7 +63,7 @@ const routes = createBrowserRouter(
 				<Route path="/dashboard/create-app" element={<NewApp />} />
 				<Route path="/dashboard/create-team" element={<NewTeam />} />
 				<Route path="/teams/:id" element={<TeamInfo />} />
-				<Route path="/notifications" element={<TeamInfo />} />
+				<Route path="/notifications" element={<Notifications />} />
 			</Route>
 		</Route>
 	)
@@ -70,9 +72,9 @@ const routes = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<TeamProvider>
+			<PageProvider>
 				<RouterProvider router={routes} />
-			</TeamProvider>
+			</PageProvider>
 		</Provider>
 	</React.StrictMode>
 );
