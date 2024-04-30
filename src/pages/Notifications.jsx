@@ -12,12 +12,12 @@ const Notification = ({ notification }) => (
 		<div className="min-w-[70%]">
 			<p>{notification.message}</p>
 			<div className="py-1"></div>
-			<p className="text-sm text-gray-400 flex items-center gap-x-2">
-				<span>{notification.app}</span>
-				<BsCircleFill className="text-[8px] text-gray-300" />
-				<span>{notification.app}</span>
-				<BsCircleFill className="text-[8px] text-gray-300" />
-				<span>{format(notification.createdat, 'P pp')}</span>
+			<p className="text-sm text-gray-400 md:flex items-center gap-x-2">
+				<span className='block sm:inline'>{notification.app}</span>
+				<BsCircleFill className="hidden sm:inline text-[8px] text-gray-300" />
+				<span className="hidden sm:inline">{notification.app}</span>
+				<BsCircleFill className="hidden sm:inline text-[8px] text-gray-300" />
+				<span className='block sm:inline'>{format(notification.createdat, 'P pp')}</span>
 			</p>
 		</div>
 		{notification.meta?.href && (
@@ -119,9 +119,11 @@ const Notifications = () => {
 				</button>
 			</div>
 			<div className="pb-[36px]"></div>
-			{notifs.length > 0 ? notifs.map((n) => (
-				<Notification notification={n} />
-			)) : <div className='px-4 text-gray-500'>No new notifications for you.</div>}
+			{notifs.length > 0 ? (
+				notifs.map((n) => <Notification notification={n} />)
+			) : (
+				<div className="px-4 text-gray-500">No new notifications for you.</div>
+			)}
 		</div>
 	);
 };

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import logo from './assets/logo.svg';
+import hilogo from './assets/hidef.png';
 import blackLogo from './assets/black-logo.svg';
 import Ellipse from './assets/Ellipse 8.svg';
 import Panes from './assets/multi-pane.png';
@@ -203,6 +204,33 @@ const Landing = () => {
 				<div className="p-0 pt-[20px] md:pt-[80px]"></div>
 				<div className="w-full flex justify-center">
 					<img src={Desktop} className="w-3/4 md:w-3/5" />
+				</div>
+			</section>
+
+			<section className="w-full px-[30px] md:px-[50px]">
+				<div className="py-[10px] md:hidden"></div>
+				<p className="text-center text-3xl md:text-4xl">But first, What is DOPPLER?</p>
+				<div className="pb-[30px] md:pb-[80px]"></div>
+				<div className="flex justify-center gap-10 items-stretch">
+					<div className="absolute md:static md:w-2/4 md:grid place-items-center -z-10 md:z-0 opacity-[0.25] md:opacity-100">
+						<img src={hilogo} />
+					</div>
+					<div className="md:w-2/3 flex flex-col justify-between items-start">
+						<p>
+							Doppler is an app tracking platform provides comprehensive
+							insights into app behavior, allowing developers and organizations
+							to identify errors, prevent fatalities, and ensure user safety. We
+							believe in the power of data-driven insights to revolutionize app
+							development and create a more reliable digital experience for
+							everyone. We believe that by working together, we can prevent
+							app-related accidents and fatalities. Join us in building a future
+							where apps are a source of trust and innovation.
+						</p>
+						<div className="py-7 md:hidden"></div>
+						<button className="py-3 w-full md:w-1/2 px-4 rounded-lg btn-primary text-sm">
+							Try Doppler for Free
+						</button>
+					</div>
 				</div>
 			</section>
 
