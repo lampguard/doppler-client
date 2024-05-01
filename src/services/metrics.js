@@ -15,6 +15,7 @@ const metricsApi = api
 						to: format(addDays(new Date(), 1), 'yyyy-MM-dd HH:mm:00'),
 						range: 'hour',
 						interval: 12,
+						team: undefined
 					}
 				) => ({
 					url: '/metrics',

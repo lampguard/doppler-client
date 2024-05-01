@@ -1,13 +1,25 @@
-import Template from '../components/DashboardLayout/Template';
 import { useGetMetricsQuery } from '../services/metrics';
 import DashboardApp from '../components/Metrics/DashboardApp';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useLazyGetAppsQuery } from '../services';
 import { usePageContext } from '../context/PageContext';
+import { useTeamContext } from '../context/TeamContext';
+import { addDays, format, subDays } from 'date-fns';
+
+const defaultDashboardParams = {
+	from: format(subDays(new Date(), 4), 'yyyy-MM-dd'),
+	to: format(addDays(new Date(), 1), 'yyyy-MM-dd HH:mm:00'),
+	range: 'hour',
+	interval: 12,
+	team: undefined,
+};
 
 const Dashboard = () => {
-	const { isLoading, data, isUninitialized } = useGetMetricsQuery();
+	const team = useTeamContext();
+	const { isLoading, data, isUninitialized } = useGetMetricsQuery({
+		...defaultDashboardParams,
+		team: team.value?.id,
+	});
 	// useEffect(() => {
 	//   trigger()
 	//     .unwrap()
