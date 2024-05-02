@@ -9,6 +9,15 @@ export default {
 			'articulat-light': ['ArticulatLight', 'ui-sans-serif', 'sans-serif'],
 			'articulat-oblique': ['ArticulatOblique', 'ui-sans-serif', 'sans-serif'],
 		},
+		animation: {
+			'unroll': 'unroll .2s linear forwards'
+		},
+		keyframes: {
+			unroll: {
+				from: { width: 0 },
+				to: { width: '100%' },
+			},
+		},
 	},
 	plugins: [require('@tailwindcss/typography'), require('daisyui')],
 	daisyui: {

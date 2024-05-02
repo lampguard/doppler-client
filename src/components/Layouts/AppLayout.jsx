@@ -1,14 +1,7 @@
-import {
-	AiFillBell,
-	AiFillSetting,
-	AiOutlineMenuFold,
-	AiOutlineMenuUnfold,
-} from 'react-icons/ai';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { BsPlus } from 'react-icons/bs';
 import { IoLogOut } from 'react-icons/io5';
 
-import MdNavbar from '../MdNavbar';
 import UserContext from '../../context/Auth';
 import { useGetAuthQuery } from '../../services';
 // import logo from '../../assets/logo-small.svg';
@@ -16,19 +9,18 @@ import logo from '../../assets/logo.png';
 import { useEffect, useState } from 'react';
 import MyTeams from '../MyTeams';
 import NavList from '../Navlist';
-import { TeamContext, TeamProvider } from '../../context/TeamContext';
+import { TeamProvider } from '../../context/TeamContext';
 import { BiSolidLeftArrow, BiSolidRightArrow } from 'react-icons/bi';
-import PageContext, {
-	PageProvider,
-	usePageContext,
-} from '../../context/PageContext';
+import { usePageContext } from '../../context/PageContext';
+import TopNav from '../Topnav';
+import FooterMenu from '../FooterMenu';
 
 const AppLayout = () => {
-	const { data, isSuccess, isError } = useGetAuthQuery();
+	const { data, isError } = useGetAuthQuery();
 	const navigate = useNavigate();
-	
+
 	const pageCtx = usePageContext();
-	const [pageTitle, setPageTitle] = useState(pageCtx.title);
+	// const [pageTitle, setPageTitle] = useState(pageCtx.title);
 
 	useEffect(() => {
 		if (isError) {
@@ -58,7 +50,7 @@ const AppLayout = () => {
 
 	useEffect(() => {
 		document.title = pageCtx?.title;
-		setPageTitle(pageCtx.title);
+		// setPageTitle(pageCtx.title);
 	}, [pageCtx]);
 
 	return (
@@ -68,7 +60,7 @@ const AppLayout = () => {
 					{/* Sidebar */}
 					<div className="w-full md:w-[20%] hidden sticky top-0 h-[100vh] border-r p-5 md:flex flex-col justify-between">
 						<div>
-							<img src={logo} alt="" className="w-[50%]" />
+							<img src={logo} alt="" className="w-[50%] min-w-[120px]" />
 							<div className="py-5"></div>
 							<Link
 								to={'/dashboard/create-app'}
@@ -95,7 +87,7 @@ const AppLayout = () => {
 
 					<div className="relative w-full">
 						{/* TopNav */}
-						<div className="border-b border-[#ccc] flex flex-wrap justify-between md:items-end pt-3 md:pt-6 pb-3 px-5">
+						{/* <div className="border-b border-[#ccc] flex flex-wrap justify-between md:items-end pt-3 md:pt-6 pb-3 px-5">
 							<p className="text-lg text-black flex items-center">
 								<button
 									className="py-1 pl-1 pr-3 md:hidden"
@@ -123,12 +115,12 @@ const AppLayout = () => {
 								<span className="px-2 md:px-6"></span>
 								<Link to={'/notifications'} className="relative">
 									<AiFillBell className="text-2xl"></AiFillBell>
-									{/* <span className="absolute top-0 right-0">
+									<span className="absolute top-0 right-0">
 										<span className="relative flex h-3 w-3">
 											<span className="animate-[ping_2s_infinite] absolute inline-flex h-full w-full rounded-full bg-theme opacity-75 left-[-2px]  top-[-2px]"></span>
 											<span className="relative rounded-full h-2 w-2 bg-theme text-white text-xs text-center"></span>
 										</span>
-									</span> */}
+									</span>
 								</Link>
 								<span className="px-2 md:px-6"></span>
 								<Link to={'/account/profile'}>
@@ -141,11 +133,13 @@ const AppLayout = () => {
 									<p className="hidden md:inline">{data?.data.user?.name}</p>
 								</Link>
 							</div>
-						</div>
+						</div> */}
+						<TopNav />
 
 						<div className="md:flex relative items-stretch">
 							<div className="w-full h-full grid grid-cols-1">
 								<Outlet />
+								<div className="py-8 md:hidden"></div>
 							</div>
 
 							<div
@@ -189,6 +183,11 @@ const AppLayout = () => {
 					<div className="btn btn-sm w-[100%] h-[100%] rounded-none bg-white rounded-l-md border-2 grid place-items-center">
 						{!teamsVisible ? <BiSolidLeftArrow /> : <BiSolidRightArrow />}
 					</div>
+				</div>
+
+				{/* Footer Menu */}
+				<div className="fixed bottom-0 left-0 w-full px-4 border-t bg-white md:hidden flex justify-around">
+					<FooterMenu />
 				</div>
 			</TeamProvider>
 		</UserContext.Provider>

@@ -92,7 +92,7 @@ const DashboardApp = ({ app, data }) => {
 										key={index}
 										type="monotone"
 										dataKey={type}
-										stackId={index+1}
+										stackId={index + 1}
 										stroke={color}
 										fill={color}
 									/>
@@ -102,12 +102,12 @@ const DashboardApp = ({ app, data }) => {
 					</AreaChart>
 				</ResponsiveContainer>
 
-				<div className="flex items-center justify-center md:flex-col md:w-[10%] md:p-0">
+				<div className="flex items-center flex-wrap justify-center md:flex-col md:w-[10%] pb-4 md:p-0">
 					{visibleCharts.map(({ type, color, visible }) => {
 						return (
 							<span
 								key={type}
-								className="text-xs pb-[0.5em] w-full hover:bg-[#ccc] cursor-pointer"
+								className="text-xs text-center pb-[0.5em] w-1/3 md:w-full hover:bg-[#ccc] cursor-pointer"
 								onClick={(e) => toggleChart(type)}
 							>
 								<FaEye color={visible ? color : '#ccc'} className="inline" />{' '}
@@ -117,7 +117,6 @@ const DashboardApp = ({ app, data }) => {
 					})}
 				</div>
 			</div>
-			{/* <p>{JSON.stringify(data.info)}</p> */}
 		</>
 	);
 };
