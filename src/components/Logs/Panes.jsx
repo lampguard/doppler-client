@@ -61,7 +61,11 @@ const Log = ({ log, appteams }) => {
 					<div className="w-[40%] border-r border-black px-4 py-5">
 						<p className="py-2">Select a team to assign</p>
 						{appteams.map((team) => (
-							<label htmlFor="" key={team.id} className='w-full flex items-center'>
+							<label
+								htmlFor=""
+								key={team.id}
+								className="w-full flex items-center"
+							>
 								<input
 									type="checkbox"
 									name="active-team"
@@ -75,7 +79,6 @@ const Log = ({ log, appteams }) => {
 											setAssignMember(undefined);
 										}
 									}}
-
 									checked={assignedTeam?.id == team.id}
 								/>
 								{team.name}
@@ -85,7 +88,9 @@ const Log = ({ log, appteams }) => {
 
 					<div className="w-full md:w-2/3 p-5">
 						<p className="py-2">
-							<strong className="font-articulat-bold">{assignedTeam?.name}</strong>
+							<strong className="font-articulat-bold">
+								{assignedTeam?.name}
+							</strong>
 						</p>
 						<div className="py-1"></div>
 						{assignedTeam?.members.map((member) => (
@@ -112,7 +117,9 @@ const Log = ({ log, appteams }) => {
 				{assignedTeam && (
 					<>
 						<div className="py-2"></div>
-						<label className="text-sm">Description <span className='text-gray-500'>(optional)</span></label>
+						<label className="text-sm">
+							Description <span className="text-gray-500">(optional)</span>
+						</label>
 						<div className="py-2"></div>
 						<textarea
 							className="textarea w-full textarea-bordered border-[#EBEBF5] textarea-primary"
@@ -127,7 +134,7 @@ const Log = ({ log, appteams }) => {
 							className="btn btn-primary w-full"
 							onClick={() => {
 								submitAssignment()
-									.then(() => {
+									.then((res) => {
 										setAssignMember(undefined);
 										setAssignTeam(undefined);
 										setDescription('');
@@ -279,8 +286,8 @@ const LogPanes = ({ data, app }) => {
 						<code className="not-prose text-sm">
 							// Paste this code in your terminal to send a sample log
 							<br />
-							curl -X POST https://api.dopple.cc/v1/logs --header "APP_ID: {app.token}"
-							--json '
+							curl -X POST https://api.dopple.cc/v1/logs --header "APP_ID:{' '}
+							{app.token}" --json '
 							{JSON.stringify({
 								level: 'error',
 								text: 'Lorem ipsum dolor sit amet.',

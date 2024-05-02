@@ -30,9 +30,9 @@ const TopNav = () => {
 				</Link>
 			</div>
 			<div className="flex md:hidden gap-x-4 items-center text-2xl">
-				<button to={'/'}>
+				<Link to={'/dashboard/create-app'}>
 					<BsPlusCircleFill />
-				</button>
+				</Link>
 				<Link to={'/account/profile'}>
 					<BsPeopleFill />
 				</Link>

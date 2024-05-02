@@ -87,11 +87,11 @@ const Apps = () => {
 
 	return (
 		<>
-			<div className="md:p-6">
+			<div className="p-2 md:p-6">
 				<Link className="btn btn-sm md:hidden" to={'/dashboard/create-app'}>
 					<BsPlus className="text-2xl" /> Add a new app
 				</Link>
-				<div className="md:border-[1px] border-[#ccc] rounded-lg">
+				<div className="border-[1px] border-[#ccc] rounded-lg">
 					{isLoading || isFetching ? (
 						<div className="p-2">
 							<Skeleton className="w-full h-64 rounded-none" />

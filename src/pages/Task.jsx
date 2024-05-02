@@ -22,12 +22,12 @@ const ContextEntry = ({ k, v }) => {
 				</span>
 				{open ? null : (
 					<span className="hidden md:inline truncate pl-3">
-						{v.slice(0, 50)}...
+						{typeof v == 'string' ? v.slice(0, 50) + '...' : v}
 					</span>
 				)}
 			</div>
 			<div className={(open ? 'block' : 'hidden') + ' max-w-full p-1 border'}>
-				<p className="overflow-y-auto">{v}</p>
+				<p className="p-1 overflow-y-auto text-pretty">{v}</p>
 			</div>
 		</>
 	);

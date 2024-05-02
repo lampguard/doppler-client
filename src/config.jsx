@@ -1,5 +1,12 @@
 import { AiFillHome, AiOutlineHome, AiOutlineLineChart } from 'react-icons/ai';
-import { BsBellFill, BsFillPersonFill } from 'react-icons/bs';
+import {
+	BsBell,
+	BsBellFill,
+	BsFillPersonFill,
+	BsGrid3X3,
+	BsGrid3X3GapFill,
+	BsPerson,
+} from 'react-icons/bs';
 import { GrGrid } from 'react-icons/gr';
 
 export const navLinks = [
@@ -32,8 +39,8 @@ export const mobileNavLinks = [
 	{
 		title: 'Apps',
 		slug: '/apps',
-		icon: <GrGrid className="text-xl inline" />,
-		activeIcon: <GrGrid className="text-xl inline" />,
+		icon: <BsGrid3X3 className="text-xl inline" />,
+		activeIcon: <BsGrid3X3GapFill className="text-xl inline" />,
 	},
 	{
 		title: 'Tasks',
@@ -44,13 +51,13 @@ export const mobileNavLinks = [
 	{
 		title: 'Notifications',
 		slug: '/notifications',
-		icon: <BsBellFill className="text-xl inline" />,
+		icon: <BsBell className="text-xl inline" />,
 		activeIcon: <BsBellFill className="text-xl inline" />,
 	},
 	{
 		title: 'Profile',
 		slug: '/account/profile',
-		icon: <BsFillPersonFill className="text-xl inline" />,
+		icon: <BsPerson className="text-xl inline" />,
 		activeIcon: <BsFillPersonFill className="text-xl inline" />,
 	},
 ];
