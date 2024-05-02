@@ -107,6 +107,15 @@ const Profile = () => {
 				<button className="btn btn-primary w-[10rem] rounded-full">
 					Edit Name
 				</button>
+				<div className="py-1"></div>
+				<button
+					className="text-red-500 btn btn-ghost glass w-[10rem] rounded-full"
+					onClick={() => {
+						navigate('/login');
+					}}
+				>
+					Log out
+				</button>
 			</div>
 			<div className="w-full px-3 md:px-[3em] flex justify-between items-center">
 				<span className="w-full">Two Factor Authentication</span>
