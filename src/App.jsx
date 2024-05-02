@@ -232,7 +232,7 @@ const Landing = () => {
 							where apps are a source of trust and innovation.
 						</p>
 						<div className="py-7 md:hidden"></div>
-						{__ENV__.WAITLISTING == 'on' ? (
+						{__ENV__.WAITLISTING != 'off' ? (
 							<>
 								<div className="w-full md:w-2/3 outline outline-1 rounded-full overflow-clip">
 									<form
