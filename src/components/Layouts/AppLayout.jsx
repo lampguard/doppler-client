@@ -163,7 +163,7 @@ const AppLayout = () => {
 										}}
 										open={teamsVisible}
 									/>
-									<Link className="btn btn-primary rounded-full">
+									<Link to={'/dashboard/create-team'} className="btn btn-primary rounded-full">
 										<BsPlus className="text-3xl" />
 										New Team
 									</Link>
