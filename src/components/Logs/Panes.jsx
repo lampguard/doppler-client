@@ -279,7 +279,7 @@ const LogPanes = ({ data, app }) => {
 						<code className="not-prose text-sm">
 							// Paste this code in your terminal to send a sample log
 							<br />
-							curl -X POST {__ENV__.API_URL}/logs --header "APP_ID: {app.token}"
+							curl -X POST https://api.dopple.cc/v1/logs --header "APP_ID: {app.token}"
 							--json '
 							{JSON.stringify({
 								level: 'error',
