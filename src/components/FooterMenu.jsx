@@ -11,7 +11,7 @@ const FooterMenu = () => {
 					<Link
 						to={link.slug}
 						className={
-							'flex flex-col align-center items-center ' +
+							'flex flex-col align-center items-center text-xs ' +
 							(link.slug == location.pathname && 'text-theme')
 						}
 					>
