@@ -34,7 +34,9 @@ const Login = () => {
 					setStep2FA(true);
 					return;
 				}
-				navigate('/dashboard');
+				setTimeout(() => {
+					navigate('/dashboard');
+				}, 1000);
 			})
 			.catch(() => {});
 	};

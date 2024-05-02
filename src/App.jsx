@@ -261,7 +261,10 @@ const Landing = () => {
 								</div>
 							</>
 						) : (
-							<Link to={'/signup'} className="py-3 w-full md:w-1/2 px-4 rounded-lg btn-primary text-sm">
+							<Link
+								to={'/signup'}
+								className="py-3 w-full md:w-1/2 px-4 rounded-lg btn-primary text-sm"
+							>
 								Try Doppler for Free
 							</Link>
 						)}
