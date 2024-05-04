@@ -14,7 +14,6 @@ const Login = () => {
 		sessionStorage.clear();
 
 		return () => {
-			console.log('cleared session storage');
 		};
 	}, []);
 

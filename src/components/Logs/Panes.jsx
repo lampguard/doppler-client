@@ -58,7 +58,7 @@ const Log = ({ log, appteams }) => {
 				</p>
 				<div className="py-2"></div>
 				<div className="md:flex items-stretch justify-start bg-[#EBEBF5]">
-					<div className="w-[40%] border-r border-black px-4 py-5">
+					<div className="md:w-[40%] md:border-r border-black px-4 py-5">
 						<p className="py-2">Select a team to assign</p>
 						{appteams.map((team) => (
 							<label
@@ -95,7 +95,10 @@ const Log = ({ log, appteams }) => {
 						<div className="py-1"></div>
 						{assignedTeam?.members.map((member) => (
 							<label className="label" key={member.email}>
-								{member.name} ({member.email})
+								<span>
+									{member.name}{' '}
+									<span className="hidden md:inline">({member.email})</span>
+								</span>
 								<input
 									type="checkbox"
 									className="checkbox checkbox-xs"

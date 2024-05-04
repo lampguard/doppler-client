@@ -66,7 +66,7 @@ const MyTeams = ({ open, setOpen }) => {
 							{team.name}
 						</label>
 						{team.id !== undefined && (
-							<Link to={`/teams/${team.id}`} className='btn btn-sm btn-circle btn-ghost'>
+							<Link to={`/teams/${team.id}`} className='btn btn-sm btn-circle btn-ghost pr-5 sm:pr-0'>
 								<BsMenuApp />
 							</Link>
 						)}

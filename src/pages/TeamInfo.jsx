@@ -49,7 +49,7 @@ const TeamInfo = () => {
 	});
 
 	const getAllApps = () => {
-		getAllApps();
+		// getAllApps();
 	};
 
 	useEffect(() => {
@@ -76,7 +76,7 @@ const TeamInfo = () => {
 	return (
 		<>
 			<div className="p-4">
-				{(isLoading || isFetching) && <Skeleton className='w-full h-72' />}
+				{(isLoading || isFetching) && <Skeleton className="w-full h-72" />}
 				{isError && <div>Error</div>}
 				{!isLoading && !isFetching && !isError && (
 					<div>
@@ -144,17 +144,18 @@ const TeamInfo = () => {
 										</span>
 									</div>
 									<div className="py-3"></div>
-									<button
-										className="btn btn-primary w-full md:w-1/4 rounded-full"
-										onClick={() => {
-											document.getElementById('add-app-modal').showModal();
-										}}
-									>
-										Add New App
-									</button>
 								</>
 							);
 						})}
+
+						<button
+							className="btn btn-primary w-full md:w-1/4 rounded-full"
+							onClick={() => {
+								document.getElementById('add-app-modal').showModal();
+							}}
+						>
+							Add New App
+						</button>
 					</div>
 				)}
 			</div>
@@ -212,7 +213,7 @@ const TeamInfo = () => {
 								.then((response) => {
 									document.getElementById('add-app-modal').close();
 									setAddAppForm({ ...addAppForm, app: '' });
-									getAllApps();
+									// getAllApps();
 								})
 								.catch((err) => {
 									console.error(err);

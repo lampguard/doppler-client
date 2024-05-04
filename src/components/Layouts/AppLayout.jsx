@@ -175,7 +175,7 @@ const AppLayout = () => {
 
 				{/* Floating Mobile drawer opener */}
 				<div
-					className="md:hidden fixed w-[35px] h-[30px] top-[20%] right-0 z-[999]"
+					className="md:hidden fixed w-[35px] h-[30px] top-[20%] right-0 z-[0]"
 					onClick={() => {
 						setTeamsVisible(!teamsVisible);
 					}}
