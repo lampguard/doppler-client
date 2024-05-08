@@ -24,6 +24,7 @@ import { useState } from 'react';
 const navLinks = [
 	{ title: 'Home', to: '/' },
 	{ title: 'Features', to: '/#features' },
+	{ title: 'Pricing', to: '/#pricing' },
 	{
 		title: `Developer Guide`,
 		to: 'https://doppler.gitbook.io/guide',
@@ -355,15 +356,15 @@ const Landing = () => {
 					className="absolute top-[-100%] z-[-1] left-[-20%] w-3/5"
 					alt=""
 				/>
-				<div className="px-[25px] py-[40px] md:absolute w-full md:w-8/12 md:p-[40px] bg-theme top-[-23%] md:flex justify-between items-center left-[18%]">
-					<p className="font-articulat text-2xl md:w-2/5">
+				<div className="px-[25px] py-[40px] md:absolute w-[94%] m-auto md:w-8/12 md:p-[40px] bg-theme top-[-23%] flex flex-col md:flex-row justify-between items-stretch md:items-center left-[18%]">
+					<p className="font-articulat text-2xl md:w-2/5 text-center">
 						Discover the Doppler Effect Now!!!
 					</p>
-					<div className="py-2 md:hidden"></div>
+					<div className="pt-[64px] md:hidden"></div>
 
 					<div className="md:w-2/5">
 						{__ENV__.WAITLISTING == 'off' ? (
-							<Link className="btn btn-white w-full">Try Doppler for Free</Link>
+							<Link className="btn w-full">Try Doppler for Free</Link>
 						) : (
 							<div className="m-auto text-black outline outline-1">
 								<form
@@ -394,15 +395,20 @@ const Landing = () => {
 					</div>
 				</div>
 
-				<div className="md:p-[120px] w-full bg-white font-articulat-light">
-					<div className="flex justify-between items-center">
-						<img src={blackLogo} className="hidden md:block w-[130px]" />
-						<div className="hidden md:flex items-center w-2/3 justify-end">
+				<div className="py-[32px] md:p-[120px] w-full font-articulat-light relative overflow-hidden">
+					<div className="flex flex-col md:flex-row justify-between items-center">
+						<img src={blackLogo} className="py-[32px] md:py-0 w-[130px]" />
+						<div className="gap-y-[30px] md:gap-y-0 flex flex-col md:flex-row items-center w-2/3 justify-end pb-[64px] md:pb-0">
+							<img
+								src={Ellipse}
+								alt=""
+								className="md:hidden scale-[3] -rotate-45 absolute top-[0] -z-[1]"
+							/>
 							{navLinks.map((link) => (
 								<Link
 									key={link.to}
 									to={link.to}
-									className="py-2 pl-5 rounded hover:underline hover:bg-[#cccccc3d]"
+									className="py-2 px-5 md:px-0 md:pl-5 rounded hover:underline hover:bg-[#cccccc3d] md:hover:bg-transparent"
 									target={link._blank ? '_blank' : undefined}
 								>
 									{link.title}
@@ -411,7 +417,7 @@ const Landing = () => {
 						</div>
 					</div>
 
-					<div className="px-3 pb-3 md:p-0 gap-x-[24px] flex items-center justify-end w-full bg-theme md:bg-white">
+					<div className="px-3 pb-[32px] md:p-0 gap-x-[24px] flex items-center justify-center md:justify-end w-full">
 						<a
 							href={'https://linkedin.com/u/peter-adeojo'}
 							target="_blank"
