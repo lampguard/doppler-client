@@ -11,7 +11,7 @@ import Faq from './components/Faq';
 import Twitter from './assets/twitter-logo.svg';
 import Github from './assets/github-icon-logo.svg';
 import Linkedin from './assets/linkedin-logo.svg';
-import { FaBurger, FaGithub } from 'react-icons/fa6';
+import { FaGithub } from 'react-icons/fa6';
 
 import TextInput from './components/Input/TextInput';
 import Loader from './components/Loaders';
@@ -20,6 +20,8 @@ import { notification } from 'antd';
 
 import { useJoinWaitlistMutation } from './services';
 import { useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { FaTimes } from 'react-icons/fa';
 
 const navLinks = [
 	{ title: 'Home', to: '/' },
@@ -37,6 +39,7 @@ const navLinks = [
  */
 const Landing = () => {
 	const [email, setEmail] = useState('');
+	const [navOpen, setNavOpen] = useState(false);
 	const [waitlist, { isLoading }] = useJoinWaitlistMutation();
 
 	const joinWaitlist = () => {
@@ -62,7 +65,7 @@ const Landing = () => {
 			{/* Top Nav & Header */}
 			<div className="px-[2em] md:px-[4em] py-[1.7em] md:py-[2em] flex justify-between items-center w-full">
 				<div className="w-[130px] md:w-[12.5%]">
-					<img src={logo} className="w-full" />
+					<img src={logo} className={"w-full " + (navOpen && "hidden")} />
 				</div>
 
 				<div className="hidden md:flex items-center">
@@ -100,23 +103,28 @@ const Landing = () => {
 				</div>
 				<div className="md:hidden">
 					<button
-						className="btn btn-outline btn-square btn-sm"
+						className="btn btn-ghost btn-sm"
 						onClick={() => {
 							document.querySelector('#mobileNav').classList.toggle('hidden');
+							setNavOpen(!navOpen);
 						}}
 					>
-						<FaBurger />
+						{!navOpen ? (
+							<GiHamburgerMenu className="text-xl" />
+						) : (
+							<FaTimes className="text-xl" />
+						)}
 					</button>
 				</div>
 			</div>
 
-			<div className="border-t hidden md:hidden" id="mobileNav">
-				<div className="nav text-[16px] flex flex-col justify-center px-4">
+			<div className="hidden md:hidden" id="mobileNav">
+				<div className="nav text-[16px] flex flex-col items-center justify-center px-10 gap-y-4">
 					{navLinks.map((nav, index) => (
 						<Link
 							key={index}
 							to={nav.to}
-							className="py-2.5 px-8 w-full rounded hover:bg-gray-200"
+							className="py-2.5 px-8 w-full rounded hover:bg-gray-200 text-center"
 							target={nav._blank ? '_blank' : undefined}
 						>
 							{nav.title}
@@ -126,7 +134,7 @@ const Landing = () => {
 						<>
 							<Link
 								to={'/login'}
-								className="py-2.5 px-8 btn-ghost rounded-lg w-full"
+								className="py-2.5 px-8 btn-ghost rounded-lg w-full text-center"
 							>
 								Sign In
 							</Link>

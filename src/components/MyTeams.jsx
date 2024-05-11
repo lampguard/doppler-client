@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLazyGetTeamsQuery } from '../services/teams';
-// import { BsMenuApp, BsPlus } from 'react-icons/bs';
 import { CgMoreVerticalAlt as BsMenuApp } from 'react-icons/cg';
-import { TeamContext, useTeamContext } from '../context/TeamContext.jsx';
+import { useTeamContext } from '../context/TeamContext.jsx';
 import { Link } from 'react-router-dom';
+import { FaTimes } from 'react-icons/fa';
 
 const defaultActiveTeam = {
 	id: undefined,
@@ -15,7 +15,7 @@ const defaultActiveTeam = {
  * @type {React.FC<{open: boolean, setOpen: (state: boolean) => void}>} MyTeams
  *
  */
-const MyTeams = ({ open, setOpen }) => {
+const MyTeams = ({ setOpen }) => {
 	const [getTeams] = useLazyGetTeamsQuery();
 	const [teams, setTeams] = useState([defaultActiveTeam]);
 
@@ -48,7 +48,12 @@ const MyTeams = ({ open, setOpen }) => {
 
 	return (
 		<div className="bg-white h-full w-full">
-			<p className="text-3xl">My Teams</p>
+			<div className="flex md:block text-3xl justify-between items-center">
+				<p>My Teams</p>
+				<button className="md:hidden btn btn-ghost" onClick={() => setOpen(false)}>
+					<FaTimes className="text-2xl" />
+				</button>
+			</div>
 			<div className="py-2"></div>
 			{teams.map((team) => {
 				return (
@@ -66,7 +71,10 @@ const MyTeams = ({ open, setOpen }) => {
 							{team.name}
 						</label>
 						{team.id !== undefined && (
-							<Link to={`/teams/${team.id}`} className='btn btn-sm btn-circle btn-ghost pr-5 sm:pr-0'>
+							<Link
+								to={`/teams/${team.id}`}
+								className="btn btn-sm btn-circle btn-ghost pr-5 sm:pr-0"
+							>
 								<BsMenuApp />
 							</Link>
 						)}

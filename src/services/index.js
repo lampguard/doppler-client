@@ -19,7 +19,7 @@ export const api = createApi({
   }),
   refetchOnReconnect: true,
   keepUnusedDataFor: 120,
-  tagTypes: ["Auth", "Apps"],
+  tagTypes: ["Auth", "Apps", "Metrics"],
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (body) => ({
@@ -99,7 +99,7 @@ export const api = createApi({
         url: "/auth/logout",
         method: "POST",
       }),
-      invalidatesTags: ["Auth"],
+      invalidatesTags: ["Auth", "Apps", "Metrics"],
     }),
     joinWaitlist: builder.mutation({
       query: (data) => ({

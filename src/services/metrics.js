@@ -23,7 +23,7 @@ const metricsApi = api
 						...params,
 					},
 				}),
-				providesTags: 'Metrics',
+				providesTags: ['Metrics'],
 			}),
 			getMetricsForApp: builder.query({
 				query: (data) => ({

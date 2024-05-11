@@ -3,14 +3,14 @@ import UserContext from '../context/Auth';
 import { usePageContext } from '../context/PageContext';
 import {
 	BsBellFill,
-	BsPeopleFill,
-	BsPlus,
-	BsPlusCircle,
-	BsPlusCircleFill,
 } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
-const TopNav = () => {
+/**
+ * 
+ * @type {React.FC<{children: React.ReactNode}>} TopNav
+ */
+const TopNav = ({children}) => {
 	const user = useContext(UserContext);
 	const page = usePageContext();
 
@@ -30,12 +30,7 @@ const TopNav = () => {
 				</Link>
 			</div>
 			<div className="flex md:hidden gap-x-4 items-center text-2xl">
-				<Link to={'/dashboard/create-app'}>
-					<BsPlusCircleFill />
-				</Link>
-				<Link to={'/account/profile'}>
-					<BsPeopleFill />
-				</Link>
+				{children}
 			</div>
 		</div>
 	);
