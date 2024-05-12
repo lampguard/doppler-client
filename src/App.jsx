@@ -52,8 +52,8 @@ const Landing = () => {
 	const [navOpen, setNavOpen] = useState(false);
 	const [waitlist, { isLoading }] = useJoinWaitlistMutation();
 
-	const joinWaitlist = () => {
-		waitlist({ email })
+	const joinWaitlist = (input) => {
+		waitlist({ email: input || email })
 			.unwrap()
 			.then((data) => {
 				notification.info({
@@ -380,8 +380,8 @@ const Landing = () => {
 						className="w-full pt-10 relative"
 						onSubmit={(e) => {
 							e.preventDefault();
-							joinWaitlist();
-							setEmail('');
+							const email = e.target.email;
+							joinWaitlist(email.value);
 						}}
 					>
 						<div className="pt-0 md:pt-[4rem]"></div>
@@ -390,9 +390,10 @@ const Landing = () => {
 								type="text"
 								className="p-[.5em_0] border-b border-[#33333388] focus:outline-none bg-transparent md:absolute bottom-0 w-full left-0"
 								placeholder="E-mail address"
-								value={email}
+								// value={email}
+								name='email'
 								required
-								onChange={(e) => setEmail(e.target.value)}
+								// onChange={(e) => setEmail(e.target.value)}
 							/>
 							<div className="py-2 md:hidden"></div>
 							<button
