@@ -4,10 +4,9 @@ import {
 	getCoreRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
-import { useGetAppsQuery, useLazyGetAppsQuery } from '../services';
+import { useLazyGetAppsQuery } from '../services';
 import Table from '../components/Table';
 import { Link } from 'react-router-dom';
-import Loader from '../components/Loaders';
 import { BsPlus } from 'react-icons/bs';
 import { useTeamContext } from '../context/TeamContext';
 import { useEffect, useState } from 'react';

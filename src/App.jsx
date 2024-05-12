@@ -23,6 +23,16 @@ import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FaTimes } from 'react-icons/fa';
 
+const BgEllipse = ({ className }) => {
+	return (
+		<img
+			src={Ellipse}
+			alt=""
+			className={'absolute w-full z-[-10] ' + className}
+		/>
+	);
+};
+
 const navLinks = [
 	{ title: 'Home', to: '/' },
 	{ title: 'Features', to: '/#features' },
@@ -65,7 +75,7 @@ const Landing = () => {
 			{/* Top Nav & Header */}
 			<div className="px-[2em] md:px-[4em] py-[1.7em] md:py-[2em] flex justify-between items-center w-full">
 				<div className="w-[130px] md:w-[12.5%]">
-					<img src={logo} className={"w-full " + (navOpen && "hidden")} />
+					<img src={logo} className={'w-full ' + (navOpen && 'hidden')} />
 				</div>
 
 				<div className="hidden md:flex items-center">
@@ -218,19 +228,17 @@ const Landing = () => {
 
 			<section className="w-full px-[30px] md:px-[50px]">
 				<div className="py-[10px] md:hidden"></div>
-				<p className="text-center text-3xl md:text-4xl">
+				<p className="text-center text-2xl md:text-4xl">
 					But first, What is DOPPLER?
 				</p>
 				<div className="pb-[30px] md:pb-[80px]"></div>
-				<div className="md:flex justify-center gap-10 items-stretch relative overflow-hidden">
-					<div className="md:w-2/4 md:grid place-items-center opacity-[0.15] md:opacity-100 max-w-full overflow-x-hidden p-1">
-						<img
-							src={hilogo}
-							className="md:w-2/3 scale-[2.5] translate-x-[50px] md:scale-0 md:translate-x-[initial] absolute md:static -z-[100] md:z-0"
-						/>
+				<div className="md:flex justify-center gap-10 items-center relative max-w-full overflow-x-clip">
+					<div className="w-full md:w-2/5 grid place-items-center relative py-10 md:py-0">
+						<BgEllipse className={'scale-y-[4] scale-x-[1.3] blur-[40px]'} />
+						<img src={hilogo} className="w-3/5" />
 					</div>
-					<div className="w-full md:w-2/3 flex flex-col p-2 justify-between items-start">
-						<p className="w-full md:max-w-[80%]">
+					<div className="w-full md:w-3/5 flex flex-col p-2 justify-between items-start gap-y-10">
+						<p className="w-full text-center md:text-left md:max-w-[80%] font-articulat-light leading-loose md:leading-snug">
 							Doppler is an app tracking platform provides comprehensive
 							insights into app behavior, allowing developers and organizations
 							to identify errors, prevent fatalities, and ensure user safety. We
@@ -240,7 +248,6 @@ const Landing = () => {
 							app-related accidents and fatalities. Join us in building a future
 							where apps are a source of trust and innovation.
 						</p>
-						<div className="py-7 md:hidden"></div>
 						{__ENV__.WAITLISTING != 'off' ? (
 							<>
 								<div className="w-full md:w-2/3 outline outline-1 rounded-full overflow-clip">
@@ -272,7 +279,7 @@ const Landing = () => {
 						) : (
 							<Link
 								to={'/signup'}
-								className="py-3 w-full md:w-1/2 px-4 rounded-lg btn-primary text-sm"
+								className="py-3 w-full md:w-1/2 px-4 rounded-lg btn-primary text-sm text-center"
 							>
 								Try Doppler for Free
 							</Link>
@@ -291,9 +298,11 @@ const Landing = () => {
 						className="hidden md:block absolute w-3/4 left-[0] top-[-15%] z-[-1]"
 					/>
 					<div className="md:w-2/5">
-						<p className="text-2xl font-bold">Error Tracking</p>
+						<p className="text-2xl font-bold text-center md:text-left font-articulat-light">
+							Error Tracking
+						</p>
 						<div className="py-1.5 md:py-3"></div>
-						<p>
+						<p className="text-gray-700 leading-relaxed font-articulat-light text-center md:text-left">
 							Gain real-time insights into app errors and potential safety
 							risks. Our comprehensive tracking system empowers you to identify
 							issues, prevent accidents, and ensure the well-being of your
@@ -308,9 +317,11 @@ const Landing = () => {
 				<div className="md:flex gap-3 w-full px-[24px] md:px-[100px] py-[50px] justify-between items-center relative">
 					<img src={Desktop} className="hidden md:block md:w-1/2" />
 					<div className="md:w-2/5">
-						<p className="text-2xl font-bold">Manage Your Apps & Teams</p>
+						<p className="text-2xl text-center md:text-left font-bold">
+							Manage Your Apps & Teams
+						</p>
 						<div className="py-3"></div>
-						<p>
+						<p className="text-gray-700 leading-relaxed font-articulat-light text-center md:text-left">
 							Our platform brings all your apps under one roof. Easily manage
 							access, track app performance, and receive real-time alerts. This
 							centralized system fosters collaboration, empowers your team to
@@ -328,9 +339,11 @@ const Landing = () => {
 						className="absolute w-3/4 right-[0] top-[-15%] z-[-1]"
 					/>
 					<div className="md:w-2/5">
-						<p className="text-2xl font-bold">Distribute Tasks Efficiently</p>
+						<p className="text-2xl text-center md:text-left font-bold">
+							Distribute Tasks Efficiently
+						</p>
 						<div className="py-3"></div>
-						<p>
+						<p className="text-gray-700 leading-relaxed font-articulat-light text-center md:text-left">
 							Don't waste time assigning tasks manually. Our platform leverages
 							smart algorithms to distribute error and fatality tracking tasks
 							based on team member expertise and workload. This ensures a
@@ -347,17 +360,54 @@ const Landing = () => {
 				</div>
 			</section>
 
-			<section className="">
-				<p className="text-xl md:text-3xl font-bold py-[40px] text-center w-full">
+			<section className="relative">
+				<p className="text-xl md:text-3xl font-bold p-[80px_0_60px]  md:p-[40px_0] text-center w-full">
 					Some of your Questions, Answered!
 				</p>
 				<div className="w-full md:py-[40px]">
 					<Faq />
 				</div>
+				<div className="w-full text-center py-[80px] px-4 relative overflow-x-clip">
+					<BgEllipse className={'scale-[4] md:scale-[1] md:-top-[10em]'} />
+					<p className="text-2xl">Newsletter</p>
+					<div className="pt-[80px]"></div>
+					<p className="px-1.5 text-gray-600">
+						Get all the latest updates about Doppler by subscribing to our
+						Newsletters
+					</p>
+
+					<form
+						className="w-full pt-10 relative"
+						onSubmit={(e) => {
+							e.preventDefault();
+							joinWaitlist();
+							setEmail('');
+						}}
+					>
+						<div className="pt-0 md:pt-[4rem]"></div>
+						<div className="relative md:w-[50%] m-auto px-4 py-1">
+							<input
+								type="text"
+								className="p-[.5em_0] border-b border-[#33333388] focus:outline-none bg-transparent md:absolute bottom-0 w-full left-0"
+								placeholder="E-mail address"
+								value={email}
+								required
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+							<div className="py-2 md:hidden"></div>
+							<button
+								className="btn-primary py-1.5 rounded-md w-2/3 md:absolute right-0 bottom-2 md:w-[30%] disabled:bg-gray-500"
+								disabled={isLoading}
+							>
+								Subscribe
+							</button>
+						</div>
+					</form>
+				</div>
 			</section>
 
 			{/* Footer */}
-			<div className="py-[80px]"></div>
+			<div className="py-[40px] md:py-[80px]"></div>
 			<div className="relative w-full">
 				<img
 					src={Ellipse}
@@ -402,6 +452,8 @@ const Landing = () => {
 						)}
 					</div>
 				</div>
+
+				<div className="border-b w-full border-black"></div>
 
 				<div className="py-[32px] md:p-[120px] w-full font-articulat-light relative overflow-hidden">
 					<div className="flex flex-col md:flex-row justify-between items-center">

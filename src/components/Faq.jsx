@@ -16,57 +16,27 @@ const questions = [
 	{
 		question: 'Who can access my data?',
 	},
-	// {
-	// 	question: 'Is there a cost associated with using the platform?',
-	// },
 ];
 
 const Faq = () => {
-	// return (
-	// 	<ul className="w-[90%] md:w-1/2 m-auto">
-	// 		{questions.map((q, index) => (
-	// 			<li
-	// 				className="border border-[#21212180] rounded-md px-2 py-4 mb-4"
-	// 				key={`question-${index}`}
-	// 			>
-	// 				<p className="flex flex-wrap items-center justify-between">
-	// 					<span>{q.question}</span>
-	// 					<button
-	// 						onClick={(e) => {
-	// 							// console.log(e.currentTarget.nextElementSibling);
-	// 							e.currentTarget.nextElementSibling.classList.toggle('hidden');
-	// 						}}
-	// 						className="btn btn-sm btn-outline btn-circle"
-	// 					>
-	// 						<BsPlus className="text-2xl" />
-	// 					</button>
-	// 					<span className="w-full rounded-md p-2 mt-[10px] hidden">
-	// 						{q.answer}
-	// 					</span>
-	// 				</p>
-	// 			</li>
-	// 		))}
-	// 	</ul>
-	// );
-
 	return (
 		<div className="w-[90%] m-auto md:w-1/2">
 			{questions.map((q, index) => (
 				<React.Fragment key={q.question + index}>
-					<div className="collapse collapse-plus outline">
+					<div className="collapse collapse-plus rounded-md outline outline-1 outline-gray-400">
 						<input
 							type="radio"
 							name="my-accordion-3"
 							defaultChecked={index == 0}
 						/>
-						<div className="collapse-title text-xl font-medium">
+						<div className="collapse-title md:text-xl font-medium">
 							{q.question}
 						</div>
-						<div className="collapse-content">
+						<div className="collapse-content text-sm md:text-base">
 							<p>{q.answer}</p>
 						</div>
 					</div>
-					<div className="py-2"></div>
+					<div className="pt-6 md:pt-4"></div>
 				</React.Fragment>
 			))}
 		</div>
