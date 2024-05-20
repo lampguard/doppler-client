@@ -8,11 +8,15 @@ import { BsCaretDownFill, BsCone } from 'react-icons/bs';
 import { useCreateFlagMutation } from '../../services/flags';
 import { useAssignTaskMutation } from '../../services/tasks';
 import { useLazyGetAppTeamsQuery } from '../../services/apps';
+import { useLazyAnalyseQuery } from '../../services/ai';
 import { FaFlag, FaChartLine } from 'react-icons/fa';
 import { notification } from 'antd';
 import Loader from '../Loaders';
 import Modal from '../../components/Modal';
+import Report from './Report';
 import { format } from 'date-fns';
+import { FaList } from 'react-icons/fa6';
+import Skeleton from '../Loaders/Skeleton';
 
 /**
  * @type {React.FC<{log: TLog, appteams: any[]}>} Log
@@ -28,6 +32,8 @@ const Log = ({ log, appteams }) => {
 
 	const [assignTask, { isLoading: assigning }] = useAssignTaskMutation();
 
+	const [reporting, setReporting] = useState(undefined);
+
 	const submitAssignment = () => {
 		return assignTask({
 			log_id: log.id,
@@ -37,6 +43,24 @@ const Log = ({ log, appteams }) => {
 			},
 			description: description.length == 0 ? undefined : description,
 		});
+	};
+
+	const [analyse, { isLoading: analysing, isSuccess: analysed }] =
+		useLazyAnalyseQuery();
+	const [analysis, setAnalysis] = useState(undefined);
+
+	const requestAnalysis = () => {
+		analyse(reporting?.id)
+			.unwrap()
+			.then(({ response }) => {
+				setAnalysis(response);
+			})
+			.catch((err) => {
+				notification.error({
+					message: err.data.error,
+					duration: 5,
+				});
+			});
 	};
 
 	return (
@@ -164,6 +188,36 @@ const Log = ({ log, appteams }) => {
 					</>
 				)}
 			</Modal>
+			<Modal
+				id={`log-report-${log.id}`}
+				className="rounded-sm w-full md:min-w-[75%]"
+			>
+				{reporting && (
+					<>
+						<Report log={reporting} />
+						<div className="py-2"></div>
+						<button
+							className="btn btn-primary"
+							disabled={analysing}
+							onClick={requestAnalysis}
+						>
+							{analysing ? 'Getting Analysis' : 'Request Analysis'}
+						</button>
+						<div className="py-2">
+							{analysing ? (
+								<Skeleton className="rounded-sm w-full h-8" />
+							) : analysed ? (
+								<div className="p-2 bg-black text-white">
+									<p className='underline italic'>Christian Doppler says:</p>
+									<p className="text-white text-[0.8em]">
+										{analysis}
+									</p>
+								</div>
+							) : null}
+						</div>
+					</>
+				)}
+			</Modal>
 			{open && (
 				<>
 					<div className={`log ${log.level} w-full px-[12px] py-2 rounded-lg`}>
@@ -191,28 +245,11 @@ const Log = ({ log, appteams }) => {
 							<button
 								className="btn btn-xs glass btn-ghost relative"
 								onClick={(e) => {
-									flag({
-										log_id: log.id,
-										reason: 'User flagged',
-									})
-										.unwrap()
-										.then((data) => {
-											notification.info({
-												message: 'Okay!',
-												duration: 3,
-											});
-										})
-										.catch((err) => {
-											notification.error({
-												message:
-													err.data.message ||
-													"That didn't work. Please try again.",
-												duration: 3,
-											});
-										});
+									setReporting(log);
+									document.getElementById(`log-report-${log.id}`).showModal();
 								}}
 							>
-								<FaFlag /> Raise a flag
+								<FaList /> View Report
 								{isLoading && <Loader theme={false} />}
 							</button>
 						</div>

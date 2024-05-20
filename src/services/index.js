@@ -15,7 +15,7 @@ export const api = createApi({
       return headers;
     },
     // cache: "force-cache",
-    timeout: 60000,
+    // timeout: 300000,
   }),
   refetchOnReconnect: true,
   keepUnusedDataFor: 120,

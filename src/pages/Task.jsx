@@ -6,7 +6,7 @@ import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
 import { usePageContext } from '../context/PageContext';
 
-const ContextEntry = ({ k, v }) => {
+export const ContextEntry = ({ k, v }) => {
 	const [open, setOpen] = useState(false);
 
 	return (

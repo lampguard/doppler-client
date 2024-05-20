@@ -1,5 +1,5 @@
-const Skeleton = ({ className = "" }) => {
-  return <div className={"skeleton " + className}></div>;
+const Skeleton = ({ className = "", children }) => {
+  return <div className={"skeleton " + className}>{children}</div>;
 };
 
 export default Skeleton;
