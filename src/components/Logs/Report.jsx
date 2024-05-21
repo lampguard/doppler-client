@@ -6,6 +6,7 @@ const Report = ({ log }) => {
 	return (
 		<div className="p-4 bg-gray-100">
 			<p className="text-xl">Incident Report</p>
+			<p className="font-articulat-bold">#{log.id}</p>
 			<div className="py-2"></div>
 			<div className="text-sm">
 				<p>

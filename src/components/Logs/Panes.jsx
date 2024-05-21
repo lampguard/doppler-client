@@ -20,8 +20,8 @@ import Skeleton from '../Loaders/Skeleton';
 
 const analysisMessages = [
 	'Running analysis',
-	"Hold on, we're going home",
 	"We're still thinking about it",
+	"Hold on, we're going home",
 	'This your issue strong o',
 	'Jesus, what did you break',
 	"Are you sure you know what you're doing?",
@@ -40,8 +40,6 @@ const Log = ({ log, appteams }) => {
 	const [assignedMember, setAssignMember] = useState(undefined);
 
 	const [assignTask, { isLoading: assigning }] = useAssignTaskMutation();
-
-	const [reporting, setReporting] = useState(undefined);
 
 	const submitAssignment = () => {
 		return assignTask({
@@ -62,15 +60,11 @@ const Log = ({ log, appteams }) => {
 
 	const interval = useRef(null);
 
-	useEffect(() => {
-		if (!isAnalysing) {
-			clearInterval(interval.current);
-		}
-	}, [isAnalysing, analysisMessage]);
-
-	const requestAnalysis = () => {
+	const requestAnalysis = (log) => {
+		// setAnalysing(true);
 		interval.current = setInterval(() => {
 			setAnalysisMessage((prev) => {
+				console.log(prev);
 				if (prev < analysisMessages.length - 1) {
 					return prev + 1;
 				} else {
@@ -79,7 +73,14 @@ const Log = ({ log, appteams }) => {
 			});
 		}, 10 * 1000);
 
-		analyse(reporting?.id)
+		// setTimeout(() => {
+		// 	setAnalysing((prev) => false);
+		// 	clearInterval(interval.current);
+		// }, 100000);
+
+		// return;
+
+		analyse(log?.id)
 			.unwrap()
 			.then(({ response }) => {
 				setAnalysis(response);
@@ -94,7 +95,8 @@ const Log = ({ log, appteams }) => {
 				});
 			})
 			.finally(() => {
-				clearInterval(interval);
+				setAnalysisMessage(0);
+				clearInterval(interval.current);
 			});
 	};
 
@@ -229,40 +231,35 @@ const Log = ({ log, appteams }) => {
 				id={`log-report-${log.id}`}
 				className="rounded-sm w-full md:min-w-[75%]"
 			>
-				{reporting && (
-					<>
-						<Report log={reporting} />
-						<div className="py-2"></div>
-						{/* {false && ( */}
-						{!isAnalysing && (
-							<button
-								className="btn btn-primary btn-sm"
-								disabled={isAnalysing}
-								onClick={requestAnalysis}
-							>
-								Get Suggestion
-							</button>
-						)}
-						<div className="py-2">
-							{isAnalysing ? (
-								<>
-									{/* <Skeleton className="rounded-sm w-full h-8" /> */}
-									<div className="w-full bg-black text-white grid place-items-center min-h-12">
-										<span className="loading loading-infinity loading-lg"></span>
-										<p className="text-sm italic">
-											{analysisMessages[analysisMessage]}...
-										</p>
-									</div>
-								</>
-							) : analysed ? (
-								<div className="p-2 bg-black text-white">
-									<p className="underline italic">Christian Doppler says:</p>
-									<p className="text-white text-[0.8em]">{analysis}</p>
+				<>
+					<Report log={log} />
+					<div className="py-2"></div>
+					{/* {false && ( */}
+					{!(isAnalysing || analysing || analysed) && (
+						<button
+							className="btn btn-primary btn-sm"
+							disabled={isAnalysing}
+							onClick={() => requestAnalysis(log)}
+						>
+							Get Suggestion
+						</button>
+					)}
+					<div className="py-2">
+						{isAnalysing || analysing ? (
+							<>
+								<div className="w-full grid place-items-center min-h-12">
+									<span className="loading text-theme loading-dots loading-lg"></span>
+									<p className="text-sm">{analysisMessages[analysisMessage]}</p>
 								</div>
-							) : null}
-						</div>
-					</>
-				)}
+							</>
+						) : analysed ? (
+							<div className="p-2">
+								<p className="font-articulat-bold">Doppler:</p>
+								<p className="text-[0.8em]">{analysis}</p>
+							</div>
+						) : null}
+					</div>
+				</>
 			</Modal>
 			{open && (
 				<>
@@ -290,10 +287,9 @@ const Log = ({ log, appteams }) => {
 							</button>
 							<button
 								className="btn btn-xs glass btn-ghost relative"
-								onClick={(e) => {
-									setReporting(log);
-									document.getElementById(`log-report-${log.id}`).showModal();
-								}}
+								onClick={() =>
+									document.getElementById(`log-report-${log.id}`).showModal()
+								}
 							>
 								<FaList /> View Report
 							</button>
