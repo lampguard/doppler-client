@@ -3,7 +3,7 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BsCaretDownFill, BsCone } from 'react-icons/bs';
 import { useCreateFlagMutation } from '../../services/flags';
 import { useAssignTaskMutation } from '../../services/tasks';
@@ -18,13 +18,22 @@ import { format } from 'date-fns';
 import { FaList } from 'react-icons/fa6';
 import Skeleton from '../Loaders/Skeleton';
 
+const analysisMessages = [
+	'Running analysis',
+	"Hold on, we're going home",
+	"We're still thinking about it",
+	'This your issue strong o',
+	'Jesus, what did you break',
+	"Are you sure you know what you're doing?",
+];
+
 /**
  * @type {React.FC<{log: TLog, appteams: any[]}>} Log
  * @returns
  */
 const Log = ({ log, appteams }) => {
 	const [open, setOpen] = useState(false);
-	const [flag, { isLoading }] = useCreateFlagMutation();
+	// const [flag, { isLoading }] = useCreateFlagMutation();
 
 	const [description, setDescription] = useState('');
 	const [assignedTeam, setAssignTeam] = useState(undefined);
@@ -45,11 +54,31 @@ const Log = ({ log, appteams }) => {
 		});
 	};
 
-	const [analyse, { isLoading: analysing, isSuccess: analysed }] =
+	const [analyse, { isLoading: isAnalysing, isSuccess: analysed }] =
 		useLazyAnalyseQuery();
 	const [analysis, setAnalysis] = useState(undefined);
+	const [analysisMessage, setAnalysisMessage] = useState(0);
+	const [analysing, setAnalysing] = useState(false);
+
+	const interval = useRef(null);
+
+	useEffect(() => {
+		if (!isAnalysing) {
+			clearInterval(interval.current);
+		}
+	}, [isAnalysing, analysisMessage]);
 
 	const requestAnalysis = () => {
+		interval.current = setInterval(() => {
+			setAnalysisMessage((prev) => {
+				if (prev < analysisMessages.length - 1) {
+					return prev + 1;
+				} else {
+					return 0;
+				}
+			});
+		}, 10 * 1000);
+
 		analyse(reporting?.id)
 			.unwrap()
 			.then(({ response }) => {
@@ -57,9 +86,15 @@ const Log = ({ log, appteams }) => {
 			})
 			.catch((err) => {
 				notification.error({
-					message: err.status == 429 ? "You're making too many requests. Please try a bit later." : err.data.error || err.data.message,
+					message:
+						err.status == 429
+							? "You're making too many requests. Please try a bit later."
+							: err.data.error || err.data.message,
 					duration: 5,
 				});
+			})
+			.finally(() => {
+				clearInterval(interval);
 			});
 	};
 
@@ -188,30 +223,41 @@ const Log = ({ log, appteams }) => {
 					</>
 				)}
 			</Modal>
+
+			{/* Report Modal with AI integration */}
 			<Modal
 				id={`log-report-${log.id}`}
-				className="rounded-sm w-full md:w-[75%]"
+				className="rounded-sm w-full md:min-w-[75%]"
 			>
 				{reporting && (
 					<>
 						<Report log={reporting} />
 						<div className="py-2"></div>
-						<button
-							className="btn btn-primary"
-							disabled={analysing}
-							onClick={requestAnalysis}
-						>
-							{analysing ? 'Getting Analysis' : 'Request Analysis'}
-						</button>
+						{/* {false && ( */}
+						{!isAnalysing && (
+							<button
+								className="btn btn-primary btn-sm"
+								disabled={isAnalysing}
+								onClick={requestAnalysis}
+							>
+								Get Suggestion
+							</button>
+						)}
 						<div className="py-2">
-							{analysing ? (
-								<Skeleton className="rounded-sm w-full h-8" />
+							{isAnalysing ? (
+								<>
+									{/* <Skeleton className="rounded-sm w-full h-8" /> */}
+									<div className="w-full bg-black text-white grid place-items-center min-h-12">
+										<span className="loading loading-infinity loading-lg"></span>
+										<p className="text-sm italic">
+											{analysisMessages[analysisMessage]}...
+										</p>
+									</div>
+								</>
 							) : analysed ? (
 								<div className="p-2 bg-black text-white">
-									<p className='underline italic'>Christian Doppler says:</p>
-									<p className="text-white text-[0.8em]">
-										{analysis}
-									</p>
+									<p className="underline italic">Christian Doppler says:</p>
+									<p className="text-white text-[0.8em]">{analysis}</p>
 								</div>
 							) : null}
 						</div>
@@ -250,7 +296,6 @@ const Log = ({ log, appteams }) => {
 								}}
 							>
 								<FaList /> View Report
-								{isLoading && <Loader theme={false} />}
 							</button>
 						</div>
 					</div>
