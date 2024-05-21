@@ -194,7 +194,7 @@ const Landing = () => {
 								className="flex"
 								onSubmit={(e) => {
 									e.preventDefault();
-									joinWaitlist({ email });
+									joinWaitlist(email);
 								}}
 							>
 								<TextInput
@@ -255,7 +255,7 @@ const Landing = () => {
 										className="flex"
 										onSubmit={(e) => {
 											e.preventDefault();
-											joinWaitlist({ email });
+											joinWaitlist(email);
 										}}
 									>
 										<TextInput
@@ -430,7 +430,7 @@ const Landing = () => {
 									className="flex"
 									onSubmit={(e) => {
 										e.preventDefault();
-										joinWaitlist({ email });
+										joinWaitlist(email);
 									}}
 								>
 									<TextInput
