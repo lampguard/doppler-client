@@ -190,7 +190,7 @@ const Log = ({ log, appteams }) => {
 			</Modal>
 			<Modal
 				id={`log-report-${log.id}`}
-				className="rounded-sm w-full md:min-w-[75%]"
+				className="rounded-sm w-full md:w-[75%]"
 			>
 				{reporting && (
 					<>
@@ -228,7 +228,7 @@ const Log = ({ log, appteams }) => {
 							<span>IP Address: {log.ip}</span>
 							<span>{format(log.createdAt, 'yyyy-MM-dd hh:mm:ss a')}</span>
 						</div>
-						<div className="w-full p-[5px] bg-gray-200 rounded min-h-[100px]">
+						<div className="max-w-full p-[5px] bg-gray-200 rounded min-h-[100px] break-words">
 							{log.text}
 						</div>
 						<div className="py-1 flex justify-between">

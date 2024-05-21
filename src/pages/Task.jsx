@@ -27,7 +27,7 @@ export const ContextEntry = ({ k, v }) => {
 				)}
 			</div>
 			<div className={(open ? 'block' : 'hidden') + ' max-w-full p-1 border'}>
-				<p className="p-1 overflow-y-auto text-pretty">{v}</p>
+				<p className="p-1 overflow-y-auto text-pretty break-words">{v}</p>
 			</div>
 		</>
 	);

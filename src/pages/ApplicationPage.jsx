@@ -124,7 +124,7 @@ const ApplicationPage = () => {
 						) : (
 							appMetrics.length > 0 && (
 								<div
-									className="px-0 md:px-2 relative min-h-[350px] rounded-md grid grid-cols-1 mb-3"
+									className="px-0 pb-10 md:pb-2 md:px-2 relative min-h-[350px] rounded-md grid grid-cols-1 mb-3"
 									key={app.id}
 								>
 									<DashboardApp app={app} data={appMetrics} />
