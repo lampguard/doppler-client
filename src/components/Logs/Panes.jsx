@@ -57,7 +57,7 @@ const Log = ({ log, appteams }) => {
 			})
 			.catch((err) => {
 				notification.error({
-					message: err.data.error,
+					message: err.status == 429 ? "You're making too many requests. Please try a bit later." : err.data.error || err.data.message,
 					duration: 5,
 				});
 			});
@@ -228,7 +228,7 @@ const Log = ({ log, appteams }) => {
 							<span>IP Address: {log.ip}</span>
 							<span>{format(log.createdAt, 'yyyy-MM-dd hh:mm:ss a')}</span>
 						</div>
-						<div className="max-w-full p-[5px] bg-gray-200 rounded min-h-[100px] break-words">
+						<div className="max-w-full p-[5px] bg-gray-200 rounded min-h-[100px] break-words text-sm md:text-base">
 							{log.text}
 						</div>
 						<div className="py-1 flex justify-between">
