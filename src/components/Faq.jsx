@@ -16,6 +16,9 @@ const questions = [
 	{
 		question: 'Who can access my data?',
 	},
+	{
+		question: 'Is there a cost associated with the platform?'
+	}
 ];
 
 const Faq = () => {

@@ -11,7 +11,7 @@ import Faq from './components/Faq';
 import Twitter from './assets/twitter-logo.svg';
 import Github from './assets/github-icon-logo.svg';
 import Linkedin from './assets/linkedin-logo.svg';
-import { FaGithub } from 'react-icons/fa6';
+import { FaCheck, FaGithub } from 'react-icons/fa6';
 
 import TextInput from './components/Input/TextInput';
 import Loader from './components/Loaders';
@@ -21,7 +21,71 @@ import { notification } from 'antd';
 import { useJoinWaitlistMutation } from './services';
 import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { FaTimes } from 'react-icons/fa';
+import { FaCheckCircle, FaTimes } from 'react-icons/fa';
+
+const pricings = [
+	{
+		amount: (
+			<p>
+				<span className="font-articulat-bold text-3xl">$0</span>
+				<span className="font-articulat-lighter text-xl text-[#212121B2]">
+					/month
+				</span>
+			</p>
+		),
+		name: 'Free',
+		description: 'Explore the product and power small or personal projects',
+		points: ['1 Team', 'Monitor 3 Apps'],
+		recommended: false,
+		link: '/',
+	},
+	{
+		amount: (
+			<p>
+				<span className="font-articulat-bold text-3xl">$3</span>
+				<span className="font-articulat-lighter text-xl text-[#212121B2]">
+					/month
+				</span>
+			</p>
+		),
+		name: 'Basic',
+		description: 'Suitable for smaller teams',
+		points: ['3 Teams', 'Unlimited Team Members', 'Unlimited Apps'],
+		recommended: false,
+		link: '/',
+	},
+	{
+		amount: (
+			<p>
+				<span className="font-articulat-bold text-3xl">$5</span>
+				<span className="font-articulat-lighter text-xl text-[#212121B2]">
+					/month
+				</span>
+			</p>
+		),
+		name: 'Pro-Doppler',
+		description:
+			'Suitable for large teams with substantial number of services or applications',
+		points: [
+			'Unlimited Teams',
+			'Unlimited Team Member',
+			'Unlimited Apps',
+			'AI Reporter',
+			'Jira Integration',
+		],
+		recommended: true,
+		link: '/',
+	},
+	{
+		amount: <p className="font-articulat-bold text-3xl">Custom</p>,
+		name: <>&nbsp;</>,
+		description:
+			'Suitable for organizations with custom needs. Schedule a session with us.',
+		points: [],
+		custom: true,
+		link: '/',
+	},
+];
 
 const BgEllipse = ({ className }) => {
 	return (
@@ -43,6 +107,72 @@ const navLinks = [
 		_blank: true,
 	},
 ];
+
+const PricePane = ({
+	amount,
+	name,
+	description,
+	points,
+	recommended,
+	custom,
+}) => (
+	<div className="bg-white py-6 px-3 border rounded-md md:min-h-[500px] flex flex-col justify-between">
+		<div>
+			{amount}
+			<div className="py-1"></div>
+			<p className="font-bold text-xl">{name}</p>
+			<div className="py-1"></div>
+			<p className="text-sm text-[#212121B2] min-h-12">{description}</p>
+			<div className="py-2"></div>
+			<hr className="h-[.1em] bg-[#21212180] border-0" />
+			<div className="py-2"></div>
+			<ul className="list">
+				{points?.map((point, index) => (
+					<li className="flex items-center gap-x-4 py-1" key={index}>
+						<FaCheckCircle />
+						{point}
+					</li>
+				))}
+			</ul>
+		</div>
+		<div className="py-4"></div>
+		{__ENV__.WAITLISTING == 'off' &&
+			(!custom ? (
+				<Link
+					className={
+						'btn rounded-full w-full ' +
+						(recommended ? 'btn-primary' : 'hover:btn-primary')
+					}
+				>
+					Get Started
+				</Link>
+			) : (
+				<button className="btn rounded-full bg-black text-white">
+					Contact Us
+				</button>
+			))}
+	</div>
+);
+
+const Pricing = () => {
+	return (
+		<div className="text-center" id="pricing">
+			<p className="text-3xl font-bold">Pricing</p>
+			<div className="py-6"></div>
+			<p className="md:w-1/2 m-auto">
+				Use Doppler for free and feel free to upgrade to enable more freedom and
+				all our other exciting features
+			</p>
+			<div className="py-4"></div>
+
+			<div className="px-10 md:px-40 grid md:grid-cols-4 grid-rows-1 gap-x-8 gap-y-4 text-left">
+				{pricings.map((pricing, index) => (
+					<PricePane {...pricing} key={index} />
+				))}
+			</div>
+		</div>
+	);
+};
 
 /**
  * @type {React.FC} Landing
@@ -81,6 +211,18 @@ const Landing = () => {
 				<div className="hidden md:flex items-center">
 					<div className="nav">
 						{navLinks.map((link) => {
+							if (link.to.startsWith('/#')) {
+								return (
+									<a
+										key={link.to}
+										href={link.to}
+										className="py-2 px-5 rounded hover:bg-gray-200"
+										target={link._blank ? '_blank' : undefined}
+									>
+										{link.title}
+									</a>
+								);
+							}
 							return (
 								<Link
 									key={link.to}
@@ -360,6 +502,11 @@ const Landing = () => {
 				</div>
 			</section>
 
+			<div className="py-8 relative">
+				<BgEllipse className={' translate-y-40 translate-x-[-45em]'} />
+				<Pricing />
+			</div>
+
 			<section className="relative">
 				<p className="text-xl md:text-3xl font-bold p-[80px_0_60px]  md:p-[40px_0] text-center w-full">
 					Some of your Questions, Answered!
@@ -391,7 +538,7 @@ const Landing = () => {
 								className="p-[.5em_0] border-b border-[#33333388] focus:outline-none bg-transparent md:absolute bottom-0 w-full left-0"
 								placeholder="E-mail address"
 								// value={email}
-								name='email'
+								name="email"
 								required
 								// onChange={(e) => setEmail(e.target.value)}
 							/>
