@@ -13,6 +13,7 @@ import { FaTimes } from 'react-icons/fa';
 import { FaGithub } from 'react-icons/fa6';
 import TextInput from './Input/TextInput';
 import Loader from './Loaders';
+import { useJoinWaitlistMutation } from '../services';
 
 const navLinks = [
 	{ title: 'Home', to: '/' },
@@ -27,6 +28,27 @@ const navLinks = [
 
 const GuestLayout = () => {
 	const [navOpen, setNavOpen] = useState(false);
+
+	const [email, setEmail] = useState('');
+	const [waitlist, { isLoading }] = useJoinWaitlistMutation();
+
+	const joinWaitlist = (input) => {
+		waitlist({ email: input || email })
+			.unwrap()
+			.then((data) => {
+				notification.info({
+					message: data.message || 'Success!',
+					duration: 3,
+				});
+			})
+			.catch((err) => {
+				notification.error({
+					message: err.data?.message || 'An error occurred',
+					duration: 3,
+					className: 'bg-red-200 text-white',
+				});
+			});
+	};
 
 	return (
 		<>
