@@ -35,12 +35,17 @@ import PasswordReset from './pages/PasswordReset.jsx';
 import AppLayout from './components/Layouts/AppLayout.jsx';
 import Notifications from './pages/Notifications.jsx';
 import { PageProvider } from './context/PageContext.jsx';
+import Pricing from './pages/Pricing.jsx';
+import GuestLayout from './components/GuestLayout.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
-			<Route element={<App />} index />
-			<Route path="/docs/guide" element={<App />} />
+			<Route element={<GuestLayout />}>
+				<Route element={<App />} index />
+				<Route path="/docs/guide" element={<App />} />
+				<Route path="/pricing" element={<Pricing />} />
+			</Route>
 			<Route element={<AuthPane />}>
 				<Route element={<Login />} path="/verify-2fa" />
 				<Route element={<Login />} path="/login" />

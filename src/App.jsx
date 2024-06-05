@@ -1,17 +1,12 @@
 import { Link } from 'react-router-dom';
 
-import logo from './assets/logo.svg';
+
 import hilogo from './assets/biglogo.png';
-import blackLogo from './assets/black-logo.svg';
 import Ellipse from './assets/Ellipse 8.svg';
 import Panes from './assets/multi-pane.png';
 import Desktop from './assets/Desktop.png';
 import DesktopTasks from './assets/Tasks.png';
 import Faq from './components/Faq';
-import Twitter from './assets/twitter-logo.svg';
-import Github from './assets/github-icon-logo.svg';
-import Linkedin from './assets/linkedin-logo.svg';
-import { FaCheck, FaGithub } from 'react-icons/fa6';
 
 import TextInput from './components/Input/TextInput';
 import Loader from './components/Loaders';
@@ -20,72 +15,7 @@ import { notification } from 'antd';
 
 import { useJoinWaitlistMutation } from './services';
 import { useState } from 'react';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { FaCheckCircle, FaTimes } from 'react-icons/fa';
-
-const pricings = [
-	{
-		amount: (
-			<p>
-				<span className="font-articulat-bold text-3xl">$0</span>
-				<span className="font-articulat-lighter text-xl text-[#212121B2]">
-					/month
-				</span>
-			</p>
-		),
-		name: 'Free',
-		description: 'Explore the product and power small or personal projects',
-		points: ['1 Team', 'Monitor 3 Apps'],
-		recommended: false,
-		link: '/',
-	},
-	{
-		amount: (
-			<p>
-				<span className="font-articulat-bold text-3xl">$3</span>
-				<span className="font-articulat-lighter text-xl text-[#212121B2]">
-					/month
-				</span>
-			</p>
-		),
-		name: 'Basic',
-		description: 'Suitable for smaller teams',
-		points: ['3 Teams', 'Unlimited Team Members', 'Unlimited Apps'],
-		recommended: false,
-		link: '/',
-	},
-	{
-		amount: (
-			<p>
-				<span className="font-articulat-bold text-3xl">$5</span>
-				<span className="font-articulat-lighter text-xl text-[#212121B2]">
-					/month
-				</span>
-			</p>
-		),
-		name: 'Pro-Doppler',
-		description:
-			'Suitable for large teams with substantial number of services or applications',
-		points: [
-			'Unlimited Teams',
-			'Unlimited Team Member',
-			'Unlimited Apps',
-			'AI Reporter',
-			'Jira Integration',
-		],
-		recommended: true,
-		link: '/',
-	},
-	{
-		amount: <p className="font-articulat-bold text-3xl">Custom</p>,
-		name: <>&nbsp;</>,
-		description:
-			'Suitable for organizations with custom needs. Schedule a session with us.',
-		points: [],
-		custom: true,
-		link: '/',
-	},
-];
+import { Pricing } from './components/Pricing';
 
 const BgEllipse = ({ className }) => {
 	return (
@@ -97,89 +27,11 @@ const BgEllipse = ({ className }) => {
 	);
 };
 
-const navLinks = [
-	{ title: 'Home', to: '/' },
-	{ title: 'Features', to: '/#features' },
-	{ title: 'Pricing', to: '/#pricing' },
-	{
-		title: `Developer Guide`,
-		to: 'https://doppler.gitbook.io/guide',
-		_blank: true,
-	},
-];
-
-const PricePane = ({
-	amount,
-	name,
-	description,
-	points,
-	recommended,
-	custom,
-}) => (
-	<div className="bg-white py-6 px-3 border rounded-md md:min-h-[500px] flex flex-col justify-between">
-		<div>
-			{amount}
-			<div className="py-1"></div>
-			<p className="font-bold text-xl">{name}</p>
-			<div className="py-1"></div>
-			<p className="text-sm text-[#212121B2] min-h-12">{description}</p>
-			<div className="py-2"></div>
-			<hr className="h-[.1em] bg-[#21212180] border-0" />
-			<div className="py-2"></div>
-			<ul className="list">
-				{points?.map((point, index) => (
-					<li className="flex items-center gap-x-4 py-1" key={index}>
-						<FaCheckCircle />
-						{point}
-					</li>
-				))}
-			</ul>
-		</div>
-		<div className="py-4"></div>
-		{__ENV__.WAITLISTING == 'off' &&
-			(!custom ? (
-				<Link
-					className={
-						'btn rounded-full w-full ' +
-						(recommended ? 'btn-primary' : 'hover:btn-primary')
-					}
-				>
-					Get Started
-				</Link>
-			) : (
-				<button className="btn rounded-full bg-black text-white">
-					Contact Us
-				</button>
-			))}
-	</div>
-);
-
-const Pricing = () => {
-	return (
-		<div className="text-center" id="pricing">
-			<p className="text-3xl font-bold">Pricing</p>
-			<div className="py-6"></div>
-			<p className="md:w-1/2 m-auto">
-				Use Doppler for free and feel free to upgrade to enable more freedom and
-				all our other exciting features
-			</p>
-			<div className="py-4"></div>
-
-			<div className="px-10 md:px-40 grid md:grid-cols-4 grid-rows-1 gap-x-8 gap-y-4 text-left">
-				{pricings.map((pricing, index) => (
-					<PricePane {...pricing} key={index} />
-				))}
-			</div>
-		</div>
-	);
-};
-
 /**
  * @type {React.FC} Landing
  */
 const Landing = () => {
 	const [email, setEmail] = useState('');
-	const [navOpen, setNavOpen] = useState(false);
 	const [waitlist, { isLoading }] = useJoinWaitlistMutation();
 
 	const joinWaitlist = (input) => {
@@ -202,105 +54,6 @@ const Landing = () => {
 
 	return (
 		<>
-			{/* Top Nav & Header */}
-			<div className="px-[2em] md:px-[4em] py-[1.7em] md:py-[2em] flex justify-between items-center w-full">
-				<div className="w-[130px] md:w-[12.5%]">
-					<img src={logo} className={'w-full ' + (navOpen && 'hidden')} />
-				</div>
-
-				<div className="hidden md:flex items-center">
-					<div className="nav">
-						{navLinks.map((link) => {
-							if (link.to.startsWith('/#')) {
-								return (
-									<a
-										key={link.to}
-										href={link.to}
-										className="py-2 px-5 rounded hover:bg-gray-200"
-										target={link._blank ? '_blank' : undefined}
-									>
-										{link.title}
-									</a>
-								);
-							}
-							return (
-								<Link
-									key={link.to}
-									to={link.to}
-									className="py-2 px-5 rounded hover:bg-gray-200"
-									target={link._blank ? '_blank' : undefined}
-								>
-									{link.title}
-								</Link>
-							);
-						})}
-					</div>
-					<div className="lg:px-[1.25rem]"></div>
-					{__ENV__.WAITLISTING == 'off' && (
-						<div>
-							<Link
-								to={'/login'}
-								className="py-2.5 px-8 btn-ghost rounded-lg w-[100px] h-[30px]"
-							>
-								Sign In
-							</Link>
-							<Link
-								to={'/signup'}
-								className="py-2.5 px-8 btn-primary btn-md rounded-lg w-[150px]"
-							>
-								Get Started
-							</Link>
-						</div>
-					)}
-				</div>
-				<div className="md:hidden">
-					<button
-						className="btn btn-ghost btn-sm"
-						onClick={() => {
-							document.querySelector('#mobileNav').classList.toggle('hidden');
-							setNavOpen(!navOpen);
-						}}
-					>
-						{!navOpen ? (
-							<GiHamburgerMenu className="text-xl" />
-						) : (
-							<FaTimes className="text-xl" />
-						)}
-					</button>
-				</div>
-			</div>
-
-			<div className="hidden md:hidden" id="mobileNav">
-				<div className="nav text-[16px] flex flex-col items-center justify-center px-10 gap-y-4">
-					{navLinks.map((nav, index) => (
-						<Link
-							key={index}
-							to={nav.to}
-							className="py-2.5 px-8 w-full rounded hover:bg-gray-200 text-center"
-							target={nav._blank ? '_blank' : undefined}
-						>
-							{nav.title}
-						</Link>
-					))}
-					{__ENV__.WAITLISTING == 'off' && (
-						<>
-							<Link
-								to={'/login'}
-								className="py-2.5 px-8 btn-ghost rounded-lg w-full text-center"
-							>
-								Sign In
-							</Link>
-							<Link
-								to={'/signup'}
-								className="btn btn-primary rounded-lg w-full"
-							>
-								Get Started
-							</Link>
-						</>
-					)}
-				</div>
-			</div>
-
 			{/* Hero */}
 			<section id="hero" className="w-full py-[50px] text-center relative">
 				<img
@@ -505,6 +258,10 @@ const Landing = () => {
 			<div className="py-8 relative">
 				<BgEllipse className={' translate-y-40 translate-x-[-45em]'} />
 				<Pricing />
+				<div className="py-4"></div>
+				<div className="text-center w-10/12 md:w-3/12 m-auto">
+					<Link to='/pricing' className='btn btn-primary w-full rounded-md'>Compare All Plans</Link>
+				</div>
 			</div>
 
 			<section className="relative">
@@ -553,104 +310,6 @@ const Landing = () => {
 					</form>
 				</div>
 			</section>
-
-			{/* Footer */}
-			<div className="py-[40px] md:py-[80px]"></div>
-			<div className="relative w-full">
-				<img
-					src={Ellipse}
-					className="absolute top-[-100%] z-[-1] left-[-20%] w-3/5"
-					alt=""
-				/>
-				<div className="px-[25px] py-[40px] md:absolute w-[94%] m-auto md:w-8/12 md:p-[40px] bg-theme top-[-23%] flex flex-col md:flex-row justify-between items-stretch md:items-center left-[18%]">
-					<p className="font-articulat text-2xl md:w-2/5 text-center">
-						Discover the Doppler Effect Now!!!
-					</p>
-					<div className="pt-[64px] md:hidden"></div>
-
-					<div className="md:w-2/5">
-						{__ENV__.WAITLISTING == 'off' ? (
-							<Link className="btn w-full">Try Doppler for Free</Link>
-						) : (
-							<div className="m-auto text-black outline outline-1">
-								<form
-									className="flex"
-									onSubmit={(e) => {
-										e.preventDefault();
-										joinWaitlist(email);
-									}}
-								>
-									<TextInput
-										type="email"
-										required
-										className="rounded-none border-0 focus:outline-none"
-										placeholder="you@beautiful.com"
-										value={email}
-										onChange={(e) => setEmail(e.target.value)}
-									/>
-									<button className="btn rounded-none min-w-[100px] border-0">
-										{isLoading ? (
-											<Loader className="text-white" theme={false} />
-										) : (
-											'Join Waitlist'
-										)}
-									</button>
-								</form>
-							</div>
-						)}
-					</div>
-				</div>
-
-				<div className="border-b w-full border-black"></div>
-
-				<div className="py-[32px] md:p-[120px] w-full font-articulat-light relative overflow-hidden">
-					<div className="flex flex-col md:flex-row justify-between items-center">
-						<img src={blackLogo} className="py-[32px] md:py-0 w-[130px]" />
-						<div className="gap-y-[30px] md:gap-y-0 flex flex-col md:flex-row items-center w-2/3 justify-end pb-[64px] md:pb-0">
-							<img
-								src={Ellipse}
-								alt=""
-								className="md:hidden scale-[3] -rotate-45 absolute top-[0] -z-[1]"
-							/>
-							{navLinks.map((link) => (
-								<Link
-									key={link.to}
-									to={link.to}
-									className="py-2 px-5 md:px-0 md:pl-5 rounded hover:underline hover:bg-[#cccccc3d] md:hover:bg-transparent"
-									target={link._blank ? '_blank' : undefined}
-								>
-									{link.title}
-								</Link>
-							))}
-						</div>
-					</div>
-
-					<div className="px-3 pb-[32px] md:p-0 gap-x-[24px] flex items-center justify-center md:justify-end w-full">
-						<a
-							href={'https://linkedin.com/u/peter-adeojo'}
-							target="_blank"
-							className="w-[35px]"
-						>
-							<img src={Linkedin} className="w-full" />
-						</a>
-						<a
-							href={'https://twitter.com/usedopple'}
-							target="_blank"
-							className="w-[35px]"
-						>
-							<img src={Twitter} className="w-full" />
-						</a>
-						<a
-							href={'https://github.com/lampguard/'}
-							target="_blank"
-							className="w-[35px]"
-						>
-							<img src={Github} className="w-full hidden md:block" />
-							<FaGithub className="w-full h-full md:hidden" />
-						</a>
-					</div>
-				</div>
-			</div>
 		</>
 	);
 };
