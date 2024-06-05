@@ -80,9 +80,9 @@ export const pricings = [
 		recommended: false,
 		link: '/',
 		features: {
-			teams: 0,
-			apps: 0,
-			team_members: 0,
+			teams: 1,
+			apps: '1-3 apps',
+			team_members: '1-4 members',
 			retention: 0,
 			download: false,
 			integration: false,
@@ -102,7 +102,7 @@ export const pricings = [
 				</span>
 			</p>
 		),
-		name: 'Basic',
+		name: 'Basic-Doppler',
 		description: 'Suitable for smaller teams',
 		points: ['3 Teams', 'Unlimited Team Members', 'Unlimited Apps'],
 		recommended: false,
@@ -158,7 +158,7 @@ export const pricings = [
 	},
 	{
 		amount: <p className="font-articulat-bold text-3xl">Custom</p>,
-		name: <>&nbsp;</>,
+		name: 'Custom Doppler',
 		description:
 			'Suitable for organizations with custom needs. Schedule a session with us.',
 		points: [],

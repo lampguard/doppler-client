@@ -10,7 +10,7 @@ export const PricePane = ({
 	recommended,
 	custom,
 }) => (
-	<div className="bg-white py-6 px-3 border rounded-md md:min-h-[500px] flex flex-col justify-between">
+	<div className="py-6 px-3 border border-[#00000026] shadow-md rounded-md md:min-h-[500px] flex flex-col justify-between">
 		<div>
 			{amount}
 			<div className="py-1"></div>

@@ -17,7 +17,7 @@ import { useJoinWaitlistMutation } from './services';
 import { useState } from 'react';
 import { Pricing } from './components/Pricing';
 
-const BgEllipse = ({ className }) => {
+export const BgEllipse = ({ className }) => {
 	return (
 		<img
 			src={Ellipse}
