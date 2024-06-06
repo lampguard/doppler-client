@@ -69,6 +69,7 @@ export const pricings = [
 		amount: (
 			<p>
 				<span className="font-articulat-bold text-3xl">$0</span>
+				<br />
 				<span className="font-articulat-lighter text-xl text-[#212121B2]">
 					/month
 				</span>
@@ -76,14 +77,14 @@ export const pricings = [
 		),
 		name: 'Free',
 		description: 'Explore the product and power small or personal projects',
-		points: ['1 Team', 'Monitor 3 Apps'],
+		points: ['Monitor up to 3 Apps'],
 		recommended: false,
 		link: '/',
 		features: {
-			teams: 1,
+			teams: 0,
 			apps: '1-3 apps',
-			team_members: '1-4 members',
-			retention: 0,
+			team_members: 0,
+			retention: '1 day',
 			download: false,
 			integration: false,
 			tasks: false,
@@ -96,7 +97,8 @@ export const pricings = [
 	{
 		amount: (
 			<p>
-				<span className="font-articulat-bold text-3xl">$3</span>
+				<span className="font-articulat-bold text-3xl">$4</span>
+				<br />
 				<span className="font-articulat-lighter text-xl text-[#212121B2]">
 					/month
 				</span>
@@ -104,17 +106,17 @@ export const pricings = [
 		),
 		name: 'Basic-Doppler',
 		description: 'Suitable for smaller teams',
-		points: ['3 Teams', 'Unlimited Team Members', 'Unlimited Apps'],
+		points: ['3 Teams', '4 Team Members', '10 Apps'],
 		recommended: false,
 		link: '/',
 		features: {
-			teams: 0,
-			apps: 0,
-			team_members: 0,
-			retention: 0,
-			download: false,
+			teams: 1,
+			apps: 'Unlimited',
+			team_members: 'Unlimited',
+			retention: '7 days',
+			download: true,
 			integration: false,
-			tasks: false,
+			tasks: true,
 			ai: false,
 			server: 'Coming Soon',
 			database: 'Coming Soon',
@@ -124,15 +126,15 @@ export const pricings = [
 	{
 		amount: (
 			<p>
-				<span className="font-articulat-bold text-3xl">$5</span>
+				<span className="font-articulat-bold text-3xl">$10</span>
+				<br />
 				<span className="font-articulat-lighter text-xl text-[#212121B2]">
-					/month
+					/month/member
 				</span>
 			</p>
 		),
 		name: 'Pro-Doppler',
-		description:
-			'Suitable for large teams with substantial number of services or applications',
+		description: 'Suitable for large teams with substantial number of projects',
 		points: [
 			'Unlimited Teams',
 			'Unlimited Team Member',
@@ -143,21 +145,26 @@ export const pricings = [
 		recommended: true,
 		link: '/',
 		features: {
-			teams: 0,
-			apps: 0,
-			team_members: 0,
-			retention: 0,
-			download: false,
-			integration: false,
-			tasks: false,
-			ai: false,
+			teams: 'Unlimited',
+			apps: 'Unlimited',
+			team_members: 'Unlimited',
+			retention: '30 days',
+			download: true,
+			integration: true,
+			tasks: true,
+			ai: true,
 			server: 'Coming Soon',
 			database: 'Coming Soon',
 			endpoints: 'Coming Soon',
 		},
 	},
 	{
-		amount: <p className="font-articulat-bold text-3xl">Custom</p>,
+		amount: (
+			<>
+				<p className="font-articulat-bold text-3xl">Custom</p>
+				<br />
+			</>
+		),
 		name: 'Custom Doppler',
 		description:
 			'Suitable for organizations with custom needs. Schedule a session with us.',
@@ -165,17 +172,17 @@ export const pricings = [
 		custom: true,
 		link: '/',
 		features: {
-			teams: 0,
-			apps: 0,
-			team_members: 0,
-			retention: 0,
-			download: false,
-			integration: false,
-			tasks: false,
-			ai: false,
-			server: 'Coming Soon',
-			database: 'Coming Soon',
-			endpoints: 'Coming Soon',
+			teams: '',
+			apps: '',
+			team_members: '',
+			retention: '',
+			download: '',
+			integration: '',
+			tasks: '',
+			ai: '',
+			server: '',
+			database: '',
+			endpoints: '',
 		},
 	},
 ];
@@ -208,7 +215,7 @@ export const pricingMoreFeatures = [
 	{ label: 'Integrations', key: 'integration' },
 	{ label: 'Task Assignment', key: 'tasks' },
 	{ label: 'AI Support', key: 'ai' },
-	{ label: 'Server Storage Monitoring', key: 'server' },
-	{ label: 'Database Monitoring', key: 'database' },
-	{ label: 'Endpoint Analysis', key: 'endpoints' },
+	// { label: 'Server Storage Monitoring', key: 'server' },
+	// { label: 'Database Monitoring', key: 'database' },
+	// { label: 'Endpoint Analysis', key: 'endpoints' },
 ];

@@ -31,6 +31,36 @@
   body {
     font-family: "Articulat"
   }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: #DFE9EB;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track:hover {
+    background-color: #B8C0C2;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track:active {
+    background-color: #8F55C2;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #003AFF;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #62A34B;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:active {
+    background-color: #62A34B;
+  }
 }
 
 @layer components {

@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { pricings } from "../config";
-import { FaCheckCircle } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+import { pricings } from '../config';
+import { FaCheckCircle } from 'react-icons/fa';
 
 export const PricePane = ({
 	amount,
@@ -10,7 +10,7 @@ export const PricePane = ({
 	recommended,
 	custom,
 }) => (
-	<div className="py-6 px-3 border border-[#00000026] shadow-md rounded-md md:min-h-[500px] flex flex-col justify-between">
+	<div className="py-6 px-3 border border-[#00000026] shadow-md rounded-md md:min-h-[500px] flex flex-col justify-between min-w-[250px]">
 		<div>
 			{amount}
 			<div className="py-1"></div>
@@ -30,7 +30,7 @@ export const PricePane = ({
 			</ul>
 		</div>
 		<div className="py-4"></div>
-		{__ENV__.WAITLISTING == 'off' &&
+		{__ENV__.PRICING == 'on' &&
 			(!custom ? (
 				<Link
 					className={
@@ -48,7 +48,7 @@ export const PricePane = ({
 	</div>
 );
 
-export const Pricing = () => {
+export const Pricing = ({ horizontal = false }) => {
 	return (
 		<div className="text-center" id="pricing">
 			<p className="text-3xl font-bold">Pricing</p>
@@ -59,7 +59,13 @@ export const Pricing = () => {
 			</p>
 			<div className="py-4"></div>
 
-			<div className="px-10 md:px-40 grid md:grid-cols-4 grid-rows-1 gap-x-8 gap-y-4 text-left">
+			<div
+				className={`px-10 md:px-40 md:grid-cols-4 grid-rows-1 md:gap-x-8 gap-y-4 text-left ${
+					horizontal
+						? 'flex gap-x-4 overflow-x-auto md:grid will-change-scroll snap-start custom-scrollbar scroll-p-3'
+						: 'grid'
+				}`}
+			>
 				{pricings.map((pricing, index) => (
 					<PricePane {...pricing} key={index} />
 				))}
