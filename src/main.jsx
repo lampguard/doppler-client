@@ -37,6 +37,7 @@ import Notifications from './pages/Notifications.jsx';
 import { PageProvider } from './context/PageContext.jsx';
 import Pricing from './pages/Pricing.jsx';
 import GuestLayout from './components/GuestLayout.jsx';
+import Onboarding from './pages/Onboarding.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -49,6 +50,7 @@ const routes = createBrowserRouter(
 			<Route element={<AuthPane />}>
 				<Route element={<Login />} path="/verify-2fa" />
 				<Route element={<Login />} path="/login" />
+				<Route element={<Onboarding />} path="/onboarding" />
 				<Route element={<Signup />} path="/signup" />
 				<Route element={<ResetPassword />} path="/reset-password" />
 				<Route element={<PasswordReset />} path="/password-reset" />

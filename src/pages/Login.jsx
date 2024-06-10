@@ -13,8 +13,7 @@ const Login = () => {
 	useEffect(() => {
 		sessionStorage.clear();
 
-		return () => {
-		};
+		return () => {};
 	}, []);
 
 	const [loginform, setLoginform] = useState({
@@ -34,7 +33,9 @@ const Login = () => {
 					return;
 				}
 				setTimeout(() => {
-					navigate('/dashboard');
+					if (res.data.user.details?.id == null) {
+						navigate('/onboarding');
+					} else navigate('/dashboard');
 				}, 1000);
 			})
 			.catch(() => {});

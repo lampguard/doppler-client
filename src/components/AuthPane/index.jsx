@@ -24,7 +24,7 @@ const AuthPane = () => {
 			</div>
 			<div className="flex justify-center relative">
 				<span className="absolute h-[1px] bg-black opacity-[15%] w-full top-[200px] z-[-1] hidden md:block"></span>
-				<div className="w-full md:w-[35%] bg-white md:border border-black border-opacity-[15%] md:rounded-[40px] py-[48px] min-h-[30vw] px-[12px] md:px-[24px] grid items-center">
+				<div className="w-full md:w-[35%] bg-white md:border border-black border-opacity-[15%] md:rounded-[40px] py-[48px] min-h-[30vw] px-[12px] md:px-[24px]">
 					<Outlet />
 				</div>
 			</div>
