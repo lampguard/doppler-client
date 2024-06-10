@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { useCompleteOnboardingMutation } from '../services';
+import { useEffect, useRef } from 'react';
+import { useCompleteOnboardingMutation, useGetAuthQuery } from '../services';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loaders';
@@ -7,6 +7,22 @@ import Loader from '../components/Loaders';
 const Onboarding = () => {
 	const [complete, { isLoading }] = useCompleteOnboardingMutation();
 	const navigate = useNavigate();
+
+	const { data, isError, isSuccess } = useGetAuthQuery();
+
+	useEffect(() => {
+		if (isError) {
+			navigate('/login');
+		}
+		if (data) {
+			const { user } = data.data;
+			if (user.details?.id != null) {
+				navigate('/dashboard');
+			}
+		}
+
+		return () => {};
+	}, [data, isError, isSuccess]);
 
 	const formRef = useRef(undefined);
 
@@ -64,9 +80,6 @@ const Onboarding = () => {
 						name="industry"
 						required
 					>
-						<option disabled selected>
-							Select an industry
-						</option>
 						<option value="1">IT/Engineering</option>
 						<option value="2">Healthcare</option>
 						<option value="3">Finance</option>
@@ -74,7 +87,7 @@ const Onboarding = () => {
 						<option value="5">Civil/Public Service</option>
 						<option value="7">Energy</option>
 						<option value="8">Manufacturing</option>
-						<option value="6">Others</option>
+						<option value="6">Other</option>
 					</select>
 				</div>
 
@@ -88,9 +101,6 @@ const Onboarding = () => {
 						name="role"
 						required
 					>
-						<option disabled selected>
-							Select a role
-						</option>
 						<option value="1">Developer</option>
 						<option value="2">Designer</option>
 						<option value="3">Product Manager</option>
