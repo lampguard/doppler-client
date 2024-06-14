@@ -2,19 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { format, subDays } from 'date-fns';
 
-import {
-	useGetAppQuery,
-	useLazyGetLogsQuery,
-	useDeleteLogsMutation,
-} from '../services/apps';
+import { useGetAppQuery } from '../services/apps';
 import { useLazyGetMetricsForAppQuery } from '../services/metrics';
-// import { useCreateFlagMutation } from '../services/flags';
 import DashboardApp from '../components/Metrics/DashboardApp';
-import Loader from '../components/Loaders';
-import Skeleton from '../components/Loaders/Skeleton';
-import LogPanes from '../components/Logs/Panes';
-import Modal from '../components/Modal';
 import AppLogs from '../components/Logs';
+import Skeleton from '../components/Loaders/Skeleton';
 
 const ApplicationPage = () => {
 	const { id } = useParams();
@@ -77,10 +69,25 @@ const ApplicationPage = () => {
 
 	return (
 		<>
+			{isLoading && (
+				<div className='p-4'>
+					<Skeleton className="w-full h-64 rounded-none" />
+				</div>
+			)}
 			{app && (
 				<>
-					<div className="py-3 md:px-4 grid gap-4">
-						<DashboardApp app={app} data={appMetrics} />
+					<div className="py-3 md:px-4 gap-4 max-w-full">
+						<div className="flex justify-end md:px-4 md:pt-4">
+							<button
+								className="btn btn-sm btn-outline bg-red rounded-full right"
+								onClick={() => document.getElementById('modal1').showModal()}
+							>
+								Clear Logs
+							</button>
+						</div>
+						<div className="px-0 pb-10 md:pb-2 md:px-2 relative min-h-[350px] rounded-md grid grid-cols-1 mb-3">
+							<DashboardApp app={app} data={appMetrics} />
+						</div>
 						<div>
 							<AppLogs app={app} />
 						</div>

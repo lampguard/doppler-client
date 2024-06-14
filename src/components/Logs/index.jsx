@@ -41,10 +41,7 @@ const AppLogs = ({ app }) => {
 		};
 	}, [socket]);
 
-	const [
-		getLogs,
-		{ isUninitialized, isLoading: loading, isSuccess: success, isFetching },
-	] = useLazyGetLogsQuery();
+	const [getLogs, { isLoading: loading, isFetching }] = useLazyGetLogsQuery();
 
 	const [deleteLogs, { isFetching: deleting, isLoading: loadingDelete }] =
 		useDeleteLogsMutation();
@@ -110,19 +107,21 @@ const AppLogs = ({ app }) => {
 				</button>
 			</Modal>
 
-			<div className="flex justify-end md:px-4 md:pt-4">
-				<button
-					className="btn btn-sm btn-outline bg-red rounded-full right"
-					onClick={() => document.getElementById('modal1').showModal()}
-				>
-					Clear Logs
-				</button>
-			</div>
 			<div className="py-2"></div>
 
-			{logs.map((log, i) => (
+			<p className="pb-2">Latest</p>
+			{logs.slice(0, 5).map((log, i) => (
 				<Log log={log} key={i} />
 			))}
+
+			<p className="pb-2">Older</p>
+			{logs.slice(5, undefined).map((log, i) => (
+				<Log log={log} key={i} />
+			))}
+
+			<button className="btn btn-sm w-full" onClick={loadMore}>
+				{loading || isFetching ? <Loader /> : 'Load More'}
+			</button>
 		</>
 	);
 };
