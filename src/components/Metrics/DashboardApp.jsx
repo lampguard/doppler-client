@@ -65,9 +65,6 @@ const DashboardApp = ({ app, data }) => {
 
 	return (
 		<>
-			<Link to={`/apps/${app.id}`}>
-				<h1 className="font-articulat-bold">{app.title}</h1>
-			</Link>
 			<div className="md:flex items-center max-h-[300px] md:max-h-none">
 				<ResponsiveContainer width="100%" height="100%" debounce={2}>
 					<AreaChart
@@ -107,7 +104,7 @@ const DashboardApp = ({ app, data }) => {
 						return (
 							<span
 								key={type}
-								className="text-xs text-center pb-[0.5em] w-1/3 md:w-full hover:bg-[#ccc] cursor-pointer"
+								className="text-xs grid grid-cols-2 items-center pb-[0.5em] w-1/3 md:w-full hover:bg-[#ccc] cursor-pointer"
 								onClick={(e) => toggleChart(type)}
 							>
 								<FaEye color={visible ? color : '#ccc'} className="inline" />{' '}

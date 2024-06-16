@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { format, subDays } from 'date-fns';
 
 import { useGetAppQuery } from '../services/apps';
 import { useLazyGetMetricsForAppQuery } from '../services/metrics';
 import DashboardApp from '../components/Metrics/DashboardApp';
 import AppLogs from '../components/Logs';
 import Skeleton from '../components/Loaders/Skeleton';
+import { defaultDashboardParams } from '../config';
+import { BsInfoCircle } from 'react-icons/bs';
 
 const ApplicationPage = () => {
 	const { id } = useParams();
@@ -15,13 +16,15 @@ const ApplicationPage = () => {
 
 	const [appMetrics, setMetrics] = useState([]);
 
+	const copyToken = (e) => {
+		window.navigator.clipboard.writeText(app.token);
+	};
+
 	useEffect(() => {
 		if (app) {
 			getMetrics({
-				from: format(subDays(new Date(), 7), 'yyyy-MM-dd'),
 				token: app.token,
-				range: 'day',
-				interval: 1,
+				...defaultDashboardParams,
 			})
 				.unwrap()
 				.then((response) => {
@@ -70,16 +73,17 @@ const ApplicationPage = () => {
 	return (
 		<>
 			{isLoading && (
-				<div className='p-4'>
+				<div className="p-4">
 					<Skeleton className="w-full h-64 rounded-none" />
 				</div>
 			)}
 			{app && (
 				<>
 					<div className="py-3 md:px-4 gap-4 max-w-full">
-						<div className="flex justify-end md:px-4 md:pt-4">
+						<div className="flex items-center justify-between md:px-4 md:pt-4">
+							<h1 className="text-xl pb-2">{app.title}</h1>
 							<button
-								className="btn btn-sm btn-outline bg-red rounded-full right"
+								className="btn btn-sm btn-outline bg-red-500 text-white rounded-full right"
 								onClick={() => document.getElementById('modal1').showModal()}
 							>
 								Clear Logs
@@ -87,6 +91,22 @@ const ApplicationPage = () => {
 						</div>
 						<div className="px-0 pb-10 md:pb-2 md:px-2 relative min-h-[350px] rounded-md grid grid-cols-1 mb-3">
 							<DashboardApp app={app} data={appMetrics} />
+						</div>
+						<div className="py-2">
+							<button
+								onClick={copyToken}
+								className="btn w-full btn-md relative"
+							>
+								<span className="relative ">
+									<BsInfoCircle
+										size={16}
+										className="text-theme tooltip tooltip-top hover:tooltip-open"
+										data-tip="#infotip"
+									/>
+									{/* <span className="" id='infotip'>Click to copy</span> */}
+								</span>
+								{app.token}
+							</button>
 						</div>
 						<div>
 							<AppLogs app={app} />

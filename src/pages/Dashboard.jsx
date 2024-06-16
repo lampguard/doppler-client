@@ -4,15 +4,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePageContext } from '../context/PageContext';
 import { useTeamContext } from '../context/TeamContext';
-import { addDays, format, subDays } from 'date-fns';
-
-const defaultDashboardParams = {
-	from: format(subDays(new Date(), 4), 'yyyy-MM-dd'),
-	to: format(addDays(new Date(), 1), 'yyyy-MM-dd HH:mm:00'),
-	range: 'hour',
-	interval: 12,
-	team: undefined,
-};
+import { defaultDashboardParams } from '../config';
 
 const Dashboard = () => {
 	const team = useTeamContext();
@@ -49,6 +41,9 @@ const Dashboard = () => {
 											className="px-0 md:px-2 md:pt-2 md:pb-4 h-[25rem] rounded-md grid grid-cols-1 mb-3"
 											key={app.id}
 										>
+											<Link to={`/apps/${app.id}`}>
+												<h1 className="font-articulat-bold">{app.title}</h1>
+											</Link>
 											<DashboardApp app={app} data={data} />
 										</div>
 									</React.Fragment>

@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-
 import hilogo from './assets/biglogo.png';
 import Ellipse from './assets/Ellipse 8.svg';
 import Panes from './assets/multi-pane.png';
@@ -13,9 +12,11 @@ import Loader from './components/Loaders';
 
 import { notification } from 'antd';
 
-import { useJoinWaitlistMutation } from './services';
+import { useGetConfigQuery, useJoinWaitlistMutation } from './services';
 import { useState } from 'react';
 import { Pricing } from './components/Pricing';
+import { isOpen, isWaitlistOpen } from './context/ConfigHook';
+import WaitlistForm from './components/WaitlistForm';
 
 export const BgEllipse = ({ className }) => {
 	return (
@@ -78,36 +79,14 @@ const Landing = () => {
 					With Doppler you can easily manage multiple apps in one place
 				</p>
 				<div className="py-4 md:py-7"></div>
-				{__ENV__.WAITLISTING == 'off' ? (
+				{!isWaitlistOpen() ? (
 					<Link to={'/signup'} className="btn btn-primary md:w-1/4">
 						Try Doppler for Free
 					</Link>
 				) : (
 					<>
 						<div className="w-[90%] md:w-1/4 outline outline-1 m-auto rounded-full overflow-clip">
-							<form
-								className="flex"
-								onSubmit={(e) => {
-									e.preventDefault();
-									joinWaitlist(email);
-								}}
-							>
-								<TextInput
-									type="email"
-									required
-									className="rounded-none border-0 focus:outline-none"
-									placeholder="you@beautiful.com"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-								/>
-								<button className="btn btn-primary rounded-none min-w-[100px] border-0">
-									{isLoading ? (
-										<Loader className="text-white" theme={false} />
-									) : (
-										'Join Waitlist'
-									)}
-								</button>
-							</form>
+							<WaitlistForm btnClass="btn rounded-none bg-theme border-0 min-w-[100px]" />
 						</div>
 					</>
 				)}
@@ -143,32 +122,10 @@ const Landing = () => {
 							app-related accidents and fatalities. Join us in building a future
 							where apps are a source of trust and innovation.
 						</p>
-						{__ENV__.WAITLISTING != 'off' ? (
+						{isWaitlistOpen() ? (
 							<>
 								<div className="w-full md:w-2/3 outline outline-1 rounded-full overflow-clip">
-									<form
-										className="flex"
-										onSubmit={(e) => {
-											e.preventDefault();
-											joinWaitlist(email);
-										}}
-									>
-										<TextInput
-											type="email"
-											required
-											className="rounded-none border-0 focus:outline-none"
-											placeholder="you@beautiful.com"
-											value={email}
-											onChange={(e) => setEmail(e.target.value)}
-										/>
-										<button className="btn btn-primary rounded-none min-w-[100px] border-0">
-											{isLoading ? (
-												<Loader className="text-white" theme={false} />
-											) : (
-												'Join Waitlist'
-											)}
-										</button>
-									</form>
+									<WaitlistForm btnClass="btn rounded-none bg-theme border-0 min-w-[100px]" />
 								</div>
 							</>
 						) : (
@@ -260,7 +217,9 @@ const Landing = () => {
 				<Pricing />
 				<div className="py-4"></div>
 				<div className="text-center w-10/12 md:w-3/12 m-auto">
-					<Link to='/pricing' className='btn btn-primary w-full rounded-md'>Compare All Plans</Link>
+					<Link to="/pricing" className="btn btn-primary w-full rounded-md">
+						Compare All Plans
+					</Link>
 				</div>
 			</div>
 

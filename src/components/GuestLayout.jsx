@@ -13,7 +13,9 @@ import { FaTimes } from 'react-icons/fa';
 import { FaGithub } from 'react-icons/fa6';
 import TextInput from './Input/TextInput';
 import Loader from './Loaders';
-import { useJoinWaitlistMutation } from '../services';
+import { useGetConfigQuery, useJoinWaitlistMutation } from '../services';
+import { isWaitlistOpen, isOnboarding, isOpen } from '../context/ConfigHook';
+import WaitlistForm from './WaitlistForm';
 
 const navLinks = [
 	{ title: 'Home', to: '/' },
@@ -29,26 +31,26 @@ const navLinks = [
 const GuestLayout = () => {
 	const [navOpen, setNavOpen] = useState(false);
 
-	const [email, setEmail] = useState('');
-	const [waitlist, { isLoading }] = useJoinWaitlistMutation();
+	// const [email, setEmail] = useState('');
+	// const [waitlist, { isLoading }] = useJoinWaitlistMutation();
 
-	const joinWaitlist = (input) => {
-		waitlist({ email: input || email })
-			.unwrap()
-			.then((data) => {
-				notification.info({
-					message: data.message || 'Success!',
-					duration: 3,
-				});
-			})
-			.catch((err) => {
-				notification.error({
-					message: err.data?.message || 'An error occurred',
-					duration: 3,
-					className: 'bg-red-200 text-white',
-				});
-			});
-	};
+	// const joinWaitlist = (input) => {
+	// 	waitlist({ email: input || email })
+	// 		.unwrap()
+	// 		.then((data) => {
+	// 			notification.info({
+	// 				message: data.message || 'Success!',
+	// 				duration: 3,
+	// 			});
+	// 		})
+	// 		.catch((err) => {
+	// 			notification.error({
+	// 				message: err.data?.message || 'An error occurred',
+	// 				duration: 3,
+	// 				className: 'bg-red-200 text-white',
+	// 			});
+	// 		});
+	// };
 
 	return (
 		<>
@@ -86,7 +88,7 @@ const GuestLayout = () => {
 						})}
 					</div>
 					<div className="lg:px-[1.25rem]"></div>
-					{__ENV__.WAITLISTING == 'off' && (
+					{isOpen() && (
 						<div>
 							<Link
 								to={'/login'}
@@ -132,7 +134,7 @@ const GuestLayout = () => {
 							{nav.title}
 						</Link>
 					))}
-					{__ENV__.WAITLISTING == 'off' && (
+					{isOpen() && (
 						<>
 							<Link
 								to={'/login'}
@@ -168,13 +170,13 @@ const GuestLayout = () => {
 					<div className="pt-[64px] md:hidden"></div>
 
 					<div className="md:w-2/5">
-						{__ENV__.WAITLISTING == 'off' ? (
+						{!isWaitlistOpen() ? (
 							<Link className="btn w-full" to={'/signup'}>
 								Try Doppler for Free
 							</Link>
 						) : (
 							<div className="m-auto text-black outline outline-1">
-								<form
+								{/* <form
 									className="flex"
 									onSubmit={(e) => {
 										e.preventDefault();
@@ -196,7 +198,8 @@ const GuestLayout = () => {
 											'Join Waitlist'
 										)}
 									</button>
-								</form>
+								</form> */}
+								<WaitlistForm />
 							</div>
 						)}
 					</div>

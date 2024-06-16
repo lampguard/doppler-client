@@ -1,5 +1,6 @@
 export const globalTitle = 'Doppler (Beta Preview)';
 
+import { addDays, format, subDays } from 'date-fns';
 import { AiFillHome, AiOutlineHome, AiOutlineLineChart } from 'react-icons/ai';
 import {
 	BsBell,
@@ -219,3 +220,11 @@ export const pricingMoreFeatures = [
 	// { label: 'Database Monitoring', key: 'database' },
 	// { label: 'Endpoint Analysis', key: 'endpoints' },
 ];
+
+export const defaultDashboardParams = {
+	from: format(subDays(new Date(), 4), 'yyyy-MM-dd'),
+	to: format(addDays(new Date(), 1), 'yyyy-MM-dd HH:mm:00'),
+	range: 'hour',
+	interval: 12,
+	team: undefined,
+};

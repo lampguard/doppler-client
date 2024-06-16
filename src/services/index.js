@@ -19,7 +19,7 @@ export const api = createApi({
 	}),
 	refetchOnReconnect: true,
 	keepUnusedDataFor: 120,
-	tagTypes: ['Auth', 'Apps', 'Metrics'],
+	tagTypes: ['Auth', 'Apps', 'Metrics', 'Config'],
 	endpoints: (builder) => ({
 		login: builder.mutation({
 			query: (body) => ({
@@ -140,6 +140,12 @@ export const api = createApi({
 				body,
 			}),
 		}),
+		getConfig: builder.query({
+			query: () => ({
+				url: '/config',
+			}),
+			providesTags: ['Config'],
+		}),
 	}),
 });
 
@@ -158,5 +164,6 @@ export const {
 	useForgotPasswordMutation,
 	useVerifyPasswordResetMutation,
 	useResetPasswordMutation,
-  useCompleteOnboardingMutation,
+	useCompleteOnboardingMutation,
+	useGetConfigQuery,
 } = api;
