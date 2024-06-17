@@ -1,6 +1,7 @@
 import {
 	useLazyGetLogsQuery,
 	useDeleteLogsMutation,
+	useGetAppTeamsQuery
 } from '../../services/apps';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal';
@@ -19,6 +20,8 @@ const AppLogs = ({ app }) => {
 	const [logs, setLogs] = useState([]);
 	const [page, setPage] = useState(1);
 	const count = 20;
+
+	const {data: appteams} = useGetAppTeamsQuery(app.id)
 
 	useEffect(() => {
 		if (!socket.connected) {
@@ -111,12 +114,12 @@ const AppLogs = ({ app }) => {
 
 			<p className="pb-2">Latest</p>
 			{logs.slice(0, 5).map((log, i) => (
-				<Log log={log} key={i} />
+				<Log log={log} key={i} appteams={appteams} />
 			))}
 
 			<p className="pb-2">Older</p>
 			{logs.slice(5, undefined).map((log, i) => (
-				<Log log={log} key={i} />
+				<Log log={log} key={i} appteams={appteams} />
 			))}
 
 			<button className="btn btn-sm w-full" onClick={loadMore}>

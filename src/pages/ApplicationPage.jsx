@@ -18,6 +18,13 @@ const ApplicationPage = () => {
 
 	const copyToken = (e) => {
 		window.navigator.clipboard.writeText(app.token);
+		const el = e.target.parentElement;
+		el.classList.add('tooltip-open');
+		el.setAttribute('data-tip', 'Copied!')
+		setTimeout(() => {
+			el.classList.remove('tooltip-open');
+			el.setAttribute('data-tip', 'Click to copy')
+		}, 2000)
 	};
 
 	useEffect(() => {
@@ -92,7 +99,7 @@ const ApplicationPage = () => {
 						<div className="px-0 pb-10 md:pb-2 md:px-2 relative min-h-[350px] rounded-md grid grid-cols-1 mb-3">
 							<DashboardApp app={app} data={appMetrics} />
 						</div>
-						<div className="py-2">
+						<div className="py-2 w-full tooltip" data-tip="Click to Copy">
 							<button
 								onClick={copyToken}
 								className="btn w-full btn-md relative"

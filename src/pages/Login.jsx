@@ -1,17 +1,20 @@
 import { Link, useNavigate } from 'react-router-dom';
 import TextInput from '../components/Input/TextInput';
 
-import { useLoginMutation, useVerify2FAMutation } from '../services';
+import { api, useLoginMutation, useVerify2FAMutation } from '../services';
 import { useEffect, useState } from 'react';
 import Loader from '../components/Loaders/';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
+	const dispatch = useDispatch();
 	const [login, { isLoading }] = useLoginMutation();
 	const [verify, { isLoading: loading2fa, error: twofaerror }] =
 		useVerify2FAMutation();
 	const navigate = useNavigate();
 	useEffect(() => {
 		sessionStorage.clear();
+		dispatch(api.util.resetApiState());
 
 		return () => {};
 	}, []);

@@ -14,10 +14,13 @@ import FooterMenu from '../FooterMenu';
 
 
 import { api } from '../../services';
+import { useDispatch } from 'react-redux';
 
 const AppLayout = () => {
 	const { data, isError } = useGetAuthQuery();
 	const navigate = useNavigate();
+
+	const dispatch = useDispatch();
 
 	const pageCtx = usePageContext();
 
@@ -74,7 +77,7 @@ const AppLayout = () => {
 							className="btn w-full rounded-full text-white bg-red-500 glass font-normal"
 							onClick={() => {
 								sessionStorage.clear('authToken');
-								api.util.resetApiState();
+								dispatch(api.util.resetApiState());
 								navigate('/login');
 							}}
 						>
