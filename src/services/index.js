@@ -146,6 +146,20 @@ export const api = createApi({
 			}),
 			providesTags: ['Config'],
 		}),
+		verifyEmail: builder.mutation({
+			query: ({ code }) => ({
+				url: '/auth/verify-email',
+				method: 'POST',
+				body: {
+					code,
+				},
+			}),
+		}),
+		requestMailVerification: builder.query({
+			query: () => ({
+				url: '/auth/email-verification',
+			}),
+		}),
 	}),
 });
 
@@ -166,4 +180,6 @@ export const {
 	useResetPasswordMutation,
 	useCompleteOnboardingMutation,
 	useGetConfigQuery,
+	useVerifyEmailMutation,
+	useLazyRequestMailVerificationQuery,
 } = api;

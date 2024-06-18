@@ -12,7 +12,6 @@ import { usePageContext } from '../../context/PageContext';
 import TopNav from '../Topnav';
 import FooterMenu from '../FooterMenu';
 
-
 import { api } from '../../services';
 import { useDispatch } from 'react-redux';
 
@@ -28,7 +27,10 @@ const AppLayout = () => {
 		if (isError) {
 			navigate('/login');
 		}
-	}, [isError]);
+		if (data && data?.data.user.email_verified_at == null) {
+			navigate('/verify-email');
+		}
+	}, [isError, data]);
 
 	const [teamsVisible, setTeamsVisible] = useState(false);
 
@@ -119,10 +121,7 @@ const AppLayout = () => {
 										'md:flex flex-col justify-between items-stretch w-full min-h-[calc(100vh-6rem)] p-5 '
 									}
 								>
-									<MyTeams
-										setOpen={setTeamsVisible}
-										open={teamsVisible}
-									/>
+									<MyTeams setOpen={setTeamsVisible} open={teamsVisible} />
 									<Link
 										to={'/dashboard/create-team'}
 										className="btn btn-primary w-full rounded-full"

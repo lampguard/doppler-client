@@ -38,6 +38,8 @@ const Login = () => {
 				setTimeout(() => {
 					if (res.data.user.details?.id == null) {
 						navigate('/onboarding');
+					} else if (res.data.user?.email_verified_at == null) {
+						navigate('/verify-email');
 					} else navigate('/dashboard');
 				}, 1000);
 			})

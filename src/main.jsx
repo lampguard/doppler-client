@@ -38,6 +38,7 @@ import { PageProvider } from './context/PageContext.jsx';
 import Pricing from './pages/Pricing.jsx';
 import GuestLayout from './components/GuestLayout.jsx';
 import Onboarding from './pages/Onboarding.jsx';
+import VerifyEmail from './pages/VerifyEmail.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -54,9 +55,11 @@ const routes = createBrowserRouter(
 				<Route element={<Signup />} path="/signup" />
 				<Route element={<ResetPassword />} path="/reset-password" />
 				<Route element={<PasswordReset />} path="/password-reset" />
+				<Route path="/verify-email" element={<VerifyEmail />} />
 			</Route>
 			<Route element={<AppLayout />}>
 				{/* <Route index element={<Dashboard />} /> */}
+				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/tasks">
 					<Route index element={<Tasks />} />
 					<Route path=":id" element={<Task />} />
@@ -65,7 +68,6 @@ const routes = createBrowserRouter(
 					<Route index element={<Apps />} />
 					<Route path={':id'} element={<ApplicationPage />} />
 				</Route>
-				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/account/profile" element={<Profile />} />
 				<Route path="/dashboard/create-app" element={<NewApp />} />
 				<Route path="/dashboard/create-team" element={<NewTeam />} />
