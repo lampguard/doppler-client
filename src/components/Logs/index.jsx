@@ -1,7 +1,7 @@
 import {
 	useLazyGetLogsQuery,
 	useDeleteLogsMutation,
-	useGetAppTeamsQuery
+	useGetAppTeamsQuery,
 } from '../../services/apps';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal';
@@ -21,7 +21,7 @@ const AppLogs = ({ app }) => {
 	const [page, setPage] = useState(1);
 	const count = 20;
 
-	const {data: appteams} = useGetAppTeamsQuery(app.id)
+	const { data: appteams } = useGetAppTeamsQuery(app.id);
 
 	useEffect(() => {
 		if (!socket.connected) {
@@ -110,21 +110,44 @@ const AppLogs = ({ app }) => {
 				</button>
 			</Modal>
 
-			<div className="py-2"></div>
+			{logs.length > 0 ? (
+				<>
+					<p className="pb-2">Latest</p>
+					{logs.slice(0, 5).map((log, i) => (
+						<Log log={log} key={i} appteams={appteams} />
+					))}
 
-			<p className="pb-2">Latest</p>
-			{logs.slice(0, 5).map((log, i) => (
-				<Log log={log} key={i} appteams={appteams} />
-			))}
+					<p className="pb-2">Older</p>
+					{logs.slice(5, undefined).map((log, i) => (
+						<Log log={log} key={i} appteams={appteams} />
+					))}
 
-			<p className="pb-2">Older</p>
-			{logs.slice(5, undefined).map((log, i) => (
-				<Log log={log} key={i} appteams={appteams} />
-			))}
-
-			<button className="btn btn-sm w-full" onClick={loadMore}>
-				{loading || isFetching ? <Loader /> : 'Load More'}
-			</button>
+					<button className="btn btn-sm w-full" onClick={loadMore}>
+						{loading || isFetching ? <Loader /> : 'Load More'}
+					</button>
+				</>
+			) : (
+				<div className="m-auto prose min-w-full">
+					<p>
+						Your app has generated 0 logs. Copy your token to start receiving
+						logs.
+					</p>
+					<div className="bg-black w-full p-3 rounded-md text-white">
+						<code className="not-prose text-sm">
+							// Paste this code in your terminal to send a sample log
+							<br />
+							curl -X POST https://laas-api.up.railway.app/v1/logs --header "APP_ID:{' '}
+							{app.token}" --json '
+							{JSON.stringify({
+								level: 'error',
+								text: 'Lorem ipsum dolor sit amet.',
+							})}
+							'
+						</code>
+					</div>
+					<div className="pb-4"></div>
+				</div>
+			)}
 		</>
 	);
 };
