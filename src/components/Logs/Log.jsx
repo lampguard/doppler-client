@@ -216,7 +216,7 @@ const Log = ({ log, appteams }) => {
 					<Report log={log} />
 					<div className="py-2"></div>
 					{/* {false && ( */}
-					{!(isAnalysing || analysing || analysed) && (
+					{!(isAnalysing || analysing || analysed) && log.level != 'info' && (
 						<button
 							className="btn btn-primary btn-sm"
 							disabled={isAnalysing}

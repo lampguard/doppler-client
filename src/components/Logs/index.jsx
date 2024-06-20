@@ -56,6 +56,7 @@ const AppLogs = ({ app }) => {
 		})
 			.unwrap()
 			.then((response) => {
+				console.log(response);
 				if (append) {
 					setLogs([...logs, ...response.data]);
 				} else {

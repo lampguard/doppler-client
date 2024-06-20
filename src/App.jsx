@@ -7,16 +7,15 @@ import Desktop from './assets/Desktop.png';
 import DesktopTasks from './assets/Tasks.png';
 import Faq from './components/Faq';
 
-import TextInput from './components/Input/TextInput';
-import Loader from './components/Loaders';
-
 import { notification } from 'antd';
 
-import { useGetConfigQuery, useJoinWaitlistMutation } from './services';
+import { useJoinWaitlistMutation } from './services';
 import { useState } from 'react';
 import { Pricing } from './components/Pricing';
-import { isOpen, isWaitlistOpen } from './context/ConfigHook';
+import { isWaitlistOpen } from './context/ConfigHook';
 import WaitlistForm from './components/WaitlistForm';
+
+const SectionSeparator = () => <div className="h-[100px] md:h-[200px]"></div>;
 
 export const BgEllipse = ({ className }) => {
 	return (
@@ -56,7 +55,8 @@ const Landing = () => {
 	return (
 		<>
 			{/* Hero */}
-			<section id="hero" className="w-full py-[50px] text-center relative">
+			<SectionSeparator />
+			<section id="hero" className="w-full text-center relative">
 				<img
 					src={Ellipse}
 					alt=""
@@ -64,12 +64,12 @@ const Landing = () => {
 				/>
 				<img
 					src={Panes}
-					className="top-0 left-0 absolute hidden md:block z-[-1]"
+					className="-top-20 left-0 absolute hidden md:block z-[-1]"
 					style={{ transform: 'rotateY(180deg)' }}
 				/>
 				<img
 					src={Panes}
-					className="top-0 right-0 absolute hidden md:block z-[-1]"
+					className="-top-20 right-0 absolute hidden md:block z-[-1]"
 				/>
 				<p className="px-[20px] text-3xl md:text-4xl font-bold">
 					An Easier way to Manage your Apps
@@ -100,8 +100,8 @@ const Landing = () => {
 				</div>
 			</section>
 
+			<SectionSeparator />
 			<section className="w-full px-[30px] md:px-[50px]">
-				<div className="py-[10px] md:hidden"></div>
 				<p className="text-center text-2xl md:text-4xl">
 					But first, What is DOPPLER?
 				</p>
@@ -140,10 +140,12 @@ const Landing = () => {
 				</div>
 			</section>
 
-			<section className="w-full relative pt-[80px] md:pt-[140px]">
-				<p className="text-3xl text-center">
-					Designed to make your life Easier
-				</p>
+			<SectionSeparator />
+			<p className="text-3xl md:text-4xl text-center">
+				Designed to make your life Easier
+			</p>
+			<div className="py-1.5"></div>
+			<section className="w-full relative">
 				<div className="md:flex gap-3 w-full p-[24px] md:p-[100px] justify-between items-center relative">
 					<img
 						src={Ellipse}
@@ -212,7 +214,8 @@ const Landing = () => {
 				</div>
 			</section>
 
-			<div className="py-8 relative">
+			<SectionSeparator />
+			<div className="relative">
 				<BgEllipse className={' translate-y-40 translate-x-[-45em]'} />
 				<Pricing />
 				<div className="py-4"></div>
@@ -223,6 +226,7 @@ const Landing = () => {
 				</div>
 			</div>
 
+			<SectionSeparator />
 			<section className="relative">
 				<p className="text-xl md:text-3xl font-bold p-[80px_0_60px]  md:p-[40px_0] text-center w-full">
 					Some of your Questions, Answered!
@@ -230,7 +234,8 @@ const Landing = () => {
 				<div className="w-full md:py-[40px]">
 					<Faq />
 				</div>
-				<div className="w-full text-center py-[80px] px-4 relative overflow-x-clip">
+				<SectionSeparator />
+				<div className="w-full text-center px-4 relative overflow-x-clip">
 					<BgEllipse className={'scale-[4] md:scale-[1] md:-top-[10em]'} />
 					<p className="text-2xl">Newsletter</p>
 					<div className="pt-[80px]"></div>

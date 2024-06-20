@@ -1,6 +1,6 @@
-import React from "react";
-import { ContextEntry } from "../../pages/Task";
-import { format } from "date-fns";
+import React from 'react';
+import { ContextEntry } from '../../pages/Task';
+import { format } from 'date-fns';
 
 const Report = ({ log }) => {
 	return (
@@ -27,20 +27,23 @@ const Report = ({ log }) => {
 					))}
 				</p>
 				<div className="py-1">
-					{!log.context && (
-						<span className="font-articulat-oblique">No context provided</span>
-					)}
-					{log.context && (
-						<div className="py-2 md:py-1">
-							{Object.entries(log.context).map(([k, v], index) => {
-								return (
-									<React.Fragment key={index}>
-										<ContextEntry k={k} v={v} />
-										<div className="pb-1 md:pb-2"></div>
-									</React.Fragment>
-								);
-							})}
-						</div>
+					{!log.context ? (
+						<span className="p-1 font-articulat-bold block w-full cursor-pointer">
+							No context provided
+						</span>
+					) : (
+						log.context && (
+							<div className="py-2 md:py-1">
+								{Object.entries(log.context).map(([k, v], index) => {
+									return (
+										<React.Fragment key={index}>
+											<ContextEntry k={k} v={v} />
+											<div className="pb-1 md:pb-2"></div>
+										</React.Fragment>
+									);
+								})}
+							</div>
+						)
 					)}
 				</div>
 			</div>

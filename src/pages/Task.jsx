@@ -6,12 +6,61 @@ import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
 import { usePageContext } from '../context/PageContext';
 
-export const ContextEntry = ({ k, v }) => {
+const RenderContextValue = ({ value, open = false, nested = false }) => {
+	const type = typeof value;
+	if (!open) {
+		return (
+			<span className="hidden md:inline truncate pl-3">
+				{type == 'string' || type == 'number'
+					? String(value).slice(0, 50)
+					: null}
+			</span>
+		);
+	} else {
+		return (
+			<div
+				className={
+					(open ? 'block' : 'hidden') + ' bg-white max-w-full p-1 border'
+				}
+			>
+				{type == 'string' || type == 'number' ? (
+					<p className="p-1 overflow-y-auto text-pretty break-words">
+						{String(value).slice(0, 512)}
+					</p>
+				) : (
+					Object.entries(value).map(([k, v], index) => (
+						<div key={`context-entry-nest-${index}`} className="pt-1 px-1.5">
+							<ContextEntry
+								k={k}
+								v={
+									// nested && (typeof v != 'string' || typeof v != 'number')
+									// 	? JSON.stringify(v)
+									// 	: v
+									v
+								}
+								nested
+							/>
+							<div className="pb-1 md:pb-2"></div>
+						</div>
+					))
+				)}
+			</div>
+		);
+	}
+};
+
+export const ContextEntry = ({ k, v, nested = false }) => {
 	const [open, setOpen] = useState(false);
 
 	return (
 		<>
-			<div className="bg-red-300 cursor-pointer" onClick={() => setOpen(!open)}>
+			<div
+				className={`${nested ? 'bg-blue-200' : 'bg-red-300'} cursor-pointer`}
+				onClick={(e) => {
+					e.stopPropagation();
+					setOpen(!open);
+				}}
+			>
 				{open ? (
 					<FaCaretDown className="text-xl inline" />
 				) : (
@@ -20,14 +69,11 @@ export const ContextEntry = ({ k, v }) => {
 				<span className={'inline ' + (open ? 'font-articulat-bold' : '')}>
 					{k}
 				</span>
-				{open ? null : (
-					<span className="hidden md:inline truncate pl-3">
-						{typeof v == 'string' ? v.slice(0, 50) + '...' : v}
-					</span>
-				)}
-			</div>
-			<div className={(open ? 'block' : 'hidden') + ' max-w-full p-1 border'}>
-				<p className="p-1 overflow-y-auto text-pretty break-words">{v}</p>
+				<RenderContextValue value={v} open={open} nested />
+				{/* {open ? (
+					<RenderContextValue value={v} open={true} nested />
+				) : (
+				)} */}
 			</div>
 		</>
 	);
