@@ -99,7 +99,14 @@ const Log = ({ log, appteams }) => {
 				<p className="line-clamp-2 pb-5">
 					<span className="text-gray-500">Message</span>: {log.text}
 				</p>
-				<div className="py-2"></div>
+				<div className="py-2">
+					{log.tasks.length > 0 && (
+						<>
+							<p>This log has pending tasks</p>
+							{log.tasks.map((task) => JSON.stringify(task))}
+						</>
+					)}
+				</div>
 				<div className="md:flex items-stretch justify-start bg-[#EBEBF5]">
 					<div className="md:w-[40%] md:border-r border-black px-4 py-5">
 						<p className="py-2">Select a team to assign</p>
@@ -251,7 +258,12 @@ const Log = ({ log, appteams }) => {
 							onClick={() => setOpen(false)}
 						>
 							<span>IP Address: {log.ip}</span>
-							<span>{format(log.createdAt || log.createdat, 'yyyy-MM-dd hh:mm:ss a')}</span>
+							<span>
+								{format(
+									log.createdAt || log.createdat,
+									'yyyy-MM-dd hh:mm:ss a'
+								)}
+							</span>
 						</div>
 						<div className="max-w-full p-[5px] bg-gray-200 rounded min-h-[100px] break-words text-sm md:text-base">
 							{log.text}
