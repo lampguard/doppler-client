@@ -1,23 +1,39 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import TextInput from '../components/Input/TextInput';
 
 import { api, useLoginMutation, useVerify2FAMutation } from '../services';
 import { useEffect, useState } from 'react';
 import Loader from '../components/Loaders/';
 import { useDispatch } from 'react-redux';
+import { notification } from 'antd';
+import { BsInfo } from 'react-icons/bs';
 
 const Login = () => {
 	const dispatch = useDispatch();
-	const [login, { isLoading }] = useLoginMutation();
+	const location = useLocation();
+
+	const url = new URLSearchParams(location);
+	const [login, { isLoading, error, isError }] = useLoginMutation();
 	const [verify, { isLoading: loading2fa, error: twofaerror }] =
 		useVerify2FAMutation();
 	const navigate = useNavigate();
+
 	useEffect(() => {
 		sessionStorage.clear();
 		dispatch(api.util.resetApiState());
 
+		console.log(url);
+
 		return () => {};
 	}, []);
+
+	useEffect(() => {
+		if (error?.data?.reason == 'waitlist') {
+			navigate(`/waitlist-verify?email=${loginform.email}`);
+		}
+
+		return () => {};
+	}, [isError]);
 
 	const [loginform, setLoginform] = useState({
 		email: undefined,
@@ -36,14 +52,22 @@ const Login = () => {
 					return;
 				}
 				setTimeout(() => {
+					if (res.data.user?.email_verified_at == null) {
+						return navigate('/verify-email');
+					}
 					if (res.data.user.details?.id == null) {
-						navigate('/onboarding');
-					} else if (res.data.user?.email_verified_at == null) {
-						navigate('/verify-email');
-					} else navigate('/dashboard');
+						return navigate('/onboarding');
+					}
+					return navigate('/dashboard');
 				}, 1000);
 			})
-			.catch(() => {});
+			.catch((err) => {
+				if (err.data.reason != 'waitlist')
+					notification.error({
+						message: err.data.message,
+						duration: 3,
+					});
+			});
 	};
 
 	const verify2FA = () => {
@@ -111,7 +135,15 @@ const Login = () => {
 					>
 						<div className="text-left p-2">
 							<label>E-mail Address</label>
-							<p className="p-1"></p>
+							{isError && error.data?.reason == 'email' && (
+								<p className="text-md text-left text-red-500 flex items-center gap-x-2">
+									<BsInfo
+										size={'16px'}
+										className="border-2 border-red-500 rounded-full"
+									/>
+									{error.data?.message}
+								</p>
+							)}
 							<TextInput
 								type="email"
 								placeholder="you@example.com"
@@ -123,11 +155,22 @@ const Login = () => {
 										email: e.target.value,
 									});
 								}}
+								className={`${
+									error?.data?.reason == 'email' && 'border-red-500'
+								}`}
 							/>
 						</div>
 						<div className="text-left p-2">
 							<label>Password</label>
-							<p className="p-1"></p>
+							{isError && error.data?.reason == 'password' && (
+								<p className="text-md text-left text-red-500 flex items-center gap-x-2">
+									<BsInfo
+										size={'16px'}
+										className="border-2 border-red-500 rounded-full"
+									/>
+									{error.data?.message}
+								</p>
+							)}
 							<TextInput
 								type="password"
 								placeholder="*********"
@@ -139,6 +182,9 @@ const Login = () => {
 									});
 								}}
 								value={loginform.password}
+								className={`${
+									error?.data?.reason == 'password' && 'border-red-500'
+								}`}
 							/>
 						</div>
 
