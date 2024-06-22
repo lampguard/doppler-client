@@ -11,6 +11,7 @@ import io from 'socket.io-client';
 import Loader from '../Loaders';
 import Skeleton from '../Loaders/Skeleton';
 import { copy } from '../../services/util';
+import { notification } from 'antd';
 
 const wsUrl = __ENV__.WS_URL;
 
@@ -22,8 +23,8 @@ export const SampleLog = ({ app }) => {
 	const cmd = `curl -X POST ${__ENV__.API_URL}/logs --header "APP_ID: ${
 		app?.token
 	}" --json '${JSON.stringify({
-		level: 'error',
-		text: 'Lorem ipsum dolor sit amet.',
+		level: 'info',
+		text: 'This is a sample info log',
 	})}'`;
 
 	return (
@@ -119,10 +120,18 @@ const AppLogs = ({ app, setShowSample }) => {
 		deleteLogs(app.id)
 			.unwrap()
 			.then((response) => {
+				notification.success({
+					message: 'Success',
+					duration: 3,
+				});
 				setLogs([]);
 				fetchLogs({ page: 1, count: 20 });
 			})
 			.catch((err) => {
+				notification.error({
+					message: err?.data.message || 'An error occurred',
+					duration: 3,
+				});
 				console.error(err);
 			});
 	};
