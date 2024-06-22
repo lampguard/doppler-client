@@ -12,7 +12,7 @@ import { notification } from 'antd';
 import { useJoinWaitlistMutation } from './services';
 import { useState } from 'react';
 import { Pricing } from './components/Pricing';
-import { isWaitlistOpen } from './context/ConfigHook';
+import { isWaitlistOpen, useSystemConfig } from './context/ConfigHook';
 import WaitlistForm from './components/WaitlistForm';
 
 const SectionSeparator = () => <div className="h-[100px] md:h-[200px]"></div>;
@@ -33,6 +33,8 @@ export const BgEllipse = ({ className }) => {
 const Landing = () => {
 	const [email, setEmail] = useState('');
 	const [waitlist, { isLoading }] = useJoinWaitlistMutation();
+
+	const config = useSystemConfig();
 
 	const joinWaitlist = (input) => {
 		waitlist({ email: input || email })

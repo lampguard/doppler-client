@@ -14,7 +14,7 @@ import { FaGithub } from 'react-icons/fa6';
 import TextInput from './Input/TextInput';
 import Loader from './Loaders';
 import { useGetConfigQuery, useJoinWaitlistMutation } from '../services';
-import { isWaitlistOpen, isOnboarding, isOpen } from '../context/ConfigHook';
+import { isWaitlistOpen, isOnboarding, isOpen, useSystemConfig } from '../context/ConfigHook';
 import WaitlistForm from './WaitlistForm';
 
 const navLinks = [
@@ -30,6 +30,7 @@ const navLinks = [
 
 const GuestLayout = () => {
 	const [navOpen, setNavOpen] = useState(false);
+	const config = useSystemConfig();
 
 	// const [email, setEmail] = useState('');
 	// const [waitlist, { isLoading }] = useJoinWaitlistMutation();
@@ -88,7 +89,7 @@ const GuestLayout = () => {
 						})}
 					</div>
 					<div className="lg:px-[1.25rem]"></div>
-					{isOpen() && (
+					{config?.open == '1' && (
 						<div>
 							<Link
 								to={'/login'}

@@ -1,5 +1,10 @@
 import { useGetConfigQuery } from '../services';
 
+export const useSystemConfig = () => {
+	const { data: config, refetch } = useGetConfigQuery();
+	return config;
+};
+
 const getConfig = () => {
 	const { data: config, refetch } = useGetConfigQuery();
 	return [config, refetch];
