@@ -10,6 +10,7 @@ import Log from './Log';
 import io from 'socket.io-client';
 import Loader from '../Loaders';
 import Skeleton from '../Loaders/Skeleton';
+import { copy } from '../../services/util';
 
 const wsUrl = __ENV__.WS_URL;
 
@@ -17,27 +18,34 @@ const socket = io(wsUrl, {
 	autoConnect: false,
 });
 
-const SampleLog = () => (
-	<div className="m-auto prose min-w-full">
-		<p>
-			Your app has generated 0 logs. Copy your token to start receiving logs.
-		</p>
-		<div className="bg-black w-full p-3 rounded-md text-white">
-			<code className="not-prose text-sm">
-				// Paste this code in your terminal to send a sample log
-				<br />
-				curl -X POST https://laas-api.up.railway.app/v1/logs --header "APP_ID:{' '}
-				{app.token}" --json '
-				{JSON.stringify({
-					level: 'error',
-					text: 'Lorem ipsum dolor sit amet.',
-				})}
-				'
-			</code>
+export const SampleLog = ({ app }) => {
+	const cmd = `curl -X POST ${__ENV__.API_URL}/logs --header "APP_ID: ${
+		app?.token
+	}" --json '${JSON.stringify({
+		level: 'error',
+		text: 'Lorem ipsum dolor sit amet.',
+	})}'`;
+
+	return (
+		<div className="m-auto prose min-w-full">
+			{/* <p>
+				Your app has generated 0 logs. Copy your token to start receiving logs.
+			</p> */}
+			<div
+				className="bg-black btn hover:bg-black h-fit w-full p-3 rounded-md text-white text-justify tooltip"
+				data-tip="Click to copy"
+				onClick={() => copy(cmd)}
+			>
+				<code className="not-prose text-sm">
+					// Paste this code in your terminal to send a sample log
+					<br />
+					{cmd}
+				</code>
+			</div>
+			<div className="pb-4"></div>
 		</div>
-		<div className="pb-4"></div>
-	</div>
-);
+	);
+};
 
 const LogSkeleton = () => (
 	<div className="join gap-1 w-full border p-0.5">
@@ -60,7 +68,6 @@ const AppLogs = ({ app }) => {
 
 		socket.on('connect', () => {
 			socket.emit('connect-log-stream', app.token);
-			console.log('connected');
 		});
 
 		socket.on('log', (data) => {
