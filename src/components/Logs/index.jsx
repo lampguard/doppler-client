@@ -9,12 +9,42 @@ import Log from './Log';
 
 import io from 'socket.io-client';
 import Loader from '../Loaders';
+import Skeleton from '../Loaders/Skeleton';
 
 const wsUrl = __ENV__.WS_URL;
 
 const socket = io(wsUrl, {
 	autoConnect: false,
 });
+
+const SampleLog = () => (
+	<div className="m-auto prose min-w-full">
+		<p>
+			Your app has generated 0 logs. Copy your token to start receiving logs.
+		</p>
+		<div className="bg-black w-full p-3 rounded-md text-white">
+			<code className="not-prose text-sm">
+				// Paste this code in your terminal to send a sample log
+				<br />
+				curl -X POST https://laas-api.up.railway.app/v1/logs --header "APP_ID:{' '}
+				{app.token}" --json '
+				{JSON.stringify({
+					level: 'error',
+					text: 'Lorem ipsum dolor sit amet.',
+				})}
+				'
+			</code>
+		</div>
+		<div className="pb-4"></div>
+	</div>
+);
+
+const LogSkeleton = () => (
+	<div className="join gap-1 w-full border p-0.5">
+		<Skeleton className="h-9 w-1/4 rounded-md bg-gray-200" />
+		<Skeleton className="h-9 w-full rounded-md bg-gray-100 border-black" />
+	</div>
+);
 
 const AppLogs = ({ app }) => {
 	const [logs, setLogs] = useState([]);
@@ -110,43 +140,35 @@ const AppLogs = ({ app }) => {
 				</button>
 			</Modal>
 
-			{logs.length > 0 ? (
-				<>
-					<p className="pb-2">Latest</p>
-					{logs.slice(0, 5).map((log, i) => (
-						<Log log={log} key={i} appteams={appteams} />
-					))}
-
-					<p className="pb-2">Older</p>
-					{logs.slice(5, undefined).map((log, i) => (
-						<Log log={log} key={i} appteams={appteams} />
-					))}
-
-					<button className="btn btn-sm w-full" onClick={loadMore}>
-						{loading || isFetching ? <Loader /> : 'Load More'}
-					</button>
-				</>
-			) : (
-				<div className="m-auto prose min-w-full">
-					<p>
-						Your app has generated 0 logs. Copy your token to start receiving
-						logs.
-					</p>
-					<div className="bg-black w-full p-3 rounded-md text-white">
-						<code className="not-prose text-sm">
-							// Paste this code in your terminal to send a sample log
-							<br />
-							curl -X POST https://laas-api.up.railway.app/v1/logs --header
-							"APP_ID: {app.token}" --json '
-							{JSON.stringify({
-								level: 'error',
-								text: 'Lorem ipsum dolor sit amet.',
-							})}
-							'
-						</code>
-					</div>
-					<div className="pb-4"></div>
+			{loading ? (
+				<div className="pb-4">
+					<p className="mb-2">Latest</p>
+					{Array(4)
+						.fill(0)
+						.map(() => (
+							<div className="mb-1">
+								<LogSkeleton />
+							</div>
+						))}
 				</div>
+			) : (
+				logs.length > 0 && (
+					<>
+						<p className="pb-2">Latest</p>
+						{logs.slice(0, 5).map((log, i) => (
+							<Log log={log} key={i} appteams={appteams} />
+						))}
+
+						<p className="pb-2">Older</p>
+						{logs.slice(5, undefined).map((log, i) => (
+							<Log log={log} key={i} appteams={appteams} />
+						))}
+
+						<button className="btn btn-sm w-full" onClick={loadMore}>
+							{loading || isFetching ? <Loader /> : 'Load More'}
+						</button>
+					</>
+				)
 			)}
 		</>
 	);
