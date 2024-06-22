@@ -56,7 +56,6 @@ const AppLogs = ({ app }) => {
 		})
 			.unwrap()
 			.then((response) => {
-				console.log(response);
 				if (append) {
 					setLogs([...logs, ...response.data]);
 				} else {
@@ -137,8 +136,8 @@ const AppLogs = ({ app }) => {
 						<code className="not-prose text-sm">
 							// Paste this code in your terminal to send a sample log
 							<br />
-							curl -X POST https://laas-api.up.railway.app/v1/logs --header "APP_ID:{' '}
-							{app.token}" --json '
+							curl -X POST https://laas-api.up.railway.app/v1/logs --header
+							"APP_ID: {app.token}" --json '
 							{JSON.stringify({
 								level: 'error',
 								text: 'Lorem ipsum dolor sit amet.',
