@@ -32,7 +32,7 @@ export const SampleLog = ({ app }) => {
 				Your app has generated 0 logs. Copy your token to start receiving logs.
 			</p> */}
 			<div
-				className="bg-black btn hover:bg-black h-fit w-full p-3 rounded-md text-white text-justify tooltip"
+				className="text-left bg-black btn hover:bg-black h-fit w-full p-3 rounded-md text-white tooltip tooltip-bottom"
 				data-tip="Click to copy"
 				onClick={() => copy(cmd)}
 			>
@@ -54,7 +54,7 @@ const LogSkeleton = () => (
 	</div>
 );
 
-const AppLogs = ({ app }) => {
+const AppLogs = ({ app, setShowSample }) => {
 	const [logs, setLogs] = useState([]);
 	const [page, setPage] = useState(1);
 	const count = 20;
@@ -128,6 +128,14 @@ const AppLogs = ({ app }) => {
 	};
 
 	useEffect(() => {
+		if (logs.length == 0) {
+			setShowSample(true);
+		} else {
+			setShowSample(false);
+		}
+	}, [logs]);
+
+	useEffect(() => {
 		fetchLogs({
 			page: 1,
 			count,
@@ -152,9 +160,9 @@ const AppLogs = ({ app }) => {
 					<p className="mb-2">Latest</p>
 					{Array(4)
 						.fill(0)
-						.map(() => (
+						.map(({ v, i }) => (
 							<div className="mb-1">
-								<LogSkeleton />
+								<LogSkeleton key={i} />
 							</div>
 						))}
 				</div>
@@ -163,12 +171,12 @@ const AppLogs = ({ app }) => {
 					<>
 						<p className="pb-2">Latest</p>
 						{logs.slice(0, 5).map((log, i) => (
-							<Log log={log} key={i} appteams={appteams} />
+							<Log log={log} key={log.id} appteams={appteams} />
 						))}
 
 						<p className="pb-2">Older</p>
 						{logs.slice(5, undefined).map((log, i) => (
-							<Log log={log} key={i} appteams={appteams} />
+							<Log log={log} key={log.id} appteams={appteams} />
 						))}
 
 						<button className="btn btn-sm w-full" onClick={loadMore}>

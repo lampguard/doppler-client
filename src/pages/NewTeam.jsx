@@ -16,7 +16,7 @@ const NewTeam = () => {
 	const [selectedApps, setSelection] = useState([]);
 	const navigate = useNavigate();
 
-	const [newApp, { isLoading }] = useNewTeamMutation();
+	const [newTeam, { isLoading }] = useNewTeamMutation();
 
 	const addApp = (e) => {
 		const { value } = e.target;
@@ -50,7 +50,7 @@ const NewTeam = () => {
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
-							newApp({
+							newTeam({
 								...teamForm,
 								apps: selectedApps,
 							})
@@ -60,11 +60,12 @@ const NewTeam = () => {
 										message: 'App created successfully',
 										duration: 3,
 									});
-									navigate('/apps');
+									navigate(`/teams/${response.id}`);
 								})
-								.catch(({ status, data }) => {
+								.catch((err) => {
+									console.error(err);
 									notification.error({
-										message: data.message || 'An error occurred',
+										message: err?.dsata?.message || 'An error occurred',
 										duration: 3,
 									});
 									setTimeout(() => navigate('/dashboard'), 1000);

@@ -53,6 +53,7 @@ const teams = api
 	});
 
 export const {
+	useGetTeamsQuery,
 	useLazyGetTeamsQuery,
 	useNewTeamMutation,
 	useGetTeamQuery,

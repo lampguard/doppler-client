@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLazyGetTeamsQuery } from '../services/teams';
+import { useLazyGetTeamsQuery, useGetTeamsQuery } from '../services/teams';
 import { CgMoreVerticalAlt as BsMenuApp } from 'react-icons/cg';
 import { useTeamContext } from '../context/TeamContext.jsx';
 import { Link } from 'react-router-dom';
@@ -16,23 +16,18 @@ const defaultActiveTeam = {
  *
  */
 const MyTeams = ({ setOpen }) => {
-	const [getTeams] = useLazyGetTeamsQuery();
+	const { data, refetch: getTeams } = useGetTeamsQuery();
 	const [teams, setTeams] = useState([defaultActiveTeam]);
 
 	const teamCtx = useTeamContext();
 	const [activeTeam, setActiveTeam] = useState(teamCtx?.value || teams[0]);
 
 	useEffect(() => {
-		getTeams()
-			.unwrap()
-			.then((response) => {
-				setTeams([defaultActiveTeam, ...response]);
-				setActiveTeam(teamCtx.value || defaultActiveTeam);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	}, []);
+		if (data) {
+			setTeams([defaultActiveTeam, ...data]);
+			setActiveTeam(teamCtx.value || defaultActiveTeam);
+		}
+	}, [data]);
 
 	function selectTeam(id) {
 		const team = teams.find((team) => team.id == id);
@@ -50,7 +45,10 @@ const MyTeams = ({ setOpen }) => {
 		<div className="bg-white h-full w-full">
 			<div className="flex md:block text-3xl justify-between items-center">
 				<p>My Teams</p>
-				<button className="md:hidden btn btn-ghost" onClick={() => setOpen(false)}>
+				<button
+					className="md:hidden btn btn-ghost"
+					onClick={() => setOpen(false)}
+				>
 					<FaTimes className="text-2xl" />
 				</button>
 			</div>

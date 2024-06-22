@@ -16,17 +16,10 @@ const ApplicationPage = () => {
 	const [getMetrics, { isFetching: fetching }] = useLazyGetMetricsForAppQuery();
 
 	const [appMetrics, setMetrics] = useState([]);
+	const [showSample, setShowSample] = useState(false);
+	const [lock, setLock] = useState(false);
 
-	const copyToken = (e) => {
-		copy(app.token);
-		const el = e.target.parentElement;
-		el.classList.add('tooltip-open');
-		el.setAttribute('data-tip', 'Copied!');
-		setTimeout(() => {
-			el.classList.remove('tooltip-open');
-			el.setAttribute('data-tip', 'Click to copy');
-		}, 2000);
-	};
+	const [tip, setTip] = useState('Click to copy');
 
 	useEffect(() => {
 		if (app) {
@@ -41,42 +34,6 @@ const ApplicationPage = () => {
 				.catch((err) => console.error);
 		}
 	}, [app]);
-
-	// return (
-	// 	<>
-	// 		{isSuccess && success && (
-	// 			<>
-	// 				<div className="px-2 md:px-10">
-	// 					{fetching ? (
-	// 						<Skeleton className="w-full h-64" />
-	// 					) : (
-	// 						appMetrics.length > 0 && (
-	// 							<div
-	// 								className="px-0 pb-10 md:pb-2 md:px-2 relative min-h-[350px] rounded-md grid grid-cols-1 mb-3"
-	// 								key={app.id}
-	// 							>
-	// 								<DashboardApp app={app} data={appMetrics} />
-	// 							</div>
-	// 						)
-	// 					)}
-	// 				</div>
-
-	// 				<div className="container p-3" id="loglist">
-	// 					<LogPanes data={logs} app={app} />
-	// 					{isFetching && <Loader />}
-	// 					<button className="btn btn-sm w-full" onClick={loadMore}>
-	// 						Load More
-	// 					</button>
-	// 				</div>
-	// 			</>
-	// 		)}
-	// 		{(isLoading || isUninitialized) && (
-	// 			<div className="grid w-full h-full place-items-center">
-	// 				<Loader />
-	// 			</div>
-	// 		)}
-	// 	</>
-	// );
 
 	return (
 		<>
@@ -100,10 +57,16 @@ const ApplicationPage = () => {
 						<div className="px-0 pb-10 md:pb-2 md:px-2 relative min-h-[350px] rounded-md grid grid-cols-1 mb-3">
 							<DashboardApp app={app} data={appMetrics} />
 						</div>
-						<div className="grid">
-							<div className="py-2 w-full tooltip" data-tip="Click to Copy">
+						<div className={`grid p-1 rounded-md`}>
+							<div
+								className="py-2 w-full tooltip"
+								data-tip={tip}
+								onClick={(e) => {
+									setShowSample(!showSample);
+								}}
+							>
 								<button
-									onClick={copyToken}
+									onClick={() => copy(app.token)}
 									className="btn w-full btn-md relative"
 								>
 									<span className="relative ">
@@ -114,13 +77,22 @@ const ApplicationPage = () => {
 										/>
 										{/* <span className="" id='infotip'>Click to copy</span> */}
 									</span>
-									{app.token}
+									Your app token is
+									<span className="font-articulat-bold">{app.token}</span>
 								</button>
 							</div>
-							<SampleLog app={app} />
+							<div className={`${!showSample && !lock && 'hidden'}`}>
+								<SampleLog app={app} />
+							</div>
 						</div>
 						<div>
-							<AppLogs app={app} />
+							<AppLogs
+								app={app}
+								setShowSample={(t) => {
+									setShowSample(t);
+									setLock(t);
+								}}
+							/>
 						</div>
 					</div>
 				</>
