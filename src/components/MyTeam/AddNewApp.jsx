@@ -47,7 +47,7 @@ const AddNewAppModal = ({ showAddNewModal, setShowAddNewModal }) => {
         <div className="flex flex-col items-center justify-center gap-[2rem] mt-[1rem]">
           <div className="flex flex-col w-full ">
             <h3 className="text-center text-[20px]">Add Apps</h3>
-            <div className="flex flex-col gap-2 mt-2">
+            <div className="flex flex-col gap-2 mt-2 overflow-auto max-h-[250px]">
               {apps?.data?.length === 0 ? (
                 <>
                   <p className="text-center">
