@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CustomModal } from "../../shared/CustomModal";
 import { useGetAppsQuery } from "../../services";
-import { useNewTeamMutation } from "../../services/teams";
+import { useGetTeamQuery, useNewTeamMutation } from "../../services/teams";
 import { message } from "antd";
 
 const AddNewAppModal = ({ showAddNewModal, setShowAddNewModal }) => {
@@ -9,6 +9,9 @@ const AddNewAppModal = ({ showAddNewModal, setShowAddNewModal }) => {
   const [selectedApps, setSelectedApps] = useState([]);
   const [newApp, { isLoading, isSuccess, isError, error }] =
     useNewTeamMutation();
+  const teamId = sessionStorage.getItem("teamId");
+
+  const { data: team } = useGetTeamQuery(teamId);
   const handleAddApp = (e) => {
     const { value } = e.target;
     if (selectedApps.includes(Number(value))) {
@@ -29,6 +32,7 @@ const AddNewAppModal = ({ showAddNewModal, setShowAddNewModal }) => {
 
   const addApp = () => {
     newApp({
+      name: team?.name,
       apps: selectedApps,
     });
   };

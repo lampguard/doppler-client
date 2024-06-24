@@ -105,19 +105,21 @@ const MyTeams = ({ setOpen }) => {
                   {team.id !== undefined && (
                     <Popover
                       placement="bottomRight"
-                      className="]"
                       arrow={false}
                       content={
                         <div className="w-[200px] flex flex-col gap-5">
                           <p
-                            onClick={() => navigate(`/teams/${team.id}`)}
+                            onClick={() => navigate(`/teams/${team?.id}`)}
                             className={popoverLinksStyling}
                           >
                             Team Info
                           </p>
                           <p
                             className={popoverLinksStyling}
-                            onClick={() => setShowAddNewAppModal(true)}
+                            onClick={() => {
+                              sessionStorage.setItem("teamId", team?.id);
+                              setShowAddNewAppModal(true);
+                            }}
                           >
                             Add App
                           </p>
