@@ -109,7 +109,7 @@ const MyTeams = ({ setOpen }) => {
                       content={
                         <div className="w-[200px] flex flex-col gap-5">
                           <p
-                            onClick={() => navigate(`/teams/${team.id}`)}
+                            onClick={() => navigate(`/teams/${team?.id}`)}
                             className={popoverLinksStyling}
                           >
                             Team Info
