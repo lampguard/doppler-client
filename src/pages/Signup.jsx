@@ -4,8 +4,7 @@ import Loader from '../components/Loaders';
 import { useSignupMutation } from '../services';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiInfoCircle } from 'react-icons/bi';
-import { isOpen, isOnboarding } from '../context/ConfigHook';
-import { notification } from 'antd';
+import { isOnboarding } from '../context/ConfigHook';
 import WaitlistForm from '../components/WaitlistForm';
 
 const Signup = () => {
@@ -30,9 +29,7 @@ const Signup = () => {
 
 	return (
 		<div className="text-center font-articulat">
-			<h1 className="text-[1.5em] font-[400] tracking-[0px]">
-				Create a Free Doppler Account
-			</h1>
+			<h1 className="text-[1.5em] font-[400] tracking-[0px]">Create a Free Doppler Account</h1>
 			{isOnboarding() ? (
 				<form
 					onSubmit={(e) => {
@@ -84,9 +81,7 @@ const Signup = () => {
 							placeholder="*********"
 							name="password_confirmation"
 							value={form.password_confirmation}
-							onChange={(e) =>
-								setForm({ ...form, password_confirmation: e.target.value })
-							}
+							onChange={(e) => setForm({ ...form, password_confirmation: e.target.value })}
 							required
 						/>
 					</div>
@@ -100,10 +95,7 @@ const Signup = () => {
 							<BiInfoCircle className="text-xl text-theme" />
 							<span>
 								By signing up, you agree to the{' '}
-								<Link
-									to={'/terms'}
-									className="underline text-blue-700 hover:text-black"
-								>
+								<Link to={'/terms'} className="underline text-blue-700 hover:text-black">
 									Terms & Conditions
 								</Link>
 							</span>
@@ -114,18 +106,14 @@ const Signup = () => {
 				<div className="h-full grid place-items-center">
 					<div className="py-4"></div>
 					<p className="py-4 text-justify">
-						Sorry, we're currently not taking any new sign ups. Consider joining
-						the waitlist to get notified or checkback at a later date.
+						Sorry, we're currently not taking any new sign ups. Consider joining the waitlist to get notified or
+						checkback at a later date.
 					</p>
 					<div className="w-full text-left">
 						<p htmlFor="email" className="py-2">
 							E-mail Address
 						</p>
-						<WaitlistForm
-							formClass="grid gap-2"
-							inputClassName=""
-							btnClass="btn btn-primary"
-						/>
+						<WaitlistForm formClass="grid gap-2" inputClassName="" btnClass="btn btn-primary" />
 					</div>
 				</div>
 			)}

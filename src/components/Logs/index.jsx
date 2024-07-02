@@ -154,7 +154,10 @@ const AppLogs = ({ app, setShowSample }) => {
 	return (
 		<>
 			<Modal id="modal1" withClose>
-				<p>Are you sure? This will delete all your logs.</p>
+				<p>
+					Are you sure? This will delete any logs that don't have tasks assigned
+					to them.
+				</p>
 				<button
 					className="btn btn-sm btn-primary"
 					onClick={clearLogs}

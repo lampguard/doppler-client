@@ -59,6 +59,7 @@ export const {
   useGetTeamQuery,
   useLazyGetTeamQuery,
   useLazyGetTeamAppsQuery,
+  useGetTeamAppsQuery,
   useAddMemberMutation,
   useAddAppMutation: useAddAppToTeamMutation,
 } = teams;

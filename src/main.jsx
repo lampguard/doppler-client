@@ -44,11 +44,12 @@ import WaitlistVerify from './pages/WaitlistVerify.jsx';
 const routes = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/">
-			<Route element={<GuestLayout />}>
+			<Route element={<GuestLayout />} errorElement={<></>}>
 				<Route element={<App />} index />
 				<Route path="/docs/guide" element={<App />} />
 				<Route path="/pricing" element={<Pricing />} />
 			</Route>
+
 			<Route element={<AuthPane />}>
 				<Route element={<Login />} path="/verify-2fa" />
 				<Route element={<Login />} path="/login" />
@@ -59,6 +60,7 @@ const routes = createBrowserRouter(
 				<Route path="/verify-email" element={<VerifyEmail />} />
 				<Route path="/waitlist-verify" element={<WaitlistVerify />} />
 			</Route>
+			
 			<Route element={<AppLayout />}>
 				{/* <Route index element={<Dashboard />} /> */}
 				<Route path="/dashboard" element={<Dashboard />} />
