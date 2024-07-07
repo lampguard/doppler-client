@@ -94,7 +94,7 @@ const Log = ({ log, appteams }) => {
 				</p>
 				<p className="line-clamp-2 pb-5">
 					<span className="text-gray-500">Time</span>:{' '}
-					{format(log.createdAt, 'P HH:mm:ss a')}
+					{format(log.createdAt||log.createdat, 'P HH:mm:ss a')}
 				</p>
 				<p className="line-clamp-2 pb-5">
 					<span className="text-gray-500">Message</span>: {log.text}

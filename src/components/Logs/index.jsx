@@ -1,8 +1,4 @@
-import {
-	useLazyGetLogsQuery,
-	useDeleteLogsMutation,
-	useGetAppTeamsQuery,
-} from '../../services/apps';
+import { useLazyGetLogsQuery, useDeleteLogsMutation, useGetAppTeamsQuery } from '../../services/apps';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal';
 import Log from './Log';
@@ -20,9 +16,7 @@ const socket = io(wsUrl, {
 });
 
 export const SampleLog = ({ app }) => {
-	const cmd = `curl -X POST ${__ENV__.API_URL}/logs --header "APP_ID: ${
-		app?.token
-	}" --json '${JSON.stringify({
+	const cmd = `curl -X POST ${__ENV__.WS_DISPLAY_URL} --header "APP_ID: ${app?.token}" --json '${JSON.stringify({
 		level: 'info',
 		text: 'This is a sample info log',
 	})}'`;
@@ -72,8 +66,10 @@ const AppLogs = ({ app, setShowSample }) => {
 		});
 
 		socket.on('log', (data) => {
-			data.createdAt = new Date(data.createdat);
-			setLogs((prev) => [data, ...prev]);
+			const log = JSON.parse(data);
+			log.createdAt = new Date(log.createdat);
+			setLogs((prev) => [log, ...prev]);
+			console.log(log);
 		});
 
 		return () => {
@@ -84,8 +80,7 @@ const AppLogs = ({ app, setShowSample }) => {
 
 	const [getLogs, { isLoading: loading, isFetching }] = useLazyGetLogsQuery();
 
-	const [deleteLogs, { isFetching: deleting, isLoading: loadingDelete }] =
-		useDeleteLogsMutation();
+	const [deleteLogs, { isFetching: deleting, isLoading: loadingDelete }] = useDeleteLogsMutation();
 
 	const fetchLogs = (data, append = false) => {
 		getLogs({
@@ -154,15 +149,8 @@ const AppLogs = ({ app, setShowSample }) => {
 	return (
 		<>
 			<Modal id="modal1" withClose>
-				<p>
-					Are you sure? This will delete any logs that don't have tasks assigned
-					to them.
-				</p>
-				<button
-					className="btn btn-sm btn-primary"
-					onClick={clearLogs}
-					disabled={deleting}
-				>
+				<p>Are you sure? This will delete any logs that don't have tasks assigned to them.</p>
+				<button className="btn btn-sm btn-primary" onClick={clearLogs} disabled={deleting}>
 					{deleting || loadingDelete ? <Loader /> : "Yes, I'm sure"}
 				</button>
 			</Modal>

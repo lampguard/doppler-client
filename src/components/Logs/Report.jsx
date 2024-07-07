@@ -22,9 +22,7 @@ const Report = ({ log }) => {
 					{(!log.tags || log.tags?.length < 1) && (
 						<span className="font-articulat-oblique">No tags.</span>
 					)}
-					{log.tags?.map((tag) => (
-						<>{tag}</>
-					))}
+				<span className="font-bold text-blue-500">	{log.tags?.join(", ")}</span>
 				</p>
 				<div className="py-1">
 					{!log.context ? (
