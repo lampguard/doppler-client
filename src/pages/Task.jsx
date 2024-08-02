@@ -2,79 +2,92 @@ import { format } from 'date-fns';
 import Skeleton from '../components/Loaders/Skeleton';
 import { useGetTaskQuery } from '../services/tasks';
 import { useParams } from 'react-router-dom';
-import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { usePageContext } from '../context/PageContext';
+import Report from '../components/Logs/Report';
+import { useGetAuthQuery } from '../services';
 
-const RenderContextValue = ({ value, open = false, nested = false }) => {
-	const type = typeof value;
-	if (!open) {
-		return (
-			<span className="hidden md:inline truncate pl-3">
-				{type == 'string' || type == 'number'
-					? String(value).slice(0, 50)
-					: null}
-			</span>
-		);
-	} else {
-		return (
-			<div
-				className={
-					(open ? 'block' : 'hidden') + ' bg-white max-w-full p-1 border'
-				}
-			>
-				{type == 'string' || type == 'number' ? (
-					<p className="p-1 overflow-y-auto text-pretty break-words">
-						{String(value).slice(0, 512)}
-					</p>
-				) : (
-					Object.entries(value).map(([k, v], index) => (
-						<div key={`context-entry-nest-${index}`} className="pt-1 px-1.5">
-							<ContextEntry
-								k={k}
-								v={
-									// nested && (typeof v != 'string' || typeof v != 'number')
-									// 	? JSON.stringify(v)
-									// 	: v
-									v
-								}
-								nested
-							/>
-							<div className="pb-1 md:pb-2"></div>
-						</div>
-					))
-				)}
+import io from 'socket.io-client';
+
+const socket = io(__ENV__.WS_URL, {
+	autoConnect: false,
+});
+
+const TaskChatMessage = ({ message }) => {
+	return (
+		<div className={`chat ${message.me ? 'chat-end' : 'chat-start'}`}>
+			<div className="chat-header">{typeof message.sender == 'string' ? message.sender : message.sender.name}</div>
+			<div className={`chat-bubble ${message.me ? 'bg-blue-100 text-black' : 'bg-green-100 text-black'}`}>
+				{message.content || message.message}
 			</div>
-		);
-	}
+			<div className="chat-footer">
+				<time className="text-xs opacity-50">{message.time || format(message.createdAt, 'y-MM-dd hh:mm:ss a')}</time>
+			</div>
+		</div>
+	);
 };
 
-export const ContextEntry = ({ k, v, nested = false }) => {
-	const [open, setOpen] = useState(false);
+const TaskChat = ({ task }) => {
+	const [messages, setMessages] = useState([]);
+
+	const { data: user } = useGetAuthQuery();
+
+	useEffect(() => {
+		if (task) {
+			setMessages(task.comments);
+			socket.connect();
+			socket.emit('connect-task-chat', task.id);
+
+			socket.on('task-chat', (message) => {
+				message.me = true;
+				// if (message.sender_id == user?.data.user.id) {
+				// }
+				setMessages((prev) => [...prev, message]);
+			});
+		}
+
+		() => {
+			socket.disconnect();
+		};
+	}, [task]);
 
 	return (
 		<>
-			<div
-				className={`${nested ? 'bg-blue-200' : 'bg-red-300'} cursor-pointer`}
-				onClick={(e) => {
-					e.stopPropagation();
-					setOpen(!open);
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					const form = e.currentTarget;
+					socket.emit('task-chat', {
+						content: form.message.value,
+						sender: user?.data.user.name,
+						time: format(new Date(), 'y-MM-dd hh:mm:ss aa'),
+						task: task.id,
+						sender_id: user?.data.user.id,
+					});
+
+					form.reset();
 				}}
+				className="p-2 border rounded-md"
 			>
-				{open ? (
-					<FaCaretDown className="text-xl inline" />
-				) : (
-					<FaCaretRight className="text-xl inline" />
-				)}{' '}
-				<span className={'inline ' + (open ? 'font-articulat-bold' : '')}>
-					{k}
-				</span>
-				<RenderContextValue value={v} open={open} nested />
-				{/* {open ? (
-					<RenderContextValue value={v} open={true} nested />
-				) : (
-				)} */}
-			</div>
+				<div id="chatArea" className="text-sm max-h-[500px] overflow-y-auto">
+					{messages.map((msg, i) => {
+						const message = { ...msg };
+						message.me = msg.sender_id == user?.data.user.id;
+						return <TaskChatMessage message={message} key={i} />;
+					})}
+				</div>
+				<div className="p-2"></div>
+
+				<div className="grid grid-cols-12 grid-rows-1">
+					<input
+						name="message"
+						className="border col-span-10 w-full rounded input-sm"
+						placeholder="Enter your message"
+						required
+					/>
+					<button className="btn btn-sm col-span-2">Send</button>
+				</div>
+			</form>
 		</>
 	);
 };
@@ -94,92 +107,50 @@ const Task = () => {
 	}, [task]);
 
 	return (
-		<div className="p-3">
-			{isLoading ? (
-				<>
-					<Skeleton className="w-1/2 h-10 p-4" />
-					<div className="py-1"></div>
-					<Skeleton className="w-2/3 h-16 p-4" />
-					<div className="py-3"></div>
-					<Skeleton className="w-full h-64 rounded-none p-4" />
-				</>
-			) : (
-				<>
-					{isSuccess && (
-						<>
-							<p className="text-2xl font-bold">
-								{Boolean(task.assigned_to) == true ? 'Your task' : 'Task'} in{' '}
-								{task.team.name}
-							</p>
-							<p className="text-sm pt-2">
-								Assigned by:{' '}
-								<span className="text-gray-500">
-									{task.user.name} ({task.user.email})
-								</span>{' '}
-							</p>
-							<p className="text-sm pt-2">
-								On:{' '}
-								<span className="text-gray-500">
-									{format(task.createdAt, 'P HH:mm:ss a')}
-								</span>{' '}
-							</p>
-							<div>
-								<p className="text-sm pt-2">
-									Comment: <span className="">{task.description}</span>
+		<div className="p-3 flex items-stretch">
+			<div className="w-1/2 p-2">
+				{isLoading ? (
+					<>
+						<Skeleton className="w-1/2 h-10 p-4" />
+						<div className="py-1"></div>
+						<Skeleton className="w-2/3 h-16 p-4" />
+						<div className="py-3"></div>
+						<Skeleton className="w-full h-64 rounded-none p-4" />
+					</>
+				) : (
+					<>
+						{isSuccess && (
+							<>
+								<p className="text-2xl font-bold">
+									{Boolean(task.assigned_to) == true ? 'Your task' : 'Task'} in {task.team.name}
 								</p>
-							</div>
-							<div className="py-3"></div>
-							<div className="p-4 bg-gray-100">
-								<p className="text-xl">Incident Report</p>
-								<div className="py-2"></div>
-								<div className="text-sm">
-									<p>
-										Level:{' '}
-										<span className="font-articulat-bold">
-											{task.log.level.toUpperCase()}
-										</span>
+								<p className="text-sm pt-2">
+									Assigned by:{' '}
+									<span className="text-gray-500">
+										{task.user.name} ({task.user.email})
+									</span>{' '}
+								</p>
+								<p className="text-sm pt-2">
+									On: <span className="text-gray-500">{format(task.createdAt, 'P HH:mm:ss a')}</span>{' '}
+								</p>
+								<div>
+									<p className="text-sm pt-2">
+										Comment: <span className="">{task.description}</span>
 									</p>
-									<p>Time: {format(task.log.createdAt, 'P HH:mm:ss a')}</p>
-									<p>IP Address: {task.log.ip}</p>
-									{/* <p>IP Address: {JSON.stringify(task.log)}</p> */}
-									<p className="pt-3 pb-2">{task.log.text}</p>
-									<p className="py-1">
-										Tags:{' '}
-										{(!task.log.tags || task.log.tags?.length < 1) && (
-											<span className="font-articulat-oblique">No tags.</span>
-										)}
-										{task.log.tags?.map((tag) => (
-											<>{tag}</>
-										))}
-									</p>
-									<div className="py-1">
-										{!task.log.context && (
-											<span className="font-articulat-oblique">
-												No context provided
-											</span>
-										)}
-										{task.log.context && (
-											<div className="py-2 md:py-1">
-												{Object.entries(task.log.context).map(
-													([k, v], index) => {
-														return (
-															<React.Fragment key={index}>
-																<ContextEntry k={k} v={v} />
-																<div className="pb-1 md:pb-2"></div>
-															</React.Fragment>
-														);
-													}
-												)}
-											</div>
-										)}
-									</div>
 								</div>
-							</div>
-						</>
-					)}
-					{isError && <></>}
-				</>
-			)}
+								<div className="py-3"></div>
+								<Report log={task.log} />
+							</>
+						)}
+						{isError && <></>}
+					</>
+				)}
+			</div>
+			<div className="w-1/2 p-2">
+				<p className="text-3xl">Discussion</p>
+
+				<TaskChat task={task} />
+			</div>
 		</div>
 	);
 };

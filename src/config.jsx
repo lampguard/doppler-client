@@ -2,15 +2,9 @@ export const globalTitle = 'Doppler (Beta Preview)';
 
 import { addDays, format, subDays } from 'date-fns';
 import { AiFillHome, AiOutlineHome, AiOutlineLineChart } from 'react-icons/ai';
-import {
-	BsBell,
-	BsBellFill,
-	BsFillPersonFill,
-	BsGrid3X3,
-	BsGrid3X3GapFill,
-	BsPerson,
-} from 'react-icons/bs';
+import { BsBell, BsBellFill, BsFillPersonFill, BsGrid3X3, BsGrid3X3GapFill, BsPerson } from 'react-icons/bs';
 import { GrGrid } from 'react-icons/gr';
+import { MdMap } from 'react-icons/md';
 
 export const navLinks = [
 	{
@@ -30,6 +24,11 @@ export const navLinks = [
 		slug: '/tasks',
 		icon: <AiOutlineLineChart className="text-xl inline" />,
 		activeIcon: <AiOutlineLineChart className="text-xl inline" />,
+	},
+	{
+		title: 'Board',
+		slug: '/board',
+		icon: <MdMap className="text-xl inline" />,
 	},
 ];
 export const mobileNavLinks = [
@@ -71,9 +70,7 @@ export const pricings = [
 			<p>
 				<span className="font-articulat-bold text-3xl">$0</span>
 				<br />
-				<span className="font-articulat-lighter text-xl text-[#212121B2]">
-					/month
-				</span>
+				<span className="font-articulat-lighter text-xl text-[#212121B2]">/month</span>
 			</p>
 		),
 		name: 'Free',
@@ -100,9 +97,7 @@ export const pricings = [
 			<p>
 				<span className="font-articulat-bold text-3xl">$4</span>
 				<br />
-				<span className="font-articulat-lighter text-xl text-[#212121B2]">
-					/month
-				</span>
+				<span className="font-articulat-lighter text-xl text-[#212121B2]">/month</span>
 			</p>
 		),
 		name: 'Basic-Doppler',
@@ -129,20 +124,12 @@ export const pricings = [
 			<p>
 				<span className="font-articulat-bold text-3xl">$10</span>
 				<br />
-				<span className="font-articulat-lighter text-xl text-[#212121B2]">
-					/month/member
-				</span>
+				<span className="font-articulat-lighter text-xl text-[#212121B2]">/month/member</span>
 			</p>
 		),
 		name: 'Pro-Doppler',
 		description: 'Suitable for large teams with substantial number of projects',
-		points: [
-			'Unlimited Teams',
-			'Unlimited Team Member',
-			'Unlimited Apps',
-			'AI Reporter',
-			'Jira Integration',
-		],
+		points: ['Unlimited Teams', 'Unlimited Team Member', 'Unlimited Apps', 'AI Reporter', 'Jira Integration'],
 		recommended: true,
 		link: '/',
 		features: {
@@ -167,8 +154,7 @@ export const pricings = [
 			</>
 		),
 		name: 'Custom Doppler',
-		description:
-			'Suitable for organizations with custom needs. Schedule a session with us.',
+		description: 'Suitable for organizations with custom needs. Schedule a session with us.',
 		points: [],
 		custom: true,
 		link: '/',

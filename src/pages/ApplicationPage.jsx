@@ -65,10 +65,7 @@ const ApplicationPage = () => {
 									setShowSample(!showSample);
 								}}
 							>
-								<button
-									onClick={() => copy(app.token)}
-									className="btn w-full btn-md relative"
-								>
+								<button onClick={() => copy(app.token)} className="btn w-full btn-md relative">
 									<span className="relative ">
 										<BsInfoCircle
 											size={16}

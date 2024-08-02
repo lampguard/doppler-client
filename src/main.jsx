@@ -40,6 +40,7 @@ import GuestLayout from './components/GuestLayout.jsx';
 import Onboarding from './pages/Onboarding.jsx';
 import VerifyEmail from './pages/VerifyEmail.jsx';
 import WaitlistVerify from './pages/WaitlistVerify.jsx';
+import AcceptInvite from './pages/AcceptInvite.jsx';
 
 const routes = createBrowserRouter(
 	createRoutesFromElements(
@@ -59,6 +60,7 @@ const routes = createBrowserRouter(
 				<Route element={<PasswordReset />} path="/password-reset" />
 				<Route path="/verify-email" element={<VerifyEmail />} />
 				<Route path="/waitlist-verify" element={<WaitlistVerify />} />
+				<Route path="/accept-invite" element={<AcceptInvite />} />
 			</Route>
 			
 			<Route element={<AppLayout />}>
