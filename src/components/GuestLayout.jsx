@@ -61,7 +61,7 @@ const GuestLayout = () => {
 					<img src={logo} className={'w-full ' + (navOpen && 'hidden')} />
 				</div>
 
-				<div className="hidden md:flex items-center">
+				<div className="hidden lg:flex items-center">
 					<div className="nav">
 						{navLinks.map((link) => {
 							if (link.to.startsWith('/#')) {
@@ -106,7 +106,7 @@ const GuestLayout = () => {
 						</div>
 					)}
 				</div>
-				<div className="md:hidden">
+				<div className="lg:hidden">
 					<button
 						className="btn btn-ghost btn-sm"
 						onClick={() => {
@@ -123,7 +123,7 @@ const GuestLayout = () => {
 				</div>
 			</div>
 
-			<div className="hidden md:hidden" id="mobileNav">
+			<div className="hidden lg:hidden" id="mobileNav">
 				<div className="nav text-[16px] flex flex-col items-center justify-center px-10 gap-y-4">
 					{navLinks.map((nav, index) => (
 						<Link

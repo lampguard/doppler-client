@@ -62,7 +62,7 @@ const Landing = () => {
 					<img src={logo} className="w-full" />
 				</div>
 
-				<div className="hidden md:flex items-center">
+				<div className="hidden sm:flex items-center">
 					<div className="nav">
 						{navLinks.map((link) => {
 							return (
@@ -95,7 +95,7 @@ const Landing = () => {
 						</div>
 					)}
 				</div>
-				<div className="md:hidden">
+				<div className="sm:hidden">
 					<button
 						className="btn btn-outline btn-square btn-sm"
 						onClick={() => {
@@ -107,7 +107,7 @@ const Landing = () => {
 				</div>
 			</div>
 
-			<div className="border-t hidden md:hidden" id="mobileNav">
+			<div className="border-t hidden sm:hidden" id="mobileNav">
 				<div className="nav text-[16px] flex flex-col justify-center px-4">
 					{navLinks.map((nav, index) => (
 						<Link
