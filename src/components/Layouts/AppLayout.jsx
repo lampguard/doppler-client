@@ -28,7 +28,8 @@ const AppLayout = () => {
     if (isError) {
       navigate("/login");
     }
-    if (data && data?.data.user.email_verified_at == null) {
+
+    if (data && data.data.user.email_verified_at == null) {
       navigate("/verify-email");
     }
   }, [isError, data]);

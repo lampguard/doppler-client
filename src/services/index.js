@@ -154,6 +154,7 @@ export const api = createApi({
 					code,
 				},
 			}),
+			invalidatesTags: ['Auth'],
 		}),
 		requestMailVerification: builder.query({
 			query: () => ({
