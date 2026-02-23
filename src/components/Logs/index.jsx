@@ -51,7 +51,7 @@ const LogSkeleton = () => (
 
 const AppLogs = ({ app, setShowSample }) => {
 	const [logs, setLogs] = useState([]);
-	const [page, setPage] = useState(1);
+	const [cursor, setCursor] = useState(null);
 	const count = 20;
 
 	const { data: appteams } = useGetAppTeamsQuery(app.id);
@@ -85,16 +85,17 @@ const AppLogs = ({ app, setShowSample }) => {
 	const fetchLogs = (data, append = false) => {
 		getLogs({
 			...data,
-			id: app.id,
+			id: app.token,
 		})
 			.unwrap()
 			.then((response) => {
 				if (append) {
-					setLogs([...logs, ...response.data]);
+					setLogs([...logs, ...response.data.logs]);
 				} else {
-					setLogs([...response.data]);
+					setLogs([...response.data.logs]);
 				}
-				setPage(Number(response.page));
+
+				setCursor(Number(response.data.logs[response.data.logs.length - 1].id));
 			})
 			.catch((err) => {
 				console.error(err);
@@ -102,13 +103,7 @@ const AppLogs = ({ app, setShowSample }) => {
 	};
 
 	const loadMore = () => {
-		fetchLogs(
-			{
-				page: page + 1,
-				count,
-			},
-			true
-		);
+		fetchLogs({ cursor, count }, true);
 	};
 
 	const clearLogs = () => {
@@ -120,7 +115,8 @@ const AppLogs = ({ app, setShowSample }) => {
 					duration: 3,
 				});
 				setLogs([]);
-				fetchLogs({ page: 1, count: 20 });
+				setCursor(null);
+				fetchLogs({ cursor, count: 20 });
 			})
 			.catch((err) => {
 				notification.error({
@@ -140,10 +136,7 @@ const AppLogs = ({ app, setShowSample }) => {
 	}, [logs]);
 
 	useEffect(() => {
-		fetchLogs({
-			page: 1,
-			count,
-		});
+		fetchLogs({ cursor, count });
 	}, []);
 
 	return (

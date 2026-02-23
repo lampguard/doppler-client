@@ -81,7 +81,7 @@ const Report = ({ log }) => {
 					Level:{' '}
 					<span className="font-articulat-bold">{log.level.toUpperCase()}</span>
 				</p>
-				<p>Time: {format(log.createdAt, 'P HH:mm:ss a')}</p>
+				<p>Time: {format(log.createdat, 'P HH:mm:ss a')}</p>
 				<p>IP Address: {log.ip}</p>
 				{/* <p>IP Address: {JSON.stringify(log)}</p> */}
 				<p className="pt-3 pb-2 text-wrap break-words">{log.text}</p>
