@@ -55,7 +55,7 @@ const Login = () => {
 					if (res.data.user?.email_verified_at == null) {
 						return navigate('/verify-email');
 					}
-					if (res.data.user.details?.id == null) {
+					if (res.data.user.onboardingData?.id == null) {
 						return navigate('/onboarding');
 					}
 					return navigate('/dashboard');
