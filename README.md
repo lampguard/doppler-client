@@ -14,11 +14,9 @@ Doppler is a monitoring platform that provides integrations for you to observe d
 
 Events from applications are collected via the `Log` API. A fast, always-up, low-latency API endpoint dedicated solely to collecting logs and stored in our database for you to use.
 
-Any event has the following structure
+<!-- Any event has the following structure -->
 
-{% tabs %}
-
-{% tab title="Node (Axios)" %}
+### Node (Axios)
 ```js
 axios.post('https://api.dopple.cc/v1/logs', {
   headers: {
@@ -27,19 +25,13 @@ axios.post('https://api.dopple.cc/v1/logs', {
   body: JSON
 })
 ```
-{% endtab %}
-
-{% tab title="Laravel" %} 
+### Laravel
 ```php
 Http::withHeaders([
     'APP_ID' => <%GENERATED APP TOKEN%>
 ])->post('https://api.dopple.cc/v1/logs');
 ```
-{% endtab %}
 
-{% tab title="Golang" %} 
+### Golang
 ```go
 ```
-{% endtab %}
-
-{% endtabs %}

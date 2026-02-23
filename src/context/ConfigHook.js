@@ -23,6 +23,7 @@ const isTrue = (key) => {
 export const isWaitlistOpen = () => {
 	const [config] = getConfig();
 	if (config) {
+		console.log(config);
 		return config.waitlist_open == '1';
 	}
 	return __ENV__.WAITLISTING == 'on';
