@@ -107,7 +107,7 @@ const AppLogs = ({ app, setShowSample }) => {
 	};
 
 	const clearLogs = () => {
-		deleteLogs(app.id)
+		deleteLogs(app.token)
 			.unwrap()
 			.then((response) => {
 				notification.success({
@@ -154,8 +154,8 @@ const AppLogs = ({ app, setShowSample }) => {
 					{Array(4)
 						.fill(0)
 						.map(({ v, i }) => (
-							<div className="mb-1">
-								<LogSkeleton key={i} />
+							<div className="mb-1" key={i}>
+								<LogSkeleton />
 							</div>
 						))}
 				</div>

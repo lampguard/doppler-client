@@ -15,25 +15,25 @@ const ApplicationPage = () => {
 	const { data: app, isLoading, isSuccess } = useGetAppQuery(id);
 	const [getMetrics, { isFetching: fetching }] = useLazyGetMetricsForAppQuery();
 
-	const [appMetrics, setMetrics] = useState([]);
+	// const [appMetrics, setMetrics] = useState([]);
 	const [showSample, setShowSample] = useState(false);
 	const [lock, setLock] = useState(false);
 
 	const [tip, setTip] = useState('Click to copy');
 
-	useEffect(() => {
-		if (app) {
-			getMetrics({
-				token: app.token,
-				...defaultDashboardParams,
-			})
-				.unwrap()
-				.then((response) => {
-					setMetrics(response.data);
-				})
-				.catch((err) => console.error);
-		}
-	}, [app]);
+	// useEffect(() => {
+	// 	if (app) {
+	// 		getMetrics({
+	// 			token: app.token,
+	// 			...defaultDashboardParams,
+	// 		})
+	// 			.unwrap()
+	// 			.then((response) => {
+	// 				setMetrics(response.data);
+	// 			})
+	// 			.catch((err) => console.error);
+	// 	}
+	// }, [app]);
 
 	return (
 		<>
@@ -54,9 +54,9 @@ const ApplicationPage = () => {
 								Clear Logs
 							</button>
 						</div>
-						<div className="px-0 pb-10 md:pb-2 md:px-2 relative min-h-[350px] rounded-md grid grid-cols-1 mb-3">
+						{/* <div className="px-0 pb-10 md:pb-2 md:px-2 relative min-h-[350px] rounded-md grid grid-cols-1 mb-3">
 							<DashboardApp app={app} data={appMetrics} />
-						</div>
+						</div> */}
 						<div className={`grid p-1 rounded-md`}>
 							<div
 								className="py-2 w-full tooltip"
