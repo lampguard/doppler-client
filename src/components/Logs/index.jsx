@@ -163,12 +163,7 @@ const AppLogs = ({ app, setShowSample }) => {
 				logs.length > 0 && (
 					<>
 						<p className="pb-2">Latest</p>
-						{logs.slice(0, 5).map((log, i) => (
-							<Log log={log} key={log.id} appteams={appteams} />
-						))}
-
-						<p className="pb-2">Older</p>
-						{logs.slice(5, undefined).map((log, i) => (
+						{logs.map((log) => (
 							<Log log={log} key={log.id} appteams={appteams} />
 						))}
 

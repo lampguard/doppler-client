@@ -8,6 +8,7 @@ import Report from './Report';
 import { FaChartLine, FaList } from 'react-icons/fa';
 import { BsCaretDownFill } from 'react-icons/bs';
 import { notification } from 'antd';
+import { formatDate } from '../../services/util';
 
 /**
  * @type {React.FC<{log: TLog, appteams: any[]}>} Log
@@ -34,8 +35,7 @@ const Log = ({ log, appteams }) => {
 		});
 	};
 
-	const [analyse, { isLoading: isAnalysing, isSuccess: analysed }] =
-		useLazyAnalyseQuery();
+	const [analyse, { isLoading: isAnalysing, isSuccess: analysed }] = useLazyAnalyseQuery();
 	const [analysis, setAnalysis] = useState(undefined);
 	const [analysisMessage, setAnalysisMessage] = useState(0);
 	const [analysing, setAnalysing] = useState(false);
@@ -84,17 +84,10 @@ const Log = ({ log, appteams }) => {
 
 	return (
 		<>
-			<Modal
-				id={`log-${log.id}`}
-				className="rounded-none min-w-[72.5%] px-10"
-				withClose
-			>
-				<p className="font-articulat-bold text-xl py-5">
-					{log.level.toUpperCase()}
-				</p>
+			<Modal id={`log-${log.id}`} className="rounded-none min-w-[72.5%] px-10" withClose>
+				<p className="font-articulat-bold text-xl py-5">{log.level.toUpperCase()}</p>
 				<p className="line-clamp-2 pb-5">
-					<span className="text-gray-500">Time</span>:{' '}
-					{format(log.createdAt||log.createdat, 'P HH:mm:ss a')}
+					<span className="text-gray-500">Time</span>: {format(log.createdAt || log.createdat, 'P HH:mm:ss a')}
 				</p>
 				<p className="line-clamp-2 pb-5">
 					<span className="text-gray-500">Message</span>: {log.text}
@@ -104,11 +97,7 @@ const Log = ({ log, appteams }) => {
 					<div className="md:w-[40%] md:border-r border-black px-4 py-5">
 						<p className="py-2">Select a team to assign</p>
 						{appteams?.map((team) => (
-							<label
-								htmlFor=""
-								key={team.id}
-								className="w-full flex items-center"
-							>
+							<label htmlFor="" key={team.id} className="w-full flex items-center">
 								<input
 									type="checkbox"
 									name="active-team"
@@ -131,16 +120,13 @@ const Log = ({ log, appteams }) => {
 
 					<div className="w-full md:w-2/3 p-5">
 						<p className="py-2">
-							<strong className="font-articulat-bold">
-								{assignedTeam?.name}
-							</strong>
+							<strong className="font-articulat-bold">{assignedTeam?.name}</strong>
 						</p>
 						<div className="py-1"></div>
 						{assignedTeam?.members.map((member) => (
 							<label className="label" key={member.email}>
 								<span>
-									{member.name}{' '}
-									<span className="hidden md:inline">({member.email})</span>
+									{member.name} <span className="hidden md:inline">({member.email})</span>
 								</span>
 								<input
 									type="checkbox"
@@ -194,9 +180,7 @@ const Log = ({ log, appteams }) => {
 									.catch((err) => {
 										notification.error({
 											duration: 3,
-											message:
-												err.data?.message ||
-												'Unable to assign task. Please try again.',
+											message: err.data?.message || 'Unable to assign task. Please try again.',
 											style: { zIndex: 100000 },
 										});
 									});
@@ -209,20 +193,13 @@ const Log = ({ log, appteams }) => {
 			</Modal>
 
 			{/* Report Modal with AI integration */}
-			<Modal
-				id={`log-report-${log.id}`}
-				className="rounded-sm w-full md:min-w-[75%]"
-			>
+			<Modal id={`log-report-${log.id}`} className="rounded-sm w-full md:min-w-[75%]">
 				<>
 					<Report log={log} />
 					<div className="py-2"></div>
 					{/* {false && ( */}
 					{!(isAnalysing || analysing || analysed) && log.level != 'info' && (
-						<button
-							className="btn btn-primary btn-sm"
-							disabled={isAnalysing}
-							onClick={() => requestAnalysis(log)}
-						>
+						<button className="btn btn-primary btn-sm" disabled={isAnalysing} onClick={() => requestAnalysis(log)}>
 							Get Suggestion
 						</button>
 					)}
@@ -246,10 +223,7 @@ const Log = ({ log, appteams }) => {
 			{open && (
 				<>
 					<div className={`log ${log.level} w-full px-[12px] py-2 rounded-lg`}>
-						<div
-							className="flex justify-between cursor-pointer"
-							onClick={() => setOpen(false)}
-						>
+						<div className="flex justify-between cursor-pointer" onClick={() => setOpen(false)}>
 							<span>IP Address: {log.ip}</span>
 							<span>{format(log.createdAt || log.createdat, 'yyyy-MM-dd hh:mm:ss a')}</span>
 						</div>
@@ -269,9 +243,7 @@ const Log = ({ log, appteams }) => {
 							</button>
 							<button
 								className="btn btn-xs glass btn-ghost relative"
-								onClick={() =>
-									document.getElementById(`log-report-${log.id}`).showModal()
-								}
+								onClick={() => document.getElementById(`log-report-${log.id}`).showModal()}
 							>
 								<FaList /> View Report
 							</button>
@@ -280,24 +252,20 @@ const Log = ({ log, appteams }) => {
 				</>
 			)}
 			{!open && (
-				<>
-					<div className="flex max-w-[100%] items-center w-full border rounded-md p-0">
-						<span
-							className={`uppercase log ${log.level}-bg text-white px-4 py-2 rounded-md w-[20%] text-center`}
-						>
+				<div className="border rounded-md p-0">
+					<span className="flex items-center px-2 text-sm" onClick={(e) => setOpen(true)}>
+						{formatDate(log.createdat, true)}
+					</span>
+					<div className="flex max-w-[100%] items-center w-full">
+						<span className={`uppercase log ${log.level}-bg text-white px-4 py-2 rounded-md w-[20%] text-center`}>
 							{log.level}
 						</span>
-						<span className="w-[70%] pl-2 truncate overflow-hidden align-middle font-articulat-light">
-							{log.text}
-						</span>
-						<span
-							className="w-[10%] grid place-items-center"
-							onClick={(e) => setOpen(true)}
-						>
+						<span className="w-[85%] pl-2 truncate overflow-hidden align-middle font-articulat-light">{log.text}</span>
+						<span className="w-[5%] grid place-items-center" onClick={(e) => setOpen(true)}>
 							<BsCaretDownFill />
 						</span>
 					</div>
-				</>
+				</div>
 			)}
 			<div className="pb-[8px]"></div>
 		</>
